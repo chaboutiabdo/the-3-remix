@@ -35,6 +35,7 @@ import { Route as PsychologistNotesRouteImport } from './routes/psychologist.not
 import { Route as PsychologistMessagesRouteImport } from './routes/psychologist.messages'
 import { Route as PsychologistAvailabilityRouteImport } from './routes/psychologist.availability'
 import { Route as PsychologistAppointmentsRouteImport } from './routes/psychologist.appointments'
+import { Route as PatientSupportRouteImport } from './routes/patient.support'
 import { Route as PatientSettingsRouteImport } from './routes/patient.settings'
 import { Route as PatientRecordsRouteImport } from './routes/patient.records'
 import { Route as PatientProfileRouteImport } from './routes/patient.profile'
@@ -56,16 +57,19 @@ import { Route as AuthForgotRouteImport } from './routes/auth.forgot'
 import { Route as AuthAccountCreatedRouteImport } from './routes/auth.account-created'
 import { Route as AdminVerificationRouteImport } from './routes/admin.verification'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
+import { Route as AdminSupportRouteImport } from './routes/admin.support'
 import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
 import { Route as AdminReportsRouteImport } from './routes/admin.reports'
 import { Route as AdminContentRouteImport } from './routes/admin.content'
 import { Route as AdminAppointmentsRouteImport } from './routes/admin.appointments'
 import { Route as AdminVerificationIndexRouteImport } from './routes/admin.verification.index'
+import { Route as AdminSupportIndexRouteImport } from './routes/admin.support.index'
 import { Route as PsychologistPatientsIdRouteImport } from './routes/psychologist.patients.$id'
 import { Route as PatientSessionIdRouteImport } from './routes/patient.session.$id'
 import { Route as PatientPsychologistIdRouteImport } from './routes/patient.psychologist.$id'
 import { Route as PatientBookIdRouteImport } from './routes/patient.book.$id'
 import { Route as AdminVerificationIdRouteImport } from './routes/admin.verification.$id'
+import { Route as AdminSupportIdRouteImport } from './routes/admin.support.$id'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
@@ -199,6 +203,11 @@ const PsychologistAppointmentsRoute =
     path: '/appointments',
     getParentRoute: () => PsychologistRoute,
   } as any)
+const PatientSupportRoute = PatientSupportRouteImport.update({
+  id: '/support',
+  path: '/support',
+  getParentRoute: () => PatientRoute,
+} as any)
 const PatientSettingsRoute = PatientSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -304,6 +313,11 @@ const AdminUsersRoute = AdminUsersRouteImport.update({
   path: '/users',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminSupportRoute = AdminSupportRouteImport.update({
+  id: '/support',
+  path: '/support',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminSettingsRoute = AdminSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -328,6 +342,11 @@ const AdminVerificationIndexRoute = AdminVerificationIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AdminVerificationRoute,
+} as any)
+const AdminSupportIndexRoute = AdminSupportIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminSupportRoute,
 } as any)
 const PsychologistPatientsIdRoute = PsychologistPatientsIdRouteImport.update({
   id: '/$id',
@@ -354,6 +373,11 @@ const AdminVerificationIdRoute = AdminVerificationIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => AdminVerificationRoute,
 } as any)
+const AdminSupportIdRoute = AdminSupportIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AdminSupportRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -372,6 +396,7 @@ export interface FileRoutesByFullPath {
   '/admin/content': typeof AdminContentRoute
   '/admin/reports': typeof AdminReportsRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/admin/support': typeof AdminSupportRouteWithChildren
   '/admin/users': typeof AdminUsersRoute
   '/admin/verification': typeof AdminVerificationRouteWithChildren
   '/auth/account-created': typeof AuthAccountCreatedRoute
@@ -393,6 +418,7 @@ export interface FileRoutesByFullPath {
   '/patient/profile': typeof PatientProfileRoute
   '/patient/records': typeof PatientRecordsRoute
   '/patient/settings': typeof PatientSettingsRoute
+  '/patient/support': typeof PatientSupportRoute
   '/psychologist/appointments': typeof PsychologistAppointmentsRoute
   '/psychologist/availability': typeof PsychologistAvailabilityRoute
   '/psychologist/messages': typeof PsychologistMessagesRoute
@@ -407,11 +433,13 @@ export interface FileRoutesByFullPath {
   '/patient/': typeof PatientIndexRoute
   '/psychologist/': typeof PsychologistIndexRoute
   '/screens/': typeof ScreensIndexRoute
+  '/admin/support/$id': typeof AdminSupportIdRoute
   '/admin/verification/$id': typeof AdminVerificationIdRoute
   '/patient/book/$id': typeof PatientBookIdRoute
   '/patient/psychologist/$id': typeof PatientPsychologistIdRoute
   '/patient/session/$id': typeof PatientSessionIdRoute
   '/psychologist/patients/$id': typeof PsychologistPatientsIdRoute
+  '/admin/support/': typeof AdminSupportIndexRoute
   '/admin/verification/': typeof AdminVerificationIndexRoute
 }
 export interface FileRoutesByTo {
@@ -447,6 +475,7 @@ export interface FileRoutesByTo {
   '/patient/profile': typeof PatientProfileRoute
   '/patient/records': typeof PatientRecordsRoute
   '/patient/settings': typeof PatientSettingsRoute
+  '/patient/support': typeof PatientSupportRoute
   '/psychologist/appointments': typeof PsychologistAppointmentsRoute
   '/psychologist/availability': typeof PsychologistAvailabilityRoute
   '/psychologist/messages': typeof PsychologistMessagesRoute
@@ -461,11 +490,13 @@ export interface FileRoutesByTo {
   '/patient': typeof PatientIndexRoute
   '/psychologist': typeof PsychologistIndexRoute
   '/screens': typeof ScreensIndexRoute
+  '/admin/support/$id': typeof AdminSupportIdRoute
   '/admin/verification/$id': typeof AdminVerificationIdRoute
   '/patient/book/$id': typeof PatientBookIdRoute
   '/patient/psychologist/$id': typeof PatientPsychologistIdRoute
   '/patient/session/$id': typeof PatientSessionIdRoute
   '/psychologist/patients/$id': typeof PsychologistPatientsIdRoute
+  '/admin/support': typeof AdminSupportIndexRoute
   '/admin/verification': typeof AdminVerificationIndexRoute
 }
 export interface FileRoutesById {
@@ -486,6 +517,7 @@ export interface FileRoutesById {
   '/admin/content': typeof AdminContentRoute
   '/admin/reports': typeof AdminReportsRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/admin/support': typeof AdminSupportRouteWithChildren
   '/admin/users': typeof AdminUsersRoute
   '/admin/verification': typeof AdminVerificationRouteWithChildren
   '/auth/account-created': typeof AuthAccountCreatedRoute
@@ -507,6 +539,7 @@ export interface FileRoutesById {
   '/patient/profile': typeof PatientProfileRoute
   '/patient/records': typeof PatientRecordsRoute
   '/patient/settings': typeof PatientSettingsRoute
+  '/patient/support': typeof PatientSupportRoute
   '/psychologist/appointments': typeof PsychologistAppointmentsRoute
   '/psychologist/availability': typeof PsychologistAvailabilityRoute
   '/psychologist/messages': typeof PsychologistMessagesRoute
@@ -521,11 +554,13 @@ export interface FileRoutesById {
   '/patient/': typeof PatientIndexRoute
   '/psychologist/': typeof PsychologistIndexRoute
   '/screens/': typeof ScreensIndexRoute
+  '/admin/support/$id': typeof AdminSupportIdRoute
   '/admin/verification/$id': typeof AdminVerificationIdRoute
   '/patient/book/$id': typeof PatientBookIdRoute
   '/patient/psychologist/$id': typeof PatientPsychologistIdRoute
   '/patient/session/$id': typeof PatientSessionIdRoute
   '/psychologist/patients/$id': typeof PsychologistPatientsIdRoute
+  '/admin/support/': typeof AdminSupportIndexRoute
   '/admin/verification/': typeof AdminVerificationIndexRoute
 }
 export interface FileRouteTypes {
@@ -547,6 +582,7 @@ export interface FileRouteTypes {
     | '/admin/content'
     | '/admin/reports'
     | '/admin/settings'
+    | '/admin/support'
     | '/admin/users'
     | '/admin/verification'
     | '/auth/account-created'
@@ -568,6 +604,7 @@ export interface FileRouteTypes {
     | '/patient/profile'
     | '/patient/records'
     | '/patient/settings'
+    | '/patient/support'
     | '/psychologist/appointments'
     | '/psychologist/availability'
     | '/psychologist/messages'
@@ -582,11 +619,13 @@ export interface FileRouteTypes {
     | '/patient/'
     | '/psychologist/'
     | '/screens/'
+    | '/admin/support/$id'
     | '/admin/verification/$id'
     | '/patient/book/$id'
     | '/patient/psychologist/$id'
     | '/patient/session/$id'
     | '/psychologist/patients/$id'
+    | '/admin/support/'
     | '/admin/verification/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -622,6 +661,7 @@ export interface FileRouteTypes {
     | '/patient/profile'
     | '/patient/records'
     | '/patient/settings'
+    | '/patient/support'
     | '/psychologist/appointments'
     | '/psychologist/availability'
     | '/psychologist/messages'
@@ -636,11 +676,13 @@ export interface FileRouteTypes {
     | '/patient'
     | '/psychologist'
     | '/screens'
+    | '/admin/support/$id'
     | '/admin/verification/$id'
     | '/patient/book/$id'
     | '/patient/psychologist/$id'
     | '/patient/session/$id'
     | '/psychologist/patients/$id'
+    | '/admin/support'
     | '/admin/verification'
   id:
     | '__root__'
@@ -660,6 +702,7 @@ export interface FileRouteTypes {
     | '/admin/content'
     | '/admin/reports'
     | '/admin/settings'
+    | '/admin/support'
     | '/admin/users'
     | '/admin/verification'
     | '/auth/account-created'
@@ -681,6 +724,7 @@ export interface FileRouteTypes {
     | '/patient/profile'
     | '/patient/records'
     | '/patient/settings'
+    | '/patient/support'
     | '/psychologist/appointments'
     | '/psychologist/availability'
     | '/psychologist/messages'
@@ -695,11 +739,13 @@ export interface FileRouteTypes {
     | '/patient/'
     | '/psychologist/'
     | '/screens/'
+    | '/admin/support/$id'
     | '/admin/verification/$id'
     | '/patient/book/$id'
     | '/patient/psychologist/$id'
     | '/patient/session/$id'
     | '/psychologist/patients/$id'
+    | '/admin/support/'
     | '/admin/verification/'
   fileRoutesById: FileRoutesById
 }
@@ -904,6 +950,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PsychologistAppointmentsRouteImport
       parentRoute: typeof PsychologistRoute
     }
+    '/patient/support': {
+      id: '/patient/support'
+      path: '/support'
+      fullPath: '/patient/support'
+      preLoaderRoute: typeof PatientSupportRouteImport
+      parentRoute: typeof PatientRoute
+    }
     '/patient/settings': {
       id: '/patient/settings'
       path: '/settings'
@@ -1051,6 +1104,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminUsersRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/support': {
+      id: '/admin/support'
+      path: '/support'
+      fullPath: '/admin/support'
+      preLoaderRoute: typeof AdminSupportRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/settings': {
       id: '/admin/settings'
       path: '/settings'
@@ -1085,6 +1145,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/verification/'
       preLoaderRoute: typeof AdminVerificationIndexRouteImport
       parentRoute: typeof AdminVerificationRoute
+    }
+    '/admin/support/': {
+      id: '/admin/support/'
+      path: '/'
+      fullPath: '/admin/support/'
+      preLoaderRoute: typeof AdminSupportIndexRouteImport
+      parentRoute: typeof AdminSupportRoute
     }
     '/psychologist/patients/$id': {
       id: '/psychologist/patients/$id'
@@ -1121,8 +1188,29 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminVerificationIdRouteImport
       parentRoute: typeof AdminVerificationRoute
     }
+    '/admin/support/$id': {
+      id: '/admin/support/$id'
+      path: '/$id'
+      fullPath: '/admin/support/$id'
+      preLoaderRoute: typeof AdminSupportIdRouteImport
+      parentRoute: typeof AdminSupportRoute
+    }
   }
 }
+
+interface AdminSupportRouteChildren {
+  AdminSupportIdRoute: typeof AdminSupportIdRoute
+  AdminSupportIndexRoute: typeof AdminSupportIndexRoute
+}
+
+const AdminSupportRouteChildren: AdminSupportRouteChildren = {
+  AdminSupportIdRoute: AdminSupportIdRoute,
+  AdminSupportIndexRoute: AdminSupportIndexRoute,
+}
+
+const AdminSupportRouteWithChildren = AdminSupportRoute._addFileChildren(
+  AdminSupportRouteChildren,
+)
 
 interface AdminVerificationRouteChildren {
   AdminVerificationIdRoute: typeof AdminVerificationIdRoute
@@ -1142,6 +1230,7 @@ interface AdminRouteChildren {
   AdminContentRoute: typeof AdminContentRoute
   AdminReportsRoute: typeof AdminReportsRoute
   AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminSupportRoute: typeof AdminSupportRouteWithChildren
   AdminUsersRoute: typeof AdminUsersRoute
   AdminVerificationRoute: typeof AdminVerificationRouteWithChildren
   AdminIndexRoute: typeof AdminIndexRoute
@@ -1152,6 +1241,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminContentRoute: AdminContentRoute,
   AdminReportsRoute: AdminReportsRoute,
   AdminSettingsRoute: AdminSettingsRoute,
+  AdminSupportRoute: AdminSupportRouteWithChildren,
   AdminUsersRoute: AdminUsersRoute,
   AdminVerificationRoute: AdminVerificationRouteWithChildren,
   AdminIndexRoute: AdminIndexRoute,
@@ -1211,6 +1301,7 @@ interface PatientRouteChildren {
   PatientProfileRoute: typeof PatientProfileRoute
   PatientRecordsRoute: typeof PatientRecordsRoute
   PatientSettingsRoute: typeof PatientSettingsRoute
+  PatientSupportRoute: typeof PatientSupportRoute
   PatientIndexRoute: typeof PatientIndexRoute
   PatientBookIdRoute: typeof PatientBookIdRoute
   PatientPsychologistIdRoute: typeof PatientPsychologistIdRoute
@@ -1225,6 +1316,7 @@ const PatientRouteChildren: PatientRouteChildren = {
   PatientProfileRoute: PatientProfileRoute,
   PatientRecordsRoute: PatientRecordsRoute,
   PatientSettingsRoute: PatientSettingsRoute,
+  PatientSupportRoute: PatientSupportRoute,
   PatientIndexRoute: PatientIndexRoute,
   PatientBookIdRoute: PatientBookIdRoute,
   PatientPsychologistIdRoute: PatientPsychologistIdRoute,

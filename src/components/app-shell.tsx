@@ -11,6 +11,7 @@ import {
   Globe,
   Home,
   LayoutDashboard,
+  LifeBuoy,
   LogOut,
   Menu,
   MessageSquare,
@@ -36,6 +37,7 @@ const navByRole: Record<Role, NavItem[]> = {
     { to: "/patient/assessment", label: "patient.assessmentNav", icon: ClipboardList },
     { to: "/patient/records", label: "patient.records", icon: FileText },
     { to: "/patient/messages", label: "patient.messages", icon: MessageSquare },
+    { to: "/patient/support", label: "Support", icon: LifeBuoy },
     { to: "/patient/profile", label: "common.profile", icon: Users },
     { to: "/patient/settings", label: "common.settings", icon: Settings },
   ],
@@ -57,6 +59,7 @@ const navByRole: Record<Role, NavItem[]> = {
     { to: "/admin/verification", label: "admin.verification", icon: ShieldCheck },
     { to: "/admin/reports", label: "admin.reports", icon: Sparkles },
     { to: "/admin/content", label: "admin.content", icon: FileText },
+    { to: "/admin/support", label: "Support Center", icon: LifeBuoy },
     { to: "/admin/settings", label: "common.settings", icon: Settings },
   ],
 };
