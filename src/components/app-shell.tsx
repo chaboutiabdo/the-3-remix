@@ -59,6 +59,7 @@ const navByRole: Record<Role, NavItem[]> = {
     { to: "/admin/verification", label: "admin.verification", icon: ShieldCheck },
     { to: "/admin/reports", label: "admin.reports", icon: Sparkles },
     { to: "/admin/content", label: "admin.content", icon: FileText },
+    { to: "/admin/support", label: "Support Center", icon: LifeBuoy },
     { to: "/admin/settings", label: "common.settings", icon: Settings },
   ],
 };
