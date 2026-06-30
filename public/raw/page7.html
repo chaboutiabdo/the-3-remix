@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PsyConnect Admin Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-dim": "#d7dbd9",
+                    "primary-fixed": "#d5e3ff",
+                    "on-secondary-fixed": "#072100",
+                    "secondary-fixed": "#c6eeac",
+                    "on-background": "#181c1b",
+                    "surface-container": "#ebefed",
+                    "on-primary-fixed": "#001c3b",
+                    "on-secondary-container": "#496c36",
+                    "on-secondary": "#ffffff",
+                    "secondary": "#456732",
+                    "inverse-on-surface": "#eef1ef",
+                    "on-tertiary-fixed": "#002023",
+                    "primary-fixed-dim": "#a7c8ff",
+                    "inverse-primary": "#a7c8ff",
+                    "surface-tint": "#395f94",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-low": "#f1f4f2",
+                    "primary": "#30568b",
+                    "primary-container": "#4a6fa5",
+                    "tertiary-container": "#48757a",
+                    "secondary-container": "#c3eba9",
+                    "on-primary-container": "#edf1ff",
+                    "surface-variant": "#e0e3e1",
+                    "on-tertiary": "#ffffff",
+                    "background": "#f7faf8",
+                    "on-primary-fixed-variant": "#1e477b",
+                    "error": "#ba1a1a",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed-dim": "#aad292",
+                    "outline": "#737780",
+                    "on-secondary-fixed-variant": "#2e4f1d",
+                    "on-surface-variant": "#43474f",
+                    "surface-container-high": "#e6e9e7",
+                    "on-tertiary-fixed-variant": "#1e4d52",
+                    "surface-container-highest": "#e0e3e1",
+                    "inverse-surface": "#2d3130",
+                    "tertiary-fixed-dim": "#a0cfd4",
+                    "on-tertiary-container": "#ccfaff",
+                    "on-error": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "surface-bright": "#f7faf8",
+                    "tertiary-fixed": "#bbebf1",
+                    "on-surface": "#181c1b",
+                    "on-primary": "#ffffff",
+                    "outline-variant": "#c3c6d1",
+                    "surface": "#f7faf8",
+                    "tertiary": "#2e5c61"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-max": "1200px",
+                    "stack-lg": "32px",
+                    "gutter": "24px",
+                    "stack-sm": "8px",
+                    "margin-mobile": "16px",
+                    "stack-md": "16px",
+                    "margin-desktop": "40px"
+            },
+            "fontFamily": {
+                    "headline-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.03em", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+      body {
+        background-color: #f7faf8;
+        font-family: 'Inter', sans-serif;
+        color: #181c1b;
+      }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        vertical-align: middle;
+      }
+      .glass-card {
+        background: rgba(253, 253, 253, 0.8);
+        backdrop-filter: blur(8px);
+        border: 1px solid #E8EDE9;
+        box-shadow: 0px 4px 20px rgba(74, 111, 165, 0.06);
+      }
+      .bento-grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 24px;
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #c3c6d1;
+        border-radius: 10px;
+      }
+    </style>
+</head>
+<body class="flex min-h-screen" data-screen-id="7">
+<!-- SideNavBar Shell -->
+<aside class="hidden lg:flex flex-col py-stack-lg px-4 gap-y-2 h-screen w-64 fixed left-0 top-0 bg-surface-container-low border-r border-surface-container-highest z-50">
+<div class="px-4 mb-8">
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary">PsyConnect</h1>
+<p class="text-on-surface-variant text-label-sm mt-1">Admin Portal</p>
+</div>
+<div class="flex flex-col gap-y-1 mb-auto">
+<!-- Active Navigation Mapping -->
+<a class="bg-secondary-container text-on-secondary-container rounded-lg font-semibold flex items-center gap-3 px-4 py-3 cursor-pointer active:scale-95 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-high rounded-lg flex items-center gap-3 px-4 py-3 cursor-pointer active:scale-95 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-label-md text-label-md">Appointments</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-high rounded-lg flex items-center gap-3 px-4 py-3 cursor-pointer active:scale-95 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="font-label-md text-label-md">Messages</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-high rounded-lg flex items-center gap-3 px-4 py-3 cursor-pointer active:scale-95 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-label-md">Profile</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-high rounded-lg flex items-center gap-3 px-4 py-3 cursor-pointer active:scale-95 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</div>
+<div class="mt-8 pt-4 border-t border-surface-container-highest">
+<button class="w-full bg-primary text-on-primary py-3 rounded-xl font-label-md flex items-center justify-center gap-2 mb-6 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add</span>
+                Book New Session
+            </button>
+<a class="text-on-surface-variant hover:bg-surface-container-high rounded-lg flex items-center gap-3 px-4 py-3 transition-all" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-md text-label-md">Help Center</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-high rounded-lg flex items-center gap-3 px-4 py-3 transition-all" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md text-label-md">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 lg:ml-64 px-margin-mobile md:px-margin-desktop py-stack-lg">
+<!-- Header -->
+<header class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-stack-lg">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-background">Platform Overview</h2>
+<p class="text-on-surface-variant font-body-md text-body-md">Monitoring global mental health activity in Algeria.</p>
+</div>
+<div class="flex items-center gap-3 bg-surface-container-lowest border border-outline-variant p-2 rounded-xl">
+<span class="material-symbols-outlined text-outline ml-2">calendar_month</span>
+<select class="bg-transparent border-none focus:ring-0 font-label-md text-on-surface cursor-pointer pr-8">
+<option>Last 30 Days</option>
+<option>Last 7 Days</option>
+<option>Quarter to Date</option>
+<option>Year to Date</option>
+</select>
+</div>
+</header>
+<!-- Analytics Bento Grid -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-stack-lg">
+<!-- Card 1 -->
+<div class="glass-card p-6 rounded-2xl flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg">group</span>
+<span class="text-secondary font-label-sm">+4.2%</span>
+</div>
+<div>
+<h3 class="text-on-surface-variant font-label-md text-label-md">Total Patients</h3>
+<p class="text-headline-md font-headline-md font-bold">12,438</p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="glass-card p-6 rounded-2xl flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-secondary bg-secondary/10 p-2 rounded-lg">psychology</span>
+<span class="text-secondary font-label-sm">+12%</span>
+</div>
+<div>
+<h3 class="text-on-surface-variant font-label-md text-label-md">Active Psychologists</h3>
+<p class="text-headline-md font-headline-md font-bold">842</p>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="glass-card p-6 rounded-2xl flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-error bg-error/10 p-2 rounded-lg">verified_user</span>
+<span class="text-error font-label-sm">High Priority</span>
+</div>
+<div>
+<h3 class="text-on-surface-variant font-label-md text-label-md">Pending Verifications</h3>
+<p class="text-headline-md font-headline-md font-bold">47</p>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="glass-card p-6 rounded-2xl flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-tertiary bg-tertiary/10 p-2 rounded-lg">payments</span>
+<span class="text-secondary font-label-sm">+8.5%</span>
+</div>
+<div>
+<h3 class="text-on-surface-variant font-label-md text-label-md">Total Revenue</h3>
+<p class="text-headline-md font-headline-md font-bold">2.4M <span class="text-body-sm font-normal">DZD</span></p>
+</div>
+</div>
+</section>
+<!-- Main Dashboard Layout (Asymmetric) -->
+<div class="bento-grid">
+<!-- Left Column: Verification Queue -->
+<section class="col-span-12 lg:col-span-8 glass-card rounded-2xl overflow-hidden flex flex-col">
+<div class="px-6 py-5 border-b border-surface-container-highest flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm text-on-background">Verification Queue</h3>
+<button class="text-primary font-label-md hover:underline">View All</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="px-6 py-3 font-label-sm text-on-surface-variant">CLINICIAN NAME</th>
+<th class="px-6 py-3 font-label-sm text-on-surface-variant">SPECIALTY</th>
+<th class="px-6 py-3 font-label-sm text-on-surface-variant">DATE APPLIED</th>
+<th class="px-6 py-3 font-label-sm text-on-surface-variant">STATUS</th>
+<th class="px-6 py-3 font-label-sm text-on-surface-variant"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-highest">
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">SB</div>
+<span class="font-body-md text-on-surface">Dr. Sofiane Belkacem</span>
+</div>
+</td>
+<td class="px-6 py-4 text-body-sm text-on-surface-variant">Clinical Psychology</td>
+<td class="px-6 py-4 text-body-sm text-on-surface-variant">Oct 12, 2024</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary-container text-on-secondary-container">Pending</span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="material-symbols-outlined text-outline cursor-pointer group-hover:text-primary transition-colors">arrow_forward</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">NM</div>
+<span class="font-body-md text-on-surface">Dr. Nadia Mansouri</span>
+</div>
+</td>
+<td class="px-6 py-4 text-body-sm text-on-surface-variant">CBT Specialist</td>
+<td class="px-6 py-4 text-body-sm text-on-surface-variant">Oct 11, 2024</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary-container text-on-secondary-container">Pending</span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="material-symbols-outlined text-outline cursor-pointer group-hover:text-primary transition-colors">arrow_forward</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">YM</div>
+<span class="font-body-md text-on-surface">Dr. Yacine Mahmoud</span>
+</div>
+</td>
+<td class="px-6 py-4 text-body-sm text-on-surface-variant">Child Therapy</td>
+<td class="px-6 py-4 text-body-sm text-on-surface-variant">Oct 10, 2024</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary-container text-on-secondary-container">Pending</span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="material-symbols-outlined text-outline cursor-pointer group-hover:text-primary transition-colors">arrow_forward</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">LB</div>
+<span class="font-body-md text-on-surface">Dr. Leila Bouzidi</span>
+</div>
+</td>
+<td class="px-6 py-4 text-body-sm text-on-surface-variant">Trauma &amp; PTSD</td>
+<td class="px-6 py-4 text-body-sm text-on-surface-variant">Oct 09, 2024</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary-container text-on-secondary-container">Pending</span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="material-symbols-outlined text-outline cursor-pointer group-hover:text-primary transition-colors">arrow_forward</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">KA</div>
+<span class="font-body-md text-on-surface">Dr. Karim Abdi</span>
+</div>
+</td>
+<td class="px-6 py-4 text-body-sm text-on-surface-variant">Addiction Therapy</td>
+<td class="px-6 py-4 text-body-sm text-on-surface-variant">Oct 09, 2024</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary-container text-on-secondary-container">Pending</span>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="material-symbols-outlined text-outline cursor-pointer group-hover:text-primary transition-colors">arrow_forward</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Right Column Top: Support Status -->
+<section class="col-span-12 lg:col-span-4 flex flex-col gap-6">
+<div class="glass-card rounded-2xl p-6">
+<h3 class="font-headline-sm text-headline-sm text-on-background mb-4">Support Status</h3>
+<div class="flex flex-col gap-4">
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant font-body-md">Open Tickets</span>
+<span class="text-primary font-bold text-headline-sm">12</span>
+</div>
+<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full" style="width: 78%"></div>
+</div>
+<div class="flex justify-between items-center text-label-sm mt-1">
+<span class="text-on-surface-variant">Resolution Rate</span>
+<span class="text-secondary font-bold">94.2%</span>
+</div>
+<button class="w-full border border-primary text-primary py-2 rounded-xl font-label-md mt-2 hover:bg-primary/5 transition-colors">
+                            Manage Support Desk
+                        </button>
+</div>
+</div>
+<!-- Right Column Bottom: Recent Activity -->
+<div class="glass-card rounded-2xl p-6 flex-1">
+<h3 class="font-headline-sm text-headline-sm text-on-background mb-4">Recent Activity</h3>
+<div class="flex flex-col gap-6">
+<div class="flex gap-4">
+<div class="relative">
+<div class="w-2 h-2 rounded-full bg-secondary mt-2"></div>
+<div class="absolute left-1/2 top-4 bottom-[-32px] w-px bg-surface-container-highest"></div>
+</div>
+<div>
+<p class="text-body-md text-on-surface">New psychologist registered</p>
+<span class="text-label-sm text-on-surface-variant">2 mins ago</span>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="relative">
+<div class="w-2 h-2 rounded-full bg-primary mt-2"></div>
+<div class="absolute left-1/2 top-4 bottom-[-32px] w-px bg-surface-container-highest"></div>
+</div>
+<div>
+<p class="text-body-md text-on-surface">Verification approved for Dr. Amina</p>
+<span class="text-label-sm text-on-surface-variant">45 mins ago</span>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="relative">
+<div class="w-2 h-2 rounded-full bg-error mt-2"></div>
+<div class="absolute left-1/2 top-4 bottom-[-32px] w-px bg-surface-container-highest"></div>
+</div>
+<div>
+<p class="text-body-md text-on-surface">Security alert: Multiple login failures</p>
+<span class="text-label-sm text-on-surface-variant">2 hours ago</span>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="relative">
+<div class="w-2 h-2 rounded-full bg-tertiary mt-2"></div>
+</div>
+<div>
+<p class="text-body-md text-on-surface">Payout of 450,000 DZD processed</p>
+<span class="text-label-sm text-on-surface-variant">5 hours ago</span>
+</div>
+</div>
+</div>
+<button class="w-full text-center text-primary font-label-md mt-8 hover:underline">View Audit Log</button>
+</div>
+</section>
+</div>
+<!-- System Footer -->
+<footer class="w-full py-stack-lg flex flex-col md:flex-row justify-between items-center gap-4 border-t border-surface-container-highest mt-stack-lg">
+<span class="font-body-sm text-body-sm text-on-surface-variant">© 2024 PsyConnect. Secured for Algeria.</span>
+<div class="flex gap-6">
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Contact Us</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Clinician Portal</a>
+</div>
+</footer>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 px-4 pb-safe bg-surface/95 backdrop-blur-sm shadow-lg border-t border-surface-container-highest rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-primary font-bold" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">event</span>
+<span class="font-label-sm text-label-sm">Sessions</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">mail</span>
+<span class="font-label-sm text-label-sm">Chat</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">menu</span>
+<span class="font-label-sm text-label-sm">Menu</span>
+</a>
+</nav>
+<script>
+        // Simple micro-interaction for cards
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-2px)';
+                card.style.transition = 'transform 0.2s ease-out';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Initialize any tooltips or dynamic elements if needed
+        console.log("PsyConnect Admin Dashboard Initialized");
+    </script>
+<script src="/raw/_nav.js"></script>
+</body></html>

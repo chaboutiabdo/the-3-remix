@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PsyConnect | Patient Dashboard</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        body {
+            background-color: #F4F7F5; /* Brand Background */
+            font-family: 'Inter', sans-serif;
+        }
+        .tonal-layer-1 {
+            background-color: #FDFDFD;
+            box-shadow: 0px 4px 20px rgba(74, 111, 165, 0.06);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid #E8EDE9;
+        }
+    </style>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "error": "#ba1a1a",
+                    "tertiary-container": "#48757a",
+                    "outline-variant": "#c3c6d1",
+                    "error-container": "#ffdad6",
+                    "on-primary-container": "#edf1ff",
+                    "tertiary-fixed-dim": "#a0cfd4",
+                    "on-secondary-fixed": "#072100",
+                    "inverse-surface": "#2d3130",
+                    "on-tertiary-fixed": "#002023",
+                    "on-background": "#181c1b",
+                    "primary-fixed-dim": "#a7c8ff",
+                    "on-secondary-fixed-variant": "#2e4f1d",
+                    "inverse-on-surface": "#eef1ef",
+                    "surface-tint": "#395f94",
+                    "secondary-fixed-dim": "#aad292",
+                    "on-tertiary-container": "#ccfaff",
+                    "background": "#f7faf8",
+                    "surface-container-lowest": "#ffffff",
+                    "outline": "#737780",
+                    "primary": "#30568b",
+                    "on-primary-fixed": "#001c3b",
+                    "surface-bright": "#f7faf8",
+                    "surface-container-low": "#f1f4f2",
+                    "on-secondary-container": "#496c36",
+                    "surface-container-highest": "#e0e3e1",
+                    "surface-container-high": "#e6e9e7",
+                    "on-surface-variant": "#43474f",
+                    "on-primary-fixed-variant": "#1e477b",
+                    "surface-variant": "#e0e3e1",
+                    "on-error": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "on-surface": "#181c1b",
+                    "secondary": "#456732",
+                    "on-tertiary-fixed-variant": "#1e4d52",
+                    "surface": "#f7faf8",
+                    "secondary-container": "#c3eba9",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed": "#bbebf1",
+                    "inverse-primary": "#a7c8ff",
+                    "on-primary": "#ffffff",
+                    "surface-container": "#ebefed",
+                    "secondary-fixed": "#c6eeac",
+                    "tertiary": "#2e5c61",
+                    "surface-dim": "#d7dbd9",
+                    "primary-container": "#4a6fa5",
+                    "primary-fixed": "#d5e3ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-md": "16px",
+                    "margin-mobile": "16px",
+                    "container-max": "1200px",
+                    "stack-lg": "32px",
+                    "margin-desktop": "40px",
+                    "stack-sm": "8px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "label-sm": ["Inter"],
+                    "label-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "headline-lg-mobile": ["Inter"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.03em", "fontWeight": "500"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          }
+        }
+      }
+    </script>
+</head>
+<body class="bg-background text-on-surface" data-screen-id="4">
+<!-- Top Navigation (Mobile/Responsive Anchor) -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-4 md:px-margin-desktop h-16 bg-surface/90 backdrop-blur-md border-b border-surface-container-highest lg:hidden">
+<div class="font-headline-md text-headline-md font-semibold text-primary">PsyConnect</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer">notifications</span>
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary-container text-sm">person</span>
+</div>
+</div>
+</header>
+<div class="flex min-h-screen pt-16 lg:pt-0">
+<!-- Sidebar Navigation (Desktop) -->
+<aside class="hidden lg:flex flex-col py-stack-lg px-4 gap-y-2 h-screen w-64 fixed left-0 top-0 bg-surface-container-low border-r border-surface-container-highest">
+<div class="mb-stack-lg px-2">
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary">PsyConnect</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Mental Wellness, Simplified.</p>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Dashboard Active -->
+<a class="flex items-center gap-3 px-3 py-2 bg-secondary-container text-on-secondary-container rounded-lg font-semibold transition-all duration-200" href="#">
+<span class="material-symbols-outlined active-icon">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-label-md text-label-md">Appointments</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="font-label-md text-label-md">Messages</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">favorite</span>
+<span class="font-label-md text-label-md">Favorites</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto space-y-1 pt-4 border-t border-surface-container-highest">
+<button class="w-full mb-4 bg-primary text-on-primary py-3 px-4 rounded-xl font-label-md text-label-md hover:opacity-90 active:scale-95 transition-all">
+                    Book New Session
+                </button>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-md text-label-md">Help Center</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined text-error">logout</span>
+<span class="font-label-md text-label-md">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 lg:ml-64 p-4 md:p-margin-desktop bg-background pb-24 lg:pb-margin-desktop">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-center justify-between mb-stack-lg gap-4">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Welcome back, Sarah</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Here is a summary of your wellness journey today.</p>
+</div>
+<div class="hidden md:flex items-center gap-4">
+<div class="flex items-center gap-2 bg-secondary-container/30 px-3 py-2 rounded-full border border-secondary-container/50">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm text-on-secondary-container">Safe Space Verified</span>
+</div>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Next Appointment Card (Primary Action) -->
+<section class="md:col-span-8 lg:col-span-8 tonal-layer-1 p-6 rounded-xl relative overflow-hidden flex flex-col justify-between min-h-[220px]">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16"></div>
+<div>
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">event</span>
+<span class="font-label-md text-label-md text-primary uppercase tracking-wider">Upcoming Session</span>
+</div>
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div class="flex items-start gap-4">
+<div class="w-20 h-20 rounded-2xl overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A professional and warm portrait of a female psychologist in a bright, modern office. She is smiling gently at the camera, wearing professional business casual attire. The room behind her has soft light, a shelf with books, and a green plant, conveying a sense of serene trust and professional reliability. The style is high-end corporate minimalist with a warm wellness aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA07VujejeLA7uuBqwO12fTmBcDENpKG7XVh8ESEVTIdi_736yX2shES02iw4E6elVxvwcJ-lCJVbaDCk_1UMJKqy_PZXF1wVKLJCsyy1lyzubLbmAjblOSkw3Nbw0oiSuPUa1K6ZCrCZOhj7t6Ed7mGTlqz2qzJP878X8ldQu2F5LncB4Zn_NBEBB8cknT-bC4FC0g7LlryYBlC60mmCZzkucALYmcsIRCPHYvpUBrqeyQT4FrKZu8SA0yX1FF2wX9OnywxLlz7aQ"/>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Dr. Amina Rahmani</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Clinical Psychologist • CBT Specialist</p>
+<div class="mt-2 flex items-center gap-4">
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">calendar_month</span>
+<span class="font-label-sm text-label-sm">Tomorrow, Oct 24</span>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span class="font-label-sm text-label-sm">14:00 - 15:00</span>
+</div>
+</div>
+</div>
+</div>
+<button class="bg-primary text-on-primary px-8 py-3 rounded-xl font-label-md text-label-md hover:bg-primary-container transition-all flex items-center gap-2 group">
+                                Join Video Room
+                                <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">videocam</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Health Summary / Daily Pulse -->
+<section class="md:col-span-4 lg:col-span-4 tonal-layer-1 p-6 rounded-xl border border-outline-variant/30 flex flex-col">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-label-md text-label-md text-on-surface">Daily Pulse</h3>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">more_vert</span>
+</div>
+<div class="flex-1 flex flex-col justify-center text-center">
+<div class="mb-4">
+<span class="font-headline-lg text-headline-lg text-secondary">Mood: Calm</span>
+<div class="w-full bg-surface-container-high h-2 rounded-full mt-2 overflow-hidden">
+<div class="bg-secondary h-full" style="width: 75%;"></div>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant italic">"You've maintained consistency for 5 days. You're doing great, Sarah."</p>
+</div>
+<button class="mt-4 w-full py-2 border border-outline-variant rounded-lg font-label-sm text-label-sm text-on-surface-variant hover:bg-surface-container-low transition-colors">
+                        Log Daily Reflection
+                    </button>
+</section>
+<!-- Quick Book Section -->
+<section class="md:col-span-12 lg:col-span-8">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Reconnect with Care</h3>
+<a class="font-label-md text-label-md text-primary hover:underline" href="#">View All Favorites</a>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+<!-- Recents 1 -->
+<div class="tonal-layer-1 p-4 rounded-xl border border-outline-variant/20 hover:border-primary/30 transition-all cursor-pointer group">
+<div class="w-12 h-12 rounded-full overflow-hidden mb-3">
+<img class="w-full h-full object-cover" data-alt="A professional profile photo of a male psychologist with a kind expression. He is wearing a minimalist dark sweater, standing against a neutral studio background. The lighting is soft and focused, creating a sense of calm expertise and modern professional care. The image fits the serene trust brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3CxzUTYYv7gyEdrTB8Kmp0tqlY5AygHa2_c1clW_On-ZThE93ljXGYiAslQSoPnKMvzTT47KdI0Tkqtyh1vezB3zYiC62LNe6xn9dJoVfmwTJofCpg3SQG-dzPF-puRPM-ITSyzllXv9i4e6eEsDscUM--j1kD8nEyAcod3RrVwSgb5Qn24fS0Kls9ObvoiNA3rGOlrxcg4aWeHMBoA-aANXNNsG4jHFtT81788rqfaGlQAKFWVpEoOPYH2TeykhMtWpWzJsgSpw"/>
+</div>
+<h4 class="font-label-md text-label-md text-on-surface group-hover:text-primary">Dr. Karim Belhadj</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-3">Trauma Specialist</p>
+<button class="text-secondary font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">bolt</span>
+                                Quick Book
+                            </button>
+</div>
+<!-- Recents 2 -->
+<div class="tonal-layer-1 p-4 rounded-xl border border-outline-variant/20 hover:border-primary/30 transition-all cursor-pointer group">
+<div class="w-12 h-12 rounded-full overflow-hidden mb-3">
+<img class="w-full h-full object-cover" data-alt="A professional portrait of a senior female therapist with graying hair and a gentle smile. She is wearing a soft linen shirt in a neutral tone, seated in a minimalist office with warm ambient lighting. The background is slightly blurred with hints of greenery and bookshelves, conveying wisdom and quiet confidence." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDNPcEg9PWqrq32azqIWrcKm8jXtAUnUvhhsmgEdQutvTOuwFKJvTuhvWlh4qCApRKu9gDb46yurpS781E5pkIwvw7vf0TBjVP5ZlNoVt50Kl8YAPkr0hY6IRhfA8Yhkv1UIopt-SbK-cTnjv8uzZ40uJQPYFOvn-B5DZc88ovAda4a7JnB_ayt-TcuQmFthS3UrjRHV2_ABCZjjVZA83DmMZeyWkCAwHtC4tz5TTkuNH49OQvNglWB0qOp7zivFeHE6W4dbV6bkQ"/>
+</div>
+<h4 class="font-label-md text-label-md text-on-surface group-hover:text-primary">Dr. Selma Ouali</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-3">Family Therapy</p>
+<button class="text-secondary font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">bolt</span>
+                                Quick Book
+                            </button>
+</div>
+<!-- Recents 3 -->
+<div class="hidden md:block tonal-layer-1 p-4 rounded-xl border border-outline-variant/20 hover:border-primary/30 transition-all cursor-pointer group">
+<div class="w-12 h-12 rounded-full overflow-hidden mb-3">
+<img class="w-full h-full object-cover" data-alt="A modern professional portrait of a young male mental health professional with glasses, looking approachable and attentive. He is set against a soft teal background that reflects the PsyConnect brand colors. The composition is clean and focused, symbolizing a fresh, modern approach to therapy and mental health support." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLTjS5Ppp1If1w8AgkCL-vf7MNl-9roCe0FeSMRMOolNHssLo2Z6GrR1Hbupc3SLaXe229uW2urodVqZmcXAwjI8XuXJOMt0mvW9_IoX9a-ynsxvbaxLZj63YYe4wSQslX-XbD_gpSIHRdON8cTpphSpIFPrJB6528KLuIPjg6Zo6Nj5ev19nCxOtWqJkbo6A9s9m2uwVEB_A6Z9gmwOdQTCIktvGFSwpKL2gsG2xiJDUb3lLks_wPUW2n1KfwfTCM90exD9TK1l4"/>
+</div>
+<h4 class="font-label-md text-label-md text-on-surface group-hover:text-primary">Dr. Yassine Tazi</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-3">Anxiety &amp; OCD</p>
+<button class="text-secondary font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">bolt</span>
+                                Quick Book
+                            </button>
+</div>
+</div>
+</section>
+<!-- Recent Messages & Support -->
+<section class="md:col-span-12 lg:col-span-4 flex flex-col gap-gutter">
+<!-- Messages List -->
+<div class="tonal-layer-1 rounded-xl p-6 flex flex-col h-full border border-outline-variant/30">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-label-md text-label-md text-on-surface">Recent Messages</h3>
+<span class="bg-error text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold">2 NEW</span>
+</div>
+<div class="space-y-4">
+<div class="flex items-start gap-3 cursor-pointer p-2 -mx-2 hover:bg-surface-container-low rounded-lg transition-colors">
+<div class="w-10 h-10 rounded-full bg-primary-fixed-dim flex-shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-sm">person</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline">
+<p class="font-label-md text-label-md text-on-surface truncate">Dr. Amina Rahmani</p>
+<span class="font-label-sm text-[10px] text-on-surface-variant">10:45 AM</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">I've sent over the worksheets for tomorrow...</p>
+</div>
+</div>
+<div class="flex items-start gap-3 cursor-pointer p-2 -mx-2 hover:bg-surface-container-low rounded-lg transition-colors">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed-dim flex-shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-sm">support_agent</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline">
+<p class="font-label-md text-label-md text-on-surface truncate">PsyConnect Support</p>
+<span class="font-label-sm text-[10px] text-on-surface-variant">Yesterday</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Your appointment has been confirmed.</p>
+</div>
+</div>
+</div>
+<button class="mt-4 w-full font-label-sm text-label-sm text-primary py-2 hover:bg-primary/5 rounded-lg transition-colors">Go to Messenger</button>
+</div>
+<!-- Support Shortcut -->
+<div class="bg-tertiary-container/10 p-6 rounded-xl border border-tertiary-container/20 flex items-center justify-between group cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="p-3 bg-tertiary-container text-on-tertiary-container rounded-xl">
+<span class="material-symbols-outlined">help</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-tertiary-container">Need Assistance?</h4>
+<p class="font-body-sm text-body-sm text-tertiary">24/7 Support Desk</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-tertiary group-hover:translate-x-1 transition-transform">arrow_forward_ios</span>
+</div>
+</section>
+<!-- Notifications / Resource Feed -->
+<section class="md:col-span-12 lg:col-span-12">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-4">Resources for You</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="tonal-layer-1 rounded-xl p-4 border border-outline-variant/30 flex gap-4 hover:shadow-md transition-shadow cursor-pointer">
+<span class="material-symbols-outlined text-primary p-2 bg-primary/5 rounded-lg h-fit">auto_stories</span>
+<div>
+<h5 class="font-label-md text-label-md text-on-surface">Managing Anxiety</h5>
+<p class="font-label-sm text-label-sm text-on-surface-variant">5 min read • Article</p>
+</div>
+</div>
+<div class="tonal-layer-1 rounded-xl p-4 border border-outline-variant/30 flex gap-4 hover:shadow-md transition-shadow cursor-pointer">
+<span class="material-symbols-outlined text-secondary p-2 bg-secondary/5 rounded-lg h-fit">self_improvement</span>
+<div>
+<h5 class="font-label-md text-label-md text-on-surface">Guided Meditation</h5>
+<p class="font-label-sm text-label-sm text-on-surface-variant">10 min • Audio</p>
+</div>
+</div>
+<div class="tonal-layer-1 rounded-xl p-4 border border-outline-variant/30 flex gap-4 hover:shadow-md transition-shadow cursor-pointer">
+<span class="material-symbols-outlined text-tertiary p-2 bg-tertiary/5 rounded-lg h-fit">edit_note</span>
+<div>
+<h5 class="font-label-md text-label-md text-on-surface">Sleep Journal</h5>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Template • Tool</p>
+</div>
+</div>
+<div class="tonal-layer-1 rounded-xl p-4 border border-outline-variant/30 flex gap-4 hover:shadow-md transition-shadow cursor-pointer">
+<span class="material-symbols-outlined text-primary p-2 bg-primary/5 rounded-lg h-fit">notifications</span>
+<div>
+<h5 class="font-label-md text-label-md text-on-surface">Weekly Wrap-up</h5>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Ready to view</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+<!-- Bottom Navigation (Mobile) -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 px-4 pb-safe bg-surface/95 backdrop-blur-sm border-t border-surface-container-highest shadow-lg">
+<a class="flex flex-col items-center justify-center text-primary font-bold" href="#">
+<span class="material-symbols-outlined active-icon">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">event</span>
+<span class="font-label-sm text-label-sm">Sessions</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">mail</span>
+<span class="font-label-sm text-label-sm">Chat</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">menu</span>
+<span class="font-label-sm text-label-sm">Menu</span>
+</a>
+</nav>
+<!-- Micro-interaction Script -->
+<script>
+        document.querySelectorAll('button, a').forEach(el => {
+            el.addEventListener('click', function(e) {
+                // Subtle ripple effect or scale feedback could go here
+                console.log('Interaction captured on:', el.textContent.trim());
+            });
+        });
+    </script>
+<script src="/raw/_nav.js"></script>
+</body></html>

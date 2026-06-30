@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PsyConnect Onboarding | Document Upload</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#1e4d52",
+                    "secondary-container": "#c3eba9",
+                    "surface": "#f7faf8",
+                    "on-secondary-fixed": "#072100",
+                    "primary-fixed": "#d5e3ff",
+                    "outline": "#737780",
+                    "on-primary": "#ffffff",
+                    "background": "#f7faf8",
+                    "tertiary-fixed": "#bbebf1",
+                    "on-primary-container": "#edf1ff",
+                    "outline-variant": "#c3c6d1",
+                    "tertiary": "#2e5c61",
+                    "surface-container": "#ebefed",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed-dim": "#aad292",
+                    "primary-container": "#4a6fa5",
+                    "on-background": "#181c1b",
+                    "on-error": "#ffffff",
+                    "inverse-surface": "#2d3130",
+                    "surface-bright": "#f7faf8",
+                    "error-container": "#ffdad6",
+                    "surface-container-high": "#e6e9e7",
+                    "primary": "#30568b",
+                    "primary-fixed-dim": "#a7c8ff",
+                    "inverse-on-surface": "#eef1ef",
+                    "surface-container-low": "#f1f4f2",
+                    "secondary-fixed": "#c6eeac",
+                    "inverse-primary": "#a7c8ff",
+                    "secondary": "#456732",
+                    "on-tertiary-fixed": "#002023",
+                    "surface-container-highest": "#e0e3e1",
+                    "on-surface": "#181c1b",
+                    "surface-tint": "#395f94",
+                    "on-primary-fixed": "#001c3b",
+                    "on-secondary-container": "#496c36",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed-variant": "#1e477b",
+                    "on-tertiary-container": "#ccfaff",
+                    "surface-dim": "#d7dbd9",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface-variant": "#43474f",
+                    "surface-variant": "#e0e3e1",
+                    "error": "#ba1a1a",
+                    "tertiary-container": "#48757a",
+                    "tertiary-fixed-dim": "#a0cfd4",
+                    "on-secondary-fixed-variant": "#2e4f1d"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-md": "16px",
+                    "container-max": "1200px",
+                    "gutter": "24px",
+                    "stack-sm": "8px",
+                    "stack-lg": "32px",
+                    "margin-desktop": "40px",
+                    "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.03em", "fontWeight": "500"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #f7faf8;
+            font-family: 'Inter', sans-serif;
+            color: #181c1b;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .drop-zone-active {
+            border-color: #30568b;
+            background-color: rgba(48, 86, 139, 0.04);
+        }
+        .custom-shadow {
+            box-shadow: 0px 4px 20px rgba(74, 111, 165, 0.06);
+        }
+    </style>
+</head>
+<body class="bg-surface" data-screen-id="10">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-outline flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 w-full">
+<div class="flex items-center gap-4">
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">PsyConnect</span>
+</div>
+<div class="flex items-center gap-stack-md">
+<div class="hidden md:flex gap-stack-lg mr-8">
+<span class="font-label-md text-label-md text-on-surface-variant cursor-pointer hover:bg-surface-container-low transition-colors px-2 py-1 rounded">Support</span>
+<span class="font-label-md text-label-md text-on-surface-variant cursor-pointer hover:bg-surface-container-low transition-colors px-2 py-1 rounded">FAQ</span>
+</div>
+<span class="material-symbols-outlined text-primary cursor-pointer active:opacity-80 transition-opacity">help</span>
+<span class="material-symbols-outlined text-primary cursor-pointer active:opacity-80 transition-opacity">notifications</span>
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a middle-aged Algerian psychologist with a warm, approachable expression. The person has dark hair and is wearing a business-casual navy blazer. The lighting is soft and studio-quality, creating a sense of professional reliability and trust. The background is a clean, minimalist off-white office setting with a hint of a bookshelf." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsoStKcZxyMj5m2dSVvP6QALT1XAWKQ9SOM4pZfip47CcxcsxK-D2ShHFG9YTWyMrBrozNjFbwtzWNAY5CQ04FYAqqHN6ZK8L4RC3cFRJZn_ooTwPv4_Pob7oSVGnaGEB3XhN07UzlMzavAdKo_Iq8fy9-AwpSjMfvNzhl331zmUoaHVruupfWiwBGZm0WeNcarUiEiGvHRBXk0cETGiUcQU6s3IMhT9UTJyAfDbn1np2QDY8E6hkung8hElxrIsXBs6xGoJISFac"/>
+</div>
+</div>
+</header>
+<div class="flex min-h-screen pt-16">
+<!-- SideNavBar (Desktop Only) -->
+<aside class="h-[calc(100vh-64px)] w-64 hidden md:flex flex-col bg-surface-container-low dark:bg-surface-container-highest border-r border-outline-variant dark:border-outline flex flex-col gap-stack-sm p-gutter sticky top-16">
+<div class="mb-stack-lg">
+<h2 class="font-headline-sm text-headline-sm font-bold text-primary">Onboarding</h2>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Application Progress</p>
+</div>
+<nav class="flex-1 flex flex-col gap-1">
+<div class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container-high transition-all cursor-pointer rounded-lg font-label-md text-label-md">
+<span class="material-symbols-outlined">person</span>
+<span>Personal Info</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container-high transition-all cursor-pointer rounded-lg font-label-md text-label-md">
+<span class="material-symbols-outlined">verified</span>
+<span>Credentials</span>
+</div>
+<div class="flex items-center gap-3 p-3 bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-lg font-bold font-label-md text-label-md">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">upload_file</span>
+<span>Documents</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container-high transition-all cursor-pointer rounded-lg font-label-md text-label-md">
+<span class="material-symbols-outlined">calendar_today</span>
+<span>Availability</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container-high transition-all cursor-pointer rounded-lg font-label-md text-label-md">
+<span class="material-symbols-outlined">pending_actions</span>
+<span>Review Status</span>
+</div>
+</nav>
+<button class="mt-auto w-full py-2 px-4 border border-primary text-primary font-label-md text-label-md rounded-lg hover:bg-primary-container hover:text-on-primary-container transition-all scale-98 active:scale-95">
+                Save Draft
+            </button>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 px-margin-mobile md:px-margin-desktop py-stack-lg max-w-4xl mx-auto w-full">
+<!-- Progress Stepper (Visual Only for context) -->
+<div class="mb-stack-lg overflow-hidden">
+<div class="flex items-center justify-between mb-4">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider">Step 3 of 4</span>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Document Verification</h1>
+</div>
+<div class="hidden md:flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-secondary text-on-secondary flex items-center justify-center font-bold">3</div>
+<div class="h-[2px] w-12 bg-outline-variant"></div>
+<div class="w-8 h-8 rounded-full border-2 border-outline-variant text-outline-variant flex items-center justify-center font-bold">4</div>
+</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-stack-lg max-w-2xl">
+                    To maintain the integrity of our clinical network, we require a clear copy of your National Identification and University Diploma. Documents are encrypted and handled with clinical-grade confidentiality.
+                </p>
+</div>
+<!-- Bento Grid Content -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Upload Column 1 -->
+<div class="md:col-span-2 space-y-6">
+<!-- National ID Upload Card -->
+<section class="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 custom-shadow">
+<div class="flex items-start justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary-container/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined">badge</span>
+</div>
+<div>
+<h3 class="font-label-md text-label-md text-on-surface">National ID Card</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Front and back view or Passport</p>
+</div>
+</div>
+<!-- Success State Example -->
+<div class="flex items-center gap-1 text-secondary font-label-sm text-label-sm hidden" id="status-id">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+<span>Uploaded</span>
+</div>
+</div>
+<!-- Drag & Drop Area -->
+<div class="border-2 border-dashed border-outline-variant rounded-xl p-8 flex flex-col items-center justify-center cursor-pointer hover:border-primary transition-colors group" id="drop-id">
+<span class="material-symbols-outlined text-4xl text-outline-variant group-hover:text-primary mb-2">cloud_upload</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-center">
+<span class="text-primary font-bold">Click to upload</span> or drag and drop<br/>
+                                PDF, JPG or PNG (max. 10MB)
+                            </p>
+<input class="hidden" id="file-id" type="file"/>
+</div>
+<!-- File Preview Placeholder (Hidden until upload) -->
+<div class="mt-4 p-3 bg-surface-container rounded-lg flex items-center justify-between border border-outline-variant">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">description</span>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface font-medium">national_id_front.jpg</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">1.2 MB</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-error cursor-pointer">delete</span>
+</div>
+</div>
+</section>
+<!-- University Diploma Upload Card -->
+<section class="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 custom-shadow">
+<div class="flex items-start justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary-container/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined">school</span>
+</div>
+<div>
+<h3 class="font-label-md text-label-md text-on-surface">University Diploma</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Highest academic degree achieved</p>
+</div>
+</div>
+</div>
+<div class="border-2 border-dashed border-outline-variant rounded-xl p-8 flex flex-col items-center justify-center cursor-pointer hover:border-primary transition-colors group" id="drop-diploma">
+<span class="material-symbols-outlined text-4xl text-outline-variant group-hover:text-primary mb-2">cloud_upload</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-center">
+<span class="text-primary font-bold">Click to upload</span> or drag and drop<br/>
+                                PDF, JPG or PNG (max. 10MB)
+                            </p>
+<input class="hidden" id="file-diploma" type="file"/>
+</div>
+</section>
+</div>
+<!-- Info Column 2 -->
+<div class="space-y-6">
+<!-- Privacy & Security Note -->
+<section class="bg-tertiary-container text-on-tertiary-container rounded-xl p-6 relative overflow-hidden">
+<!-- Abstract pattern background -->
+<div class="absolute top-0 right-0 w-32 h-32 opacity-10">
+<span class="material-symbols-outlined text-9xl">lock</span>
+</div>
+<div class="relative z-10">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-[20px]">verified_user</span>
+<h3 class="font-label-md text-label-md uppercase tracking-wide">Privacy &amp; Security</h3>
+</div>
+<p class="font-body-sm text-body-sm leading-relaxed mb-4">
+                                Your professional documents are encrypted using AES-256 standards. Only authorized medical review staff have access to these files during the verification phase.
+                            </p>
+<ul class="space-y-2 font-label-sm text-label-sm">
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[16px] mt-0.5">check</span>
+<span>GDPR &amp; Algerian Data Protection compliant</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[16px] mt-0.5">check</span>
+<span>Encrypted cloud storage</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[16px] mt-0.5">check</span>
+<span>Automatic deletion after rejection</span>
+</li>
+</ul>
+</div>
+</section>
+<!-- Helpful Tips -->
+<section class="bg-surface-container-low rounded-xl p-6 border border-outline-variant/30">
+<h3 class="font-label-md text-label-md text-on-surface mb-4">Verification Tips</h3>
+<div class="space-y-4">
+<div class="flex gap-4">
+<div class="w-16 h-16 bg-surface-container-highest rounded-lg overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="A macro close-up photo demonstrating a properly framed identification document on a dark wooden surface. The focus is sharp on the text and photo of the ID, with soft natural side lighting from a window to prevent glare. The edges of the document are clearly visible within the frame. Minimalist and professional instructional style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqVYa_Td4UXipzNBcy-mzGLp4-2nuXBoJsACogdqWaktl3cEtjxFBatSvVx_30-HNyuM2Kra07e-n_WCNnSxHa24rCLpx3zFJlD6rByPjO7HrJC6DOOKJq7oN_aiJJPUELY_hnmunqLpteH-i8m-AhMhVmHt5PaxJuCtfVFX2fs6gDDJFTCfIoaZZphicED1vYVvdpuBQLLvl3wh7WIeZhojq8qE0yJFLco2mqnRNwtwpEQgXHVKHuo_2ac3qmc9mjbEJAjpoUIdU"/>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Ensure the document is well-lit and all text is legible without glare.</p>
+</div>
+<div class="flex gap-4">
+<div class="w-16 h-16 bg-surface-container-highest rounded-lg overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="A clean, minimalist digital illustration of a diploma with a wax seal, framed centrally with ample white space. The style is professional and corporate, using a palette of muted blues and greys. The lighting is even and flat, emphasizing clarity and official verification." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsdKmvuDF_bH1k3YGhJZUpQvWAZbz2PB986R-m8pqeMyFmo4sugaUWLEEfXyuK1bJBZ-ciRuZA5epp9i_sZ8dgCCEjJd_xwQxg93eOwzqcq5m5qo6an26H84AaHSlUUojhSYwKG1aReGnYcesS_aBTemQZdiGDLGcSSM49Xmwhtg-3E7IF6vFCWBDU9OTZwYo1st34IiSx7hgffwVtMHGpjdhtMz0sUk2v73IOiHNyK-OOLYlIj7SlSarLoo0DlKsP8vvUkYOsE1k"/>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Scanning your diploma as a PDF provides the highest verification speed.</p>
+</div>
+</div>
+</section>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="mt-12 flex flex-col md:flex-row justify-between items-center gap-4 py-8 border-t border-outline-variant">
+<button class="w-full md:w-auto px-8 py-3 border border-secondary text-secondary font-label-md text-label-md rounded-full hover:bg-secondary-container transition-all order-2 md:order-1">
+                    Previous Step
+                </button>
+<div class="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto order-1 md:order-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant hidden md:block italic">All changes saved as draft</span>
+<button class="w-full md:w-auto px-10 py-3 bg-primary text-on-primary font-label-md text-label-md rounded-full hover:opacity-90 shadow-lg shadow-primary/10 transition-all">
+                        Continue to Step 4
+                    </button>
+</div>
+</div>
+</main>
+</div>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center py-2 px-margin-mobile bg-surface dark:bg-surface-dim border-t border-outline-variant dark:border-outline md:hidden z-50 shadow-lg">
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 cursor-pointer transition-all">
+<span class="material-symbols-outlined">edit</span>
+<span class="font-label-sm text-label-sm">Step 1</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 cursor-pointer transition-all">
+<span class="material-symbols-outlined">school</span>
+<span class="font-label-sm text-label-sm">Step 2</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-3 py-1 cursor-pointer transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">description</span>
+<span class="font-label-sm text-label-sm">Step 3</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 cursor-pointer transition-all">
+<span class="material-symbols-outlined">hourglass_empty</span>
+<span class="font-label-sm text-label-sm">Status</span>
+</div>
+</nav>
+<script>
+        // Micro-interaction for Drag & Drop areas
+        const drops = ['drop-id', 'drop-diploma'];
+        
+        drops.forEach(id => {
+            const el = document.getElementById(id);
+            if(el) {
+                el.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    el.classList.add('drop-zone-active');
+                });
+                
+                el.addEventListener('dragleave', () => {
+                    el.classList.remove('drop-zone-active');
+                });
+                
+                el.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    el.classList.remove('drop-zone-active');
+                    // In a real app, logic to handle files would go here
+                    alert('File received. Starting secure encryption process...');
+                });
+                
+                el.addEventListener('click', () => {
+                    const input = el.querySelector('input');
+                    if(input) input.click();
+                });
+            }
+        });
+
+        // Simple toggle for side nav on small screens if we wanted a drawer
+        // But the design mandates hiding it md:hidden
+    </script>
+<script src="/raw/_nav.js"></script>
+</body></html>

@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Find a Psychologist | PsyConnect</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-card {
+            background: rgba(253, 253, 253, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid #E8EDE9;
+        }
+        .custom-shadow {
+            box-shadow: 0px 4px 20px rgba(74, 111, 165, 0.06);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F4F7F5;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "error": "#ba1a1a",
+                      "tertiary-container": "#48757a",
+                      "outline-variant": "#c3c6d1",
+                      "error-container": "#ffdad6",
+                      "on-primary-container": "#edf1ff",
+                      "tertiary-fixed-dim": "#a0cfd4",
+                      "on-secondary-fixed": "#072100",
+                      "inverse-surface": "#2d3130",
+                      "on-tertiary-fixed": "#002023",
+                      "on-background": "#181c1b",
+                      "primary-fixed-dim": "#a7c8ff",
+                      "on-secondary-fixed-variant": "#2e4f1d",
+                      "inverse-on-surface": "#eef1ef",
+                      "surface-tint": "#395f94",
+                      "secondary-fixed-dim": "#aad292",
+                      "on-tertiary-container": "#ccfaff",
+                      "background": "#f7faf8",
+                      "surface-container-lowest": "#ffffff",
+                      "outline": "#737780",
+                      "primary": "#30568b",
+                      "on-primary-fixed": "#001c3b",
+                      "surface-bright": "#f7faf8",
+                      "surface-container-low": "#f1f4f2",
+                      "on-secondary-container": "#496c36",
+                      "surface-container-highest": "#e0e3e1",
+                      "surface-container-high": "#e6e9e7",
+                      "on-surface-variant": "#43474f",
+                      "on-primary-fixed-variant": "#1e477b",
+                      "surface-variant": "#e0e3e1",
+                      "on-error": "#ffffff",
+                      "on-tertiary": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "on-surface": "#181c1b",
+                      "secondary": "#456732",
+                      "on-tertiary-fixed-variant": "#1e4d52",
+                      "surface": "#f7faf8",
+                      "secondary-container": "#c3eba9",
+                      "on-secondary": "#ffffff",
+                      "tertiary-fixed": "#bbebf1",
+                      "inverse-primary": "#a7c8ff",
+                      "on-primary": "#ffffff",
+                      "surface-container": "#ebefed",
+                      "secondary-fixed": "#c6eeac",
+                      "tertiary": "#2e5c61",
+                      "surface-dim": "#d7dbd9",
+                      "primary-container": "#4a6fa5",
+                      "primary-fixed": "#d5e3ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-md": "16px",
+                      "margin-mobile": "16px",
+                      "container-max": "1200px",
+                      "stack-lg": "32px",
+                      "margin-desktop": "40px",
+                      "stack-sm": "8px",
+                      "gutter": "24px"
+              },
+              "fontFamily": {
+                      "label-sm": ["Inter"],
+                      "label-md": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "headline-sm": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "body-md": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "headline-lg-mobile": ["Inter"]
+              },
+              "fontSize": {
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.03em", "fontWeight": "500"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "500"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+              }
+            },
+          }
+        }
+    </script>
+</head>
+<body class="text-on-surface" data-screen-id="2">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-surface/90 backdrop-blur-md border-b border-surface-container-highest">
+<div class="flex items-center gap-8">
+<span class="font-headline-md text-headline-md font-semibold text-primary">PsyConnect</span>
+<div class="hidden md:flex gap-6">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">How it Works</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">FAQ</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">About</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="font-label-md text-label-md text-on-surface-variant cursor-pointer">Login</button>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-full font-label-md text-label-md hover:bg-primary-container transition-all active:scale-95">Register</button>
+<div class="flex gap-2 ml-4">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer">account_circle</span>
+</div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="pt-24 pb-20 px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 mb-8 text-on-surface-variant font-label-sm text-label-sm">
+<a class="hover:text-primary" href="#">Home</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-primary font-bold">Find a Psychologist</span>
+</nav>
+<!-- Page Header & Hero Search -->
+<section class="mb-12">
+<h1 class="font-headline-lg text-headline-lg text-primary mb-6">Connect with a Professional</h1>
+<div class="bg-surface-container-lowest p-6 rounded-xl custom-shadow border border-surface-container-highest">
+<div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-4">
+<!-- Global Search -->
+<div class="md:col-span-2 lg:col-span-2">
+<label class="block font-label-sm text-label-sm mb-2 text-on-surface-variant">Specialty or Name</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full pl-10 pr-4 py-3 rounded-lg border-outline-variant bg-surface-container-low focus:ring-2 focus:ring-primary/20 focus:border-primary border transition-all text-body-md font-body-md" placeholder="e.g. Anxiety, Dr. Malek" type="text"/>
+</div>
+</div>
+<!-- Languages -->
+<div>
+<label class="block font-label-sm text-label-sm mb-2 text-on-surface-variant">Language</label>
+<select class="w-full py-3 rounded-lg border-outline-variant bg-surface-container-low border text-body-md font-body-md">
+<option>All Languages</option>
+<option>Arabic</option>
+<option>French</option>
+<option>Tamazight</option>
+</select>
+</div>
+<!-- Availability -->
+<div>
+<label class="block font-label-sm text-label-sm mb-2 text-on-surface-variant">Availability</label>
+<select class="w-full py-3 rounded-lg border-outline-variant bg-surface-container-low border text-body-md font-body-md">
+<option>Anytime</option>
+<option>Today</option>
+<option>This Week</option>
+<option>Evening/Weekend</option>
+</select>
+</div>
+<!-- Price Range -->
+<div>
+<label class="block font-label-sm text-label-sm mb-2 text-on-surface-variant">Max Price</label>
+<select class="w-full py-3 rounded-lg border-outline-variant bg-surface-container-low border text-body-md font-body-md">
+<option>Any Price</option>
+<option>&lt; 3000 DZD</option>
+<option>&lt; 5000 DZD</option>
+<option>&lt; 8000 DZD</option>
+</select>
+</div>
+<!-- Session Type -->
+<div>
+<label class="block font-label-sm text-label-sm mb-2 text-on-surface-variant">Session Type</label>
+<select class="w-full py-3 rounded-lg border-outline-variant bg-surface-container-low border text-body-md font-body-md">
+<option>All Types</option>
+<option>Video Call</option>
+<option>Audio Call</option>
+<option>In-Person</option>
+</select>
+</div>
+</div>
+</div>
+</section>
+<div class="flex flex-col lg:flex-row gap-8">
+<!-- Sidebar Filters -->
+<aside class="w-full lg:w-72 shrink-0">
+<div class="bg-surface-container-low p-6 rounded-xl sticky top-24 border border-surface-container-highest">
+<h3 class="font-headline-sm text-headline-sm text-primary mb-6">Quick Filters</h3>
+<div class="space-y-6">
+<div>
+<p class="font-label-md text-label-md mb-3">Popular Specialties</p>
+<div class="flex flex-wrap gap-2">
+<span class="bg-secondary/10 text-secondary px-3 py-1 rounded-full text-label-sm font-label-sm border border-secondary/20 cursor-pointer hover:bg-secondary/20">Anxiety</span>
+<span class="bg-secondary/10 text-secondary px-3 py-1 rounded-full text-label-sm font-label-sm border border-secondary/20 cursor-pointer hover:bg-secondary/20">Depression</span>
+<span class="bg-secondary/10 text-secondary px-3 py-1 rounded-full text-label-sm font-label-sm border border-secondary/20 cursor-pointer hover:bg-secondary/20">Trauma</span>
+<span class="bg-secondary/10 text-secondary px-3 py-1 rounded-full text-label-sm font-label-sm border border-secondary/20 cursor-pointer hover:bg-secondary/20">CBT</span>
+<span class="bg-secondary/10 text-secondary px-3 py-1 rounded-full text-label-sm font-label-sm border border-secondary/20 cursor-pointer hover:bg-secondary/20">Family</span>
+</div>
+</div>
+<div class="pt-6 border-t border-surface-container-highest">
+<div class="bg-primary/5 p-4 rounded-lg border border-primary/10">
+<span class="material-symbols-outlined text-primary mb-2">lightbulb</span>
+<p class="font-label-md text-label-md text-primary mb-1">Help me choose</p>
+<p class="text-body-sm font-body-sm text-on-surface-variant mb-4">Not sure which specialist fits your needs? Take our 2-minute matching quiz.</p>
+<button class="w-full py-2 bg-primary text-on-primary rounded-lg font-label-sm text-label-sm hover:opacity-90">Start Quiz</button>
+</div>
+</div>
+<div class="pt-6 border-t border-surface-container-highest">
+<p class="font-label-md text-label-md mb-3">Verified Status</p>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="rounded text-primary focus:ring-primary border-outline-variant" type="checkbox"/>
+<span class="text-body-sm font-body-sm text-on-surface-variant group-hover:text-primary transition-colors">Verified Doctors Only</span>
+</label>
+</div>
+</div>
+</div>
+</aside>
+<!-- Psychologist Grid -->
+<section class="flex-1">
+<div class="flex justify-between items-center mb-6">
+<p class="text-on-surface-variant font-body-md text-body-md">Showing <span class="font-bold text-on-surface">124 Professionals</span> in Algiers</p>
+<div class="flex items-center gap-2">
+<span class="text-body-sm font-body-sm text-on-surface-variant">Sort by:</span>
+<select class="bg-transparent border-none font-label-md text-label-md text-primary focus:ring-0 cursor-pointer">
+<option>Recommended</option>
+<option>Highest Rating</option>
+<option>Price: Low to High</option>
+<option>Experience</option>
+</select>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6">
+<!-- Psychologist Card 1 -->
+<div class="bg-surface-container-lowest border border-surface-container-highest rounded-xl p-6 flex flex-col gap-4 custom-shadow hover:border-primary/30 transition-all group">
+<div class="flex gap-4">
+<div class="relative">
+<img class="w-24 h-24 rounded-xl object-cover shrink-0" data-alt="A professional headshot of a middle-aged female psychologist with a warm, empathetic smile. She has dark hair and is wearing professional business casual attire. The background is a soft-focus minimalist office with natural morning light, maintaining a modern light-mode clinical aesthetic with cool blue and sage green tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5DDAMurarqHx_Cp0wMVQUo9IFE-_1FqFDNdqev276G68s_JIxWsBgvuKMT4x3Vp4WYi23Z1Vi8RNY_l8jxmCtQ-5-e5bJCk4Pv-NLPX86W6R2hvo-vDOYjEmMtUcsp_Ev5Frv1PHbaEaRCawQdOeHvYH3xLdOWo_p2n55WwGretXdS3vjwTbHysbD4F16oWNucp1T7puah9OVY3bymc8IAxA4KCy6LiFHjNCLfLwJmBf3bXn-uyZ6ZIo2vMPufPAyTM-P1j__IS0"/>
+<div class="absolute -bottom-1 -right-1 bg-white p-0.5 rounded-full">
+<span class="material-symbols-outlined text-secondary text-[20px]" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+</div>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">Dr. Sarah Benali</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Clinical Psychologist • 12 years exp.</p>
+</div>
+<div class="flex items-center gap-1 bg-surface-container-low px-2 py-1 rounded">
+<span class="material-symbols-outlined text-yellow-500 text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md text-label-md">4.9</span>
+<span class="text-body-sm font-body-sm text-on-surface-variant">(128)</span>
+</div>
+</div>
+<div class="mt-3 flex flex-wrap gap-2">
+<span class="px-2 py-0.5 bg-secondary/10 text-secondary text-[11px] font-bold rounded uppercase tracking-wider">Anxiety</span>
+<span class="px-2 py-0.5 bg-secondary/10 text-secondary text-[11px] font-bold rounded uppercase tracking-wider">CBT Specialist</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between py-3 border-y border-surface-container-highest">
+<div class="flex gap-4">
+<div class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">videocam</span>
+<span class="text-body-sm font-body-sm">Video</span>
+</div>
+<div class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">mic</span>
+<span class="text-body-sm font-body-sm">Audio</span>
+</div>
+</div>
+<div class="text-right">
+<p class="text-body-sm font-body-sm text-on-surface-variant">Per session</p>
+<p class="font-headline-sm text-headline-sm text-primary">4,500 DZD</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-3 mt-2">
+<button class="py-2.5 border border-secondary text-secondary rounded-lg font-label-md text-label-md hover:bg-secondary/5 transition-colors active:scale-95">Quick Book</button>
+<button class="py-2.5 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-primary-container transition-all active:scale-95 shadow-sm">View Profile</button>
+</div>
+</div>
+<!-- Psychologist Card 2 -->
+<div class="bg-surface-container-lowest border border-surface-container-highest rounded-xl p-6 flex flex-col gap-4 custom-shadow hover:border-primary/30 transition-all group">
+<div class="flex gap-4">
+<div class="relative">
+<img class="w-24 h-24 rounded-xl object-cover shrink-0" data-alt="A professional portrait of a male psychologist in his late 40s, exuding confidence and calm. He is wearing a grey blazer and glasses. The lighting is soft and professional, set against a clean white and slate blue background. The overall aesthetic is corporate but accessible, using a palette of professional blues and warm greys." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5G2dEz0aGN3MvnEFaD-WUXC7qmFE5awyX4Ev9Twx_wYG3ultweZ5d4OPk0Yz2fupcAsyOSMj83r7ecJcK7gOJw_cNUz8zNzlZmJfdsi1_8V3lvC8CTdvHCx7J7OiFMsFNfscCLG3PJQmCIsnuSdMr33VAsL7XWDwj_rUyM-iNkAUFz52W2Bh8lpgsKBaWsyZjIitb7G7mgE7NcOVRcGEtmuInv9HY1iSvYwZqF1ymebsVP79CJzPQVmMF8y4LePesSPAbFSCYm80"/>
+<div class="absolute -bottom-1 -right-1 bg-white p-0.5 rounded-full">
+<span class="material-symbols-outlined text-secondary text-[20px]" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+</div>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">Dr. Karim Mansouri</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Family Therapist • 15 years exp.</p>
+</div>
+<div class="flex items-center gap-1 bg-surface-container-low px-2 py-1 rounded">
+<span class="material-symbols-outlined text-yellow-500 text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md text-label-md">4.8</span>
+<span class="text-body-sm font-body-sm text-on-surface-variant">(94)</span>
+</div>
+</div>
+<div class="mt-3 flex flex-wrap gap-2">
+<span class="px-2 py-0.5 bg-secondary/10 text-secondary text-[11px] font-bold rounded uppercase tracking-wider">Couples Therapy</span>
+<span class="px-2 py-0.5 bg-secondary/10 text-secondary text-[11px] font-bold rounded uppercase tracking-wider">Child Psych</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between py-3 border-y border-surface-container-highest">
+<div class="flex gap-4">
+<div class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">chat_bubble</span>
+<span class="text-body-sm font-body-sm">Chat</span>
+</div>
+<div class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">meeting_room</span>
+<span class="text-body-sm font-body-sm">Office</span>
+</div>
+</div>
+<div class="text-right">
+<p class="text-body-sm font-body-sm text-on-surface-variant">Per session</p>
+<p class="font-headline-sm text-headline-sm text-primary">6,000 DZD</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-3 mt-2">
+<button class="py-2.5 border border-secondary text-secondary rounded-lg font-label-md text-label-md hover:bg-secondary/5 transition-colors active:scale-95">Quick Book</button>
+<button class="py-2.5 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-primary-container transition-all active:scale-95 shadow-sm">View Profile</button>
+</div>
+</div>
+<!-- Additional Mock Cards would follow here -->
+<div class="bg-surface-container-lowest border border-surface-container-highest rounded-xl p-6 flex flex-col gap-4 custom-shadow hover:border-primary/30 transition-all group opacity-60">
+<div class="flex gap-4">
+<div class="w-24 h-24 rounded-xl bg-surface-container-high animate-pulse"></div>
+<div class="flex-1 space-y-3">
+<div class="h-6 w-3/4 bg-surface-container-high rounded animate-pulse"></div>
+<div class="h-4 w-1/2 bg-surface-container-high rounded animate-pulse"></div>
+<div class="flex gap-2">
+<div class="h-4 w-16 bg-surface-container-high rounded animate-pulse"></div>
+<div class="h-4 w-16 bg-surface-container-high rounded animate-pulse"></div>
+</div>
+</div>
+</div>
+<div class="h-20 bg-surface-container-high rounded-lg animate-pulse"></div>
+</div>
+<div class="bg-surface-container-lowest border border-surface-container-highest rounded-xl p-6 flex flex-col gap-4 custom-shadow hover:border-primary/30 transition-all group opacity-60">
+<div class="flex gap-4">
+<div class="w-24 h-24 rounded-xl bg-surface-container-high animate-pulse"></div>
+<div class="flex-1 space-y-3">
+<div class="h-6 w-3/4 bg-surface-container-high rounded animate-pulse"></div>
+<div class="h-4 w-1/2 bg-surface-container-high rounded animate-pulse"></div>
+<div class="flex gap-2">
+<div class="h-4 w-16 bg-surface-container-high rounded animate-pulse"></div>
+<div class="h-4 w-16 bg-surface-container-high rounded animate-pulse"></div>
+</div>
+</div>
+</div>
+<div class="h-20 bg-surface-container-high rounded-lg animate-pulse"></div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="mt-12 flex justify-center items-center gap-4">
+<button class="w-10 h-10 flex items-center justify-center rounded-full border border-surface-container-highest hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<div class="flex gap-2">
+<button class="w-10 h-10 rounded-full bg-primary text-on-primary font-label-md text-label-md">1</button>
+<button class="w-10 h-10 rounded-full hover:bg-surface-container-low font-label-md text-label-md">2</button>
+<button class="w-10 h-10 rounded-full hover:bg-surface-container-low font-label-md text-label-md">3</button>
+<span class="w-10 h-10 flex items-center justify-center text-on-surface-variant">...</span>
+<button class="w-10 h-10 rounded-full hover:bg-surface-container-low font-label-md text-label-md">12</button>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full border border-surface-container-highest hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-stack-lg px-margin-desktop bg-surface-container-lowest border-t border-surface-container-highest flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex flex-col gap-2">
+<span class="font-headline-sm text-headline-sm text-primary">PsyConnect</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">© 2024 PsyConnect. Secured for Algeria.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-x-8 gap-y-4">
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Contact Us</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Clinician Portal</a>
+</div>
+<div class="flex gap-4">
+<div class="w-8 h-8 rounded-full bg-surface-container-low flex items-center justify-center text-on-surface-variant cursor-pointer hover:bg-primary/10 hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[18px]">public</span>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-container-low flex items-center justify-center text-on-surface-variant cursor-pointer hover:bg-primary/10 hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[18px]">share</span>
+</div>
+</div>
+</footer>
+<!-- Bottom Navigation (Mobile Only) -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 px-4 pb-safe bg-surface/95 backdrop-blur-sm border-t border-surface-container-highest shadow-lg">
+<div class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-[10px]">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-primary font-bold">
+<span class="material-symbols-outlined">event</span>
+<span class="font-label-sm text-[10px]">Sessions</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">mail</span>
+<span class="font-label-sm text-[10px]">Chat</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">menu</span>
+<span class="font-label-sm text-[10px]">Menu</span>
+</div>
+</nav>
+<script>
+        // Simple filter interactions
+        document.querySelectorAll('select').forEach(select => {
+            select.addEventListener('change', (e) => {
+                console.log('Filtering by:', e.target.value);
+                // Potential loading state trigger
+            });
+        });
+        
+        // Chip selection simulation
+        document.querySelectorAll('.bg-secondary\\/10').forEach(chip => {
+            chip.addEventListener('click', () => {
+                chip.classList.toggle('bg-secondary');
+                chip.classList.toggle('text-on-secondary');
+                chip.classList.toggle('bg-secondary/10');
+                chip.classList.toggle('text-secondary');
+            });
+        });
+    </script>
+<script src="/raw/_nav.js"></script>
+</body></html>

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(253, 253, 253, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid #E8EDE9;
+        }
+        .tonal-layer-1 {
+            background-color: #FDFDFD;
+            box-shadow: 0px 4px 20px rgba(74, 111, 165, 0.06);
+        }
+        .sage-pill {
+            background-color: rgba(69, 103, 50, 0.1);
+            color: #456732;
+        }
+        @keyframes pulse-subtle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .animate-pulse-subtle {
+            animation: pulse-subtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#1e4d52",
+                        "secondary-container": "#c3eba9",
+                        "surface": "#f7faf8",
+                        "on-secondary-fixed": "#072100",
+                        "primary-fixed": "#d5e3ff",
+                        "outline": "#737780",
+                        "on-primary": "#ffffff",
+                        "background": "#f7faf8",
+                        "tertiary-fixed": "#bbebf1",
+                        "on-primary-container": "#edf1ff",
+                        "outline-variant": "#c3c6d1",
+                        "tertiary": "#2e5c61",
+                        "surface-container": "#ebefed",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed-dim": "#aad292",
+                        "primary-container": "#4a6fa5",
+                        "on-background": "#181c1b",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#2d3130",
+                        "surface-bright": "#f7faf8",
+                        "error-container": "#ffdad6",
+                        "surface-container-high": "#e6e9e7",
+                        "primary": "#30568b",
+                        "primary-fixed-dim": "#a7c8ff",
+                        "inverse-on-surface": "#eef1ef",
+                        "surface-container-low": "#f1f4f2",
+                        "secondary-fixed": "#c6eeac",
+                        "inverse-primary": "#a7c8ff",
+                        "secondary": "#456732",
+                        "on-tertiary-fixed": "#002023",
+                        "surface-container-highest": "#e0e3e1",
+                        "on-surface": "#181c1b",
+                        "surface-tint": "#395f94",
+                        "on-primary-fixed": "#001c3b",
+                        "on-secondary-container": "#496c36",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#1e477b",
+                        "on-tertiary-container": "#ccfaff",
+                        "surface-dim": "#d7dbd9",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface-variant": "#43474f",
+                        "surface-variant": "#e0e3e1",
+                        "error": "#ba1a1a",
+                        "tertiary-container": "#48757a",
+                        "tertiary-fixed-dim": "#a0cfd4",
+                        "on-secondary-fixed-variant": "#2e4f1d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "16px",
+                        "container-max": "1200px",
+                        "gutter": "24px",
+                        "stack-sm": "8px",
+                        "stack-lg": "32px",
+                        "margin-desktop": "40px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.03em", "fontWeight": "500"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen" data-screen-id="13">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 w-full bg-surface border-b border-outline-variant">
+<div class="flex items-center gap-2">
+<span class="font-headline-md text-headline-md font-bold text-primary">PsyConnect</span>
+</div>
+<div class="flex items-center gap-stack-md">
+<button class="material-symbols-outlined p-2 rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant">help</button>
+<button class="material-symbols-outlined p-2 rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant">notifications</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a friendly Middle Eastern psychologist in a modern clinic setting. The lighting is soft and warm, reflecting a serene and trustworthy professional atmosphere. High-end digital photography style with a shallow depth of field, focusing on the calm expression of the practitioner." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCSjlanIvWSBChbEhzdm6tZ7GdcGB96kxsXfQEphLoN1LdjKCnwjpH644eTjm0PABpdSMcDdHs63UNy1ODbVnO-nUPMtqUPaHWR7yrUB30pHPixVmZW8zn0UdXuPqJKkiIYNFjuxGiinwcbreWCpR0Jnxkva_vNUBuIGmeQa4KIN-1YfH2Goqt7UgyZUysMczjrqFQghOZ_QXiZ4sHnDKVBGDTXtblfNhJBlyPH4a0foTHgXyyClf4uO73qgF6IL7s7zJk7Ll08-o"/>
+</div>
+</div>
+</header>
+<div class="flex pt-16 h-[calc(100vh-64px)]">
+<!-- SideNavBar (Desktop Only) -->
+<aside class="h-full w-64 hidden md:flex flex-col border-r border-outline-variant bg-surface-container-low p-gutter gap-stack-sm overflow-y-auto">
+<div class="mb-stack-lg">
+<h2 class="font-headline-sm text-headline-sm font-bold text-primary">Onboarding</h2>
+<p class="font-label-md text-label-md text-on-surface-variant">Application Progress</p>
+</div>
+<nav class="flex-1 flex flex-col gap-2">
+<div class="flex items-center gap-3 p-3 text-on-surface-variant opacity-60 cursor-not-allowed">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-label-md">Personal Info</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-on-surface-variant opacity-60 cursor-not-allowed">
+<span class="material-symbols-outlined">verified</span>
+<span class="font-label-md text-label-md">Credentials</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-on-surface-variant opacity-60 cursor-not-allowed">
+<span class="material-symbols-outlined">upload_file</span>
+<span class="font-label-md text-label-md">Documents</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-on-surface-variant opacity-60 cursor-not-allowed">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-label-md text-label-md">Availability</span>
+</div>
+<div class="flex items-center gap-3 p-3 bg-secondary-container text-on-secondary-container rounded-lg font-bold">
+<span class="material-symbols-outlined">pending_actions</span>
+<span class="font-label-md text-label-md">Review Status</span>
+</div>
+</nav>
+<button class="mt-auto py-3 px-4 border border-outline text-on-surface-variant rounded-lg font-label-md hover:bg-surface-container-high transition-all">
+                Save Draft
+            </button>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-y-auto bg-surface p-margin-mobile md:p-margin-desktop">
+<div class="max-w-container-max mx-auto space-y-stack-lg pb-32">
+<!-- Status & Reassurance Header -->
+<section class="space-y-stack-md">
+<div class="flex items-center gap-3">
+<span class="px-3 py-1 rounded-full sage-pill text-label-sm font-label-md uppercase tracking-wider animate-pulse-subtle">Under Review</span>
+<span class="text-on-surface-variant text-body-sm italic">Expected resolution: 24-48 hours</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-primary max-w-2xl">We’re verifying your credentials to ensure the highest standard of care.</h1>
+<p class="text-body-lg text-on-surface-variant max-w-2xl">Thank you for joining PsyConnect. Our clinical team is currently reviewing your documentation. Once verified, your practice will be visible to thousands of Algerians seeking support.</p>
+</section>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Progress Timeline (Bento Style) -->
+<div class="lg:col-span-5 flex flex-col gap-gutter">
+<div class="tonal-layer-1 p-gutter rounded-xl border border-outline-variant">
+<h3 class="font-label-md text-label-md mb-stack-lg uppercase text-on-surface-variant">Application Timeline</h3>
+<div class="relative space-y-stack-lg">
+<!-- Vertical Line -->
+<div class="absolute left-4 top-2 bottom-2 w-0.5 bg-outline-variant"></div>
+<!-- Step 1 -->
+<div class="relative flex items-start gap-stack-md">
+<div class="z-10 w-8 h-8 rounded-full bg-secondary text-on-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-secondary">Application Submitted</p>
+<p class="text-body-sm text-on-surface-variant">Completed on Oct 12, 2023</p>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="relative flex items-start gap-stack-md">
+<div class="z-10 w-8 h-8 rounded-full bg-secondary-container text-secondary flex items-center justify-center border-2 border-secondary border-dashed">
+<span class="material-symbols-outlined text-[18px] animate-spin">refresh</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface font-bold">Document Verification</p>
+<p class="text-body-sm text-on-surface-variant">In progress - Checking license and ID authenticity.</p>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="relative flex items-start gap-stack-md">
+<div class="z-10 w-8 h-8 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">lock</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant">Final Approval</p>
+<p class="text-body-sm text-on-surface-variant">Awaiting clinical lead sign-off.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Help CTA Card -->
+<div class="bg-primary text-on-primary p-gutter rounded-xl shadow-lg flex items-center justify-between">
+<div class="space-y-1">
+<h4 class="font-label-md text-label-md">Need assistance?</h4>
+<p class="text-body-sm opacity-90">Our onboarding team is here to help.</p>
+</div>
+<a class="flex items-center gap-2 font-label-md border-b border-on-primary" href="#">
+                                Help Center <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Profile Preview (Asymmetric Layout) -->
+<div class="lg:col-span-7 space-y-stack-md">
+<div class="flex items-center justify-between">
+<h3 class="font-label-md text-label-md uppercase text-on-surface-variant">Public Profile Preview</h3>
+<span class="text-body-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">visibility</span> Only you can see this
+                            </span>
+</div>
+<!-- The Mock Profile Card -->
+<div class="tonal-layer-1 rounded-2xl overflow-hidden border border-outline-variant relative">
+<!-- Banner Placeholder -->
+<div class="h-32 bg-secondary-container opacity-30"></div>
+<div class="px-gutter pb-gutter">
+<div class="flex justify-between items-start -mt-10">
+<div class="w-24 h-24 rounded-2xl border-4 border-surface overflow-hidden shadow-md">
+<img class="w-full h-full object-cover" data-alt="Close-up of the psychologist's profile picture used for the public profile preview. The doctor is wearing professional attire against a clean, soft-colored background that matches the sage green and slate blue UI palette. The image conveys empathy, professionalism, and readiness to help patients in Algeria." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAG9WjZlMXr9sUSKtKbRoRNXJTwXDTytV3vhV7NdbgNXEd9eIGRyXB18N-RcJeQ3-OQSy2UwPGVmDjpsGupeBxjlL2yATj-g1EGKJsBmBZpVvgjhnOUTOFB6SdiTJLdnjfpENWEhfak77jfo7vwW4ihnuhuEzbXO4xLpfgbDn9JpM6ibiOHHV8foAOM0x58gmwhTKzbChqCKgA1ReG_2ustRLWrG-NY_X6PXRf5CRkJKLMff3P9IO8MIMljseuaUQKsr7wW3RyTes"/>
+</div>
+<div class="mt-12 flex gap-2">
+<div class="px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">map</span> Algiers, DZ
+                                        </div>
+<div class="px-3 py-1 rounded-full bg-secondary-container text-secondary text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">verified</span> Verified
+                                        </div>
+</div>
+</div>
+<div class="mt-6 space-y-stack-md">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Dr. Amel Benali</h2>
+<p class="text-primary font-medium">Clinical Psychologist • CBT Specialist</p>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 rounded-full sage-pill text-label-sm">Anxiety</span>
+<span class="px-3 py-1 rounded-full sage-pill text-label-sm">Depression</span>
+<span class="px-3 py-1 rounded-full sage-pill text-label-sm">Family Therapy</span>
+<span class="px-3 py-1 rounded-full sage-pill text-label-sm">+2 more</span>
+</div>
+<div class="p-stack-md bg-surface-container-low rounded-lg border border-outline-variant border-dashed">
+<p class="text-body-sm text-on-surface-variant line-clamp-3">
+                                            "I specialize in helping individuals navigate complex emotional landscapes through evidence-based cognitive behavioral therapy. My approach is tailored to the cultural context of our community..."
+                                        </p>
+</div>
+<div class="flex items-center gap-gutter pt-2 border-t border-outline-variant">
+<div class="text-center">
+<p class="text-headline-sm font-bold text-on-surface">12</p>
+<p class="text-label-sm text-on-surface-variant">Years Exp.</p>
+</div>
+<div class="text-center">
+<p class="text-headline-sm font-bold text-on-surface">4.9</p>
+<p class="text-label-sm text-on-surface-variant">Rating</p>
+</div>
+<button class="ml-auto bg-primary text-on-primary px-stack-lg py-2 rounded-lg font-label-md opacity-50 cursor-not-allowed">
+                                            Book Session
+                                        </button>
+</div>
+</div>
+</div>
+<!-- "Pending Overlay" mask -->
+<div class="absolute inset-0 bg-white/40 flex items-center justify-center pointer-events-none">
+<div class="glass-card px-6 py-3 rounded-full flex items-center gap-3 shadow-xl">
+<span class="material-symbols-outlined text-primary">visibility_off</span>
+<span class="font-label-md text-primary">Profile hidden during verification</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center py-2 px-margin-mobile md:hidden z-50 bg-surface border-t border-outline-variant shadow-lg">
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-70">
+<span class="material-symbols-outlined">edit</span>
+<span class="font-label-sm text-label-sm">Step 1</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-70">
+<span class="material-symbols-outlined">school</span>
+<span class="font-label-sm text-label-sm">Step 2</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-70">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-sm text-label-sm">Step 3</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-4 py-1">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">hourglass_empty</span>
+<span class="font-label-sm text-label-sm">Status</span>
+</div>
+</nav>
+<script>
+        // Simple interaction for the "Help" icon
+        document.querySelector('.material-symbols-outlined[data-icon="help"]')?.addEventListener('click', () => {
+            alert('A support representative will be with you shortly. Your ticket #8291 has been noted.');
+        });
+
+        // Background subtle parallax effect on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const moveX = (e.clientX - window.innerWidth / 2) * 0.005;
+            const moveY = (e.clientY - window.innerHeight / 2) * 0.005;
+            document.body.style.backgroundPosition = `${moveX}px ${moveY}px`;
+        });
+    </script>
+<script src="/raw/_nav.js"></script>
+</body></html>

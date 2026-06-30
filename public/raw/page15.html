@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Availability Manager | PsyConnect</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Shared Style & Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "surface-dim": "#d7dbd9",
+                "surface-container-high": "#e6e9e7",
+                "on-secondary-container": "#496c36",
+                "on-primary-fixed": "#001c3b",
+                "tertiary-container": "#48757a",
+                "surface": "#f7faf8",
+                "primary-fixed-dim": "#a7c8ff",
+                "error": "#ba1a1a",
+                "inverse-primary": "#a7c8ff",
+                "surface-container-highest": "#e0e3e1",
+                "on-tertiary-fixed-variant": "#1e4d52",
+                "tertiary-fixed": "#bbebf1",
+                "inverse-on-surface": "#eef1ef",
+                "secondary-fixed-dim": "#aad292",
+                "tertiary": "#2e5c61",
+                "surface-variant": "#e0e3e1",
+                "secondary": "#456732",
+                "on-primary": "#ffffff",
+                "on-primary-container": "#edf1ff",
+                "on-background": "#181c1b",
+                "on-primary-fixed-variant": "#1e477b",
+                "surface-container-lowest": "#ffffff",
+                "primary": "#30568b",
+                "secondary-fixed": "#c6eeac",
+                "outline-variant": "#c3c6d1",
+                "on-secondary-fixed-variant": "#2e4f1d",
+                "error-container": "#ffdad6",
+                "secondary-container": "#c3eba9",
+                "surface-bright": "#f7faf8",
+                "surface-container": "#ebefed",
+                "inverse-surface": "#2d3130",
+                "primary-container": "#4a6fa5",
+                "outline": "#737780",
+                "on-tertiary": "#ffffff",
+                "background": "#f7faf8",
+                "on-surface-variant": "#43474f",
+                "on-surface": "#181c1b",
+                "on-tertiary-container": "#ccfaff",
+                "on-secondary": "#ffffff",
+                "surface-tint": "#395f94",
+                "primary-fixed": "#d5e3ff",
+                "on-error": "#ffffff",
+                "surface-container-low": "#f1f4f2",
+                "on-tertiary-fixed": "#002023",
+                "on-secondary-fixed": "#072100",
+                "tertiary-fixed-dim": "#a0cfd4",
+                "on-error-container": "#93000a"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "stack-sm": "8px",
+                "stack-md": "16px",
+                "stack-lg": "32px",
+                "gutter": "24px",
+                "container-max": "1200px",
+                "margin-mobile": "16px",
+                "margin-desktop": "40px"
+            },
+            "fontFamily": {
+                "headline-sm": ["Inter"],
+                "label-md": ["Inter"],
+                "headline-lg-mobile": ["Inter"],
+                "headline-lg": ["Inter"],
+                "body-lg": ["Inter"],
+                "body-md": ["Inter"],
+                "label-sm": ["Inter"],
+                "headline-md": ["Inter"],
+                "body-sm": ["Inter"]
+            },
+            "fontSize": {
+                "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "500"}],
+                "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.03em", "fontWeight": "500"}],
+                "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #F4F7F5; font-family: 'Inter', sans-serif; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-card { background: rgba(253, 253, 253, 0.8); backdrop-filter: blur(8px); border: 1px solid #E8EDE9; }
+        .shadow-soft { box-shadow: 0px 4px 20px rgba(74, 111, 165, 0.06); }
+        .active-tab { border-right: 4px solid #30568b; }
+    </style>
+</head>
+<body class="text-on-surface" data-screen-id="15">
+<!-- Desktop Side Navigation -->
+<aside class="hidden lg:flex flex-col py-stack-lg px-4 gap-y-2 h-screen w-64 fixed left-0 top-0 bg-surface-container-low dark:bg-surface-container-lowest border-r border-surface-container-highest dark:border-outline-variant z-50">
+<div class="mb-10 px-4">
+<span class="font-headline-sm text-headline-sm font-bold text-primary">PsyConnect</span>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined group-active:scale-95">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-lg font-semibold transition-all duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">calendar_today</span>
+<span class="font-label-md text-label-md">Appointments</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="font-label-md text-label-md">Messages</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-label-md">Profile</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-all duration-200 rounded-lg group" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto border-t border-surface-container-highest pt-4 space-y-1">
+<button class="w-full flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-md text-label-md">Help Center</span>
+</button>
+<button class="w-full flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md text-label-md">Logout</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="lg:ml-64 min-h-screen pb-24 lg:pb-0">
+<!-- Header -->
+<header class="flex items-center justify-between px-margin-mobile lg:px-margin-desktop h-16 bg-surface/90 backdrop-blur-md sticky top-0 z-40 border-b border-surface-container-highest">
+<div>
+<h1 class="font-headline-md text-headline-md font-semibold text-primary">Availability Manager</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-surface-container rounded-full transition-colors relative">
+<span class="material-symbols-outlined text-primary">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<div class="flex items-center gap-3 pl-4 border-l border-surface-container-highest">
+<div class="text-right hidden sm:block">
+<p class="font-label-md text-label-md text-on-surface leading-tight">Dr. Amine Rahmani</p>
+<p class="text-xs text-on-surface-variant">Clinical Psychologist</p>
+</div>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/20">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a Middle Eastern male psychologist in his 40s, wearing a tailored navy suit and glasses, smiling warmly against a soft-focus office background with books. The lighting is bright and airy, reflecting a modern corporate wellness aesthetic with a serene and trustworthy mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6SKHpzsNZbpkNln4qHBS8wRIOA9d71dL5wJDoHAWUgjL8vWnugTNvgWZ3rtlZfW1NjGjKQ76A6VDWCxaFvaabGTN40PMVArU7juD7cI9SteQ0eI-rEKJTAYsxvLF3jNxlHHJPrJAf2zGHb1owEbq9KsrKoBwTtiCD9DjH6flS_G1jqP_KdWIrD3lQX7IO6JOyNB0ldhqLn2th28ccwUS0JEgMDpvD-p1UzLTkxk1y4oCpk-N5BPFMaKZIDAdoQSKSM-vgUnbZdFY"/>
+</div>
+</div>
+</div>
+</header>
+<div class="px-margin-mobile lg:px-margin-desktop py-stack-lg max-w-container-max mx-auto">
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-gutter">
+<!-- Left Column: Calendar & Agenda -->
+<div class="xl:col-span-8 space-y-stack-lg">
+<!-- Calendar Card -->
+<div class="bg-surface-container-lowest rounded-xl border border-surface-container-highest shadow-soft p-6">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+<div class="flex items-center gap-4">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">March 2024</h2>
+<div class="flex border border-surface-container-highest rounded-lg overflow-hidden">
+<button class="p-2 hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-sm">chevron_left</span></button>
+<button class="p-2 hover:bg-surface-container transition-colors border-l border-surface-container-highest"><span class="material-symbols-outlined text-sm">chevron_right</span></button>
+</div>
+<button class="px-4 py-1.5 text-label-sm font-semibold border border-surface-container-highest rounded-lg hover:bg-surface-container transition-colors">Today</button>
+</div>
+<div class="flex p-1 bg-surface-container-low rounded-xl">
+<button class="px-4 py-1.5 text-label-sm font-semibold text-on-surface bg-surface-container-lowest rounded-lg shadow-sm transition-all">Month</button>
+<button class="px-4 py-1.5 text-label-sm font-semibold text-on-surface-variant hover:text-on-surface transition-all">Week</button>
+<button class="px-4 py-1.5 text-label-sm font-semibold text-on-surface-variant hover:text-on-surface transition-all">Day</button>
+</div>
+</div>
+<!-- Calendar Header Days -->
+<div class="calendar-grid border-b border-surface-container-highest pb-4 mb-2">
+<div class="text-center font-label-sm text-on-surface-variant">MON</div>
+<div class="text-center font-label-sm text-on-surface-variant">TUE</div>
+<div class="text-center font-label-sm text-on-surface-variant">WED</div>
+<div class="text-center font-label-sm text-on-surface-variant">THU</div>
+<div class="text-center font-label-sm text-on-surface-variant">FRI</div>
+<div class="text-center font-label-sm text-on-surface-variant text-error/60">SAT</div>
+<div class="text-center font-label-sm text-on-surface-variant text-error/60">SUN</div>
+</div>
+<!-- Calendar Grid Body -->
+<div class="calendar-grid">
+<!-- Prev Month Days -->
+<div class="h-24 md:h-32 p-2 border-r border-b border-surface-container-highest text-on-surface-variant opacity-30 text-sm">26</div>
+<div class="h-24 md:h-32 p-2 border-r border-b border-surface-container-highest text-on-surface-variant opacity-30 text-sm">27</div>
+<div class="h-24 md:h-32 p-2 border-r border-b border-surface-container-highest text-on-surface-variant opacity-30 text-sm">28</div>
+<div class="h-24 md:h-32 p-2 border-r border-b border-surface-container-highest text-on-surface-variant opacity-30 text-sm">29</div>
+<!-- Current Month -->
+<div class="h-24 md:h-32 p-2 border-r border-b border-surface-container-highest text-sm">1</div>
+<div class="h-24 md:h-32 p-2 border-r border-b border-surface-container-highest text-sm bg-error-container/10">
+<span class="text-error font-bold">2</span>
+<div class="mt-2 px-2 py-1 bg-error/10 text-[10px] text-error font-medium rounded truncate">Blocked: Holiday</div>
+</div>
+<div class="h-24 md:h-32 p-2 border-b border-surface-container-highest text-sm bg-error-container/10">
+<span class="text-error font-bold">3</span>
+<div class="mt-2 px-2 py-1 bg-error/10 text-[10px] text-error font-medium rounded truncate">Blocked: Holiday</div>
+</div>
+<!-- Row 2 -->
+<div class="h-24 md:h-32 p-2 border-r border-b border-surface-container-highest text-sm">4</div>
+<div class="h-24 md:h-32 p-2 border-r border-b border-surface-container-highest text-sm">
+<span class="font-medium">5</span>
+<div class="mt-2 px-2 py-1 bg-primary/10 text-[10px] text-primary font-medium rounded truncate">3 Sessions</div>
+</div>
+<div class="h-24 md:h-32 p-2 border-r border-b border-surface-container-highest text-sm">6</div>
+<div class="h-24 md:h-32 p-2 border-r border-b border-surface-container-highest text-sm ring-2 ring-primary ring-inset bg-primary/5">
+<span class="font-bold text-primary">7</span>
+<div class="mt-2 px-2 py-1 bg-secondary-container text-[10px] text-on-secondary-container font-medium rounded truncate">5 Sessions</div>
+</div>
+<div class="h-24 md:h-32 p-2 border-r border-b border-surface-container-highest text-sm">8</div>
+<div class="h-24 md:h-32 p-2 border-r border-b border-surface-container-highest text-sm">9</div>
+<div class="h-24 md:h-32 p-2 border-b border-surface-container-highest text-sm">10</div>
+<!-- Remaining rows generated via repeat pattern -->
+<div class="h-24 md:h-32 p-2 border-r border-b border-surface-container-highest text-sm">11</div>
+<div class="h-24 md:h-32 p-2 border-r border-b border-surface-container-highest text-sm">12</div>
+<div class="h-24 md:h-32 p-2 border-r border-b border-surface-container-highest text-sm">13</div>
+<div class="h-24 md:h-32 p-2 border-r border-b border-surface-container-highest text-sm">14</div>
+<div class="h-24 md:h-32 p-2 border-r border-b border-surface-container-highest text-sm bg-primary/5 border-primary/20">15</div>
+<div class="h-24 md:h-32 p-2 border-r border-b border-surface-container-highest text-sm">16</div>
+<div class="h-24 md:h-32 p-2 border-b border-surface-container-highest text-sm">17</div>
+</div>
+</div>
+<!-- Selected Day Agenda -->
+<div class="bg-surface-container-lowest rounded-xl border border-surface-container-highest shadow-soft overflow-hidden">
+<div class="px-6 py-4 border-b border-surface-container-highest flex justify-between items-center bg-surface-container-low/50">
+<h3 class="font-label-md text-label-md text-on-surface">Agenda for Thursday, March 7</h3>
+<span class="px-3 py-1 bg-secondary-container text-on-secondary-container text-xs font-bold rounded-full">5 Booked Slots</span>
+</div>
+<div class="divide-y divide-surface-container-highest">
+<!-- Appointment Item -->
+<div class="px-6 py-4 flex items-center hover:bg-surface-container-low/30 transition-colors">
+<div class="w-16 font-label-sm text-on-surface-variant">09:00 AM</div>
+<div class="flex-1 flex items-center gap-4">
+<div class="w-1 h-10 bg-primary rounded-full"></div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Session with Sarah Benz</p>
+<p class="text-xs text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">videocam</span> Video Consultation • 45 min
+                                        </p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined">edit</span></button>
+<button class="p-2 text-on-surface-variant hover:text-error transition-colors"><span class="material-symbols-outlined">delete</span></button>
+</div>
+</div>
+<!-- Appointment Item -->
+<div class="px-6 py-4 flex items-center hover:bg-surface-container-low/30 transition-colors">
+<div class="w-16 font-label-sm text-on-surface-variant">10:30 AM</div>
+<div class="flex-1 flex items-center gap-4">
+<div class="w-1 h-10 bg-primary rounded-full"></div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Session with Mourad K.</p>
+<p class="text-xs text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">person</span> In-person • 60 min
+                                        </p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined">edit</span></button>
+<button class="p-2 text-on-surface-variant hover:text-error transition-colors"><span class="material-symbols-outlined">delete</span></button>
+</div>
+</div>
+<!-- Available Slot -->
+<div class="px-6 py-4 flex items-center opacity-60">
+<div class="w-16 font-label-sm text-on-surface-variant">02:00 PM</div>
+<div class="flex-1 flex items-center gap-4">
+<div class="w-1 h-10 bg-outline-variant border border-dashed rounded-full"></div>
+<div class="border border-dashed border-outline-variant px-4 py-2 rounded-lg text-xs font-medium text-on-surface-variant italic">
+                                        Open Slot (Available)
+                                    </div>
+</div>
+<button class="px-4 py-1.5 text-xs font-semibold text-primary border border-primary/30 rounded-lg hover:bg-primary/5 transition-colors">Block Time</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Settings & Controls -->
+<div class="xl:col-span-4 space-y-stack-lg">
+<!-- Availability Settings Card -->
+<div class="bg-surface-container-lowest rounded-xl border border-surface-container-highest shadow-soft p-6">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary">tune</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Availability Settings</h2>
+</div>
+<div class="space-y-6">
+<!-- Working Hours -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-3">Weekly Schedule</label>
+<div class="space-y-3">
+<!-- Day Toggle -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-6 bg-secondary rounded-full relative cursor-pointer">
+<div class="absolute right-1 top-1 w-4 h-4 bg-white rounded-full"></div>
+</div>
+<span class="text-sm font-medium">Mon - Fri</span>
+</div>
+<div class="flex items-center gap-2">
+<input class="w-16 text-center text-xs py-1.5 rounded-lg border-surface-container-highest focus:ring-primary focus:border-primary" type="text" value="09:00"/>
+<span class="text-xs">-</span>
+<input class="w-16 text-center text-xs py-1.5 rounded-lg border-surface-container-highest focus:ring-primary focus:border-primary" type="text" value="18:00"/>
+</div>
+</div>
+<!-- Weekend -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-6 bg-surface-container-high rounded-full relative cursor-pointer">
+<div class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full"></div>
+</div>
+<span class="text-sm font-medium text-on-surface-variant">Saturday</span>
+</div>
+<span class="text-xs text-on-surface-variant italic">Closed</span>
+</div>
+</div>
+</div>
+<!-- Session Duration -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-3">Session Duration</label>
+<div class="grid grid-cols-3 gap-2">
+<button class="py-2 text-xs font-semibold rounded-lg border border-surface-container-highest hover:bg-surface-container-low transition-all">30 min</button>
+<button class="py-2 text-xs font-semibold rounded-lg bg-primary text-on-primary shadow-sm">45 min</button>
+<button class="py-2 text-xs font-semibold rounded-lg border border-surface-container-highest hover:bg-surface-container-low transition-all">60 min</button>
+</div>
+</div>
+<!-- Buffer Time -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-3">Buffer Times (Break)</label>
+<select class="w-full text-sm py-2 rounded-lg border-surface-container-highest focus:ring-primary focus:border-primary">
+<option>None</option>
+<option selected="">15 minutes between sessions</option>
+<option>30 minutes between sessions</option>
+</select>
+<p class="text-[10px] text-on-surface-variant mt-2 leading-relaxed">Adds a cooldown period between client appointments to prevent back-to-back fatigue.</p>
+</div>
+<button class="w-full bg-primary text-on-primary py-3 rounded-xl font-bold hover:opacity-90 active:scale-95 transition-all shadow-md">
+                                Save Settings
+                            </button>
+</div>
+</div>
+<!-- Blocked Time & Holidays -->
+<div class="bg-surface-container-lowest rounded-xl border border-surface-container-highest shadow-soft p-6">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-error">block</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Time Off</h2>
+</div>
+<button class="text-primary text-xs font-bold hover:underline">+ Add New</button>
+</div>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-3 bg-surface-container-low rounded-lg border border-surface-container-highest">
+<div>
+<p class="text-sm font-semibold text-on-surface">Eid Al-Fitr</p>
+<p class="text-[10px] text-on-surface-variant">Mar 10 - Mar 12, 2024</p>
+</div>
+<div class="px-2 py-1 bg-error-container text-on-error-container text-[10px] font-bold rounded">Holidays</div>
+</div>
+<div class="flex items-center justify-between p-3 bg-surface-container-low rounded-lg border border-surface-container-highest">
+<div>
+<p class="text-sm font-semibold text-on-surface">Weekly Break</p>
+<p class="text-[10px] text-on-surface-variant">Every Friday 1PM - 3PM</p>
+</div>
+<div class="px-2 py-1 bg-surface-container-highest text-on-surface-variant text-[10px] font-bold rounded">Recurring</div>
+</div>
+</div>
+</div>
+<!-- Quick Actions -->
+<div class="p-6 bg-primary/5 rounded-xl border border-primary/10">
+<h4 class="font-label-md text-label-md text-primary mb-3">Sync &amp; Export</h4>
+<div class="flex flex-wrap gap-2">
+<button class="flex items-center gap-1.5 px-3 py-1.5 bg-surface-container-lowest border border-surface-container-highest rounded-lg text-xs font-medium hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[16px]">sync</span> Google Calendar
+                            </button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 bg-surface-container-lowest border border-surface-container-highest rounded-lg text-xs font-medium hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[16px]">download</span> PDF Export
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Mobile Bottom Navigation -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 px-4 pb-safe bg-surface/95 backdrop-blur-sm border-t border-surface-container-highest shadow-lg">
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-[10px] mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary font-bold" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">event</span>
+<span class="font-label-sm text-[10px] mt-1">Sessions</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">mail</span>
+<span class="font-label-sm text-[10px] mt-1">Chat</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">menu</span>
+<span class="font-label-sm text-[10px] mt-1">Menu</span>
+</a>
+</nav>
+<!-- Floating Action Button for Mobile Context -->
+<button class="lg:hidden fixed right-6 bottom-20 w-14 h-14 bg-primary text-on-primary rounded-full shadow-2xl flex items-center justify-center active:scale-90 transition-transform z-50">
+<span class="material-symbols-outlined">add</span>
+</button>
+<footer class="w-full py-stack-lg px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-4 border-t border-surface-container-highest bg-surface-container-lowest">
+<p class="font-body-sm text-body-sm text-on-surface-variant">© 2024 PsyConnect. Secured for Algeria.</p>
+<div class="flex gap-6">
+<a class="text-on-surface-variant hover:text-primary transition-colors text-sm" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-sm" href="#">Terms of Service</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-sm" href="#">Contact Us</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-sm" href="#">Clinician Portal</a>
+</div>
+</footer>
+<script>
+        // Simple Micro-interactions
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const icon = this.querySelector('.material-symbols-outlined');
+                if (icon) {
+                    icon.style.transform = 'scale(0.8)';
+                    setTimeout(() => icon.style.transform = 'scale(1)', 100);
+                }
+            });
+        });
+
+        // Day Selection Logic Mockup
+        const calendarCells = document.querySelectorAll('.calendar-grid div[class*="h-24"]');
+        calendarCells.forEach(cell => {
+            cell.addEventListener('click', () => {
+                calendarCells.forEach(c => {
+                    c.classList.remove('ring-2', 'ring-primary', 'ring-inset', 'bg-primary/5');
+                });
+                if(!cell.classList.contains('opacity-30')) {
+                    cell.classList.add('ring-2', 'ring-primary', 'ring-inset', 'bg-primary/5');
+                }
+            });
+        });
+    </script>
+<script src="/raw/_nav.js"></script>
+</body></html>

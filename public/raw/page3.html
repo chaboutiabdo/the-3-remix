@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dr. Sarah Rahmani - Clinical Psychologist | PsyConnect</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "error": "#ba1a1a",
+                    "tertiary-container": "#48757a",
+                    "outline-variant": "#c3c6d1",
+                    "error-container": "#ffdad6",
+                    "on-primary-container": "#edf1ff",
+                    "tertiary-fixed-dim": "#a0cfd4",
+                    "on-secondary-fixed": "#072100",
+                    "inverse-surface": "#2d3130",
+                    "on-tertiary-fixed": "#002023",
+                    "on-background": "#181c1b",
+                    "primary-fixed-dim": "#a7c8ff",
+                    "on-secondary-fixed-variant": "#2e4f1d",
+                    "inverse-on-surface": "#eef1ef",
+                    "surface-tint": "#395f94",
+                    "secondary-fixed-dim": "#aad292",
+                    "on-tertiary-container": "#ccfaff",
+                    "background": "#f7faf8",
+                    "surface-container-lowest": "#ffffff",
+                    "outline": "#737780",
+                    "primary": "#30568b",
+                    "on-primary-fixed": "#001c3b",
+                    "surface-bright": "#f7faf8",
+                    "surface-container-low": "#f1f4f2",
+                    "on-secondary-container": "#496c36",
+                    "surface-container-highest": "#e0e3e1",
+                    "surface-container-high": "#e6e9e7",
+                    "on-surface-variant": "#43474f",
+                    "on-primary-fixed-variant": "#1e477b",
+                    "surface-variant": "#e0e3e1",
+                    "on-error": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "on-surface": "#181c1b",
+                    "secondary": "#456732",
+                    "on-tertiary-fixed-variant": "#1e4d52",
+                    "surface": "#f7faf8",
+                    "secondary-container": "#c3eba9",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed": "#bbebf1",
+                    "inverse-primary": "#a7c8ff",
+                    "on-primary": "#ffffff",
+                    "surface-container": "#ebefed",
+                    "secondary-fixed": "#c6eeac",
+                    "tertiary": "#2e5c61",
+                    "surface-dim": "#d7dbd9",
+                    "primary-container": "#4a6fa5",
+                    "primary-fixed": "#d5e3ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-md": "16px",
+                    "margin-mobile": "16px",
+                    "container-max": "1200px",
+                    "stack-lg": "32px",
+                    "margin-desktop": "40px",
+                    "stack-sm": "8px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "label-sm": ["Inter"],
+                    "label-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "headline-lg-mobile": ["Inter"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.03em", "fontWeight": "500"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .scrolled-nav {
+            box-shadow: 0 4px 20px rgba(74, 111, 165, 0.06);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #D1D9D3;
+            border-radius: 10px;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+        }
+        .glass-card {
+            background: rgba(253, 253, 253, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid #E8EDE9;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md antialiased overflow-x-hidden" data-screen-id="3">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-surface/90 backdrop-blur-md border-b border-surface-container-highest">
+<div class="font-headline-md text-headline-md font-semibold text-primary">PsyConnect</div>
+<div class="hidden md:flex items-center gap-stack-lg">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">How it Works</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">FAQ</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">About</a>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer">notifications</span>
+<div class="flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-full cursor-pointer hover:bg-primary-container transition-all">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="font-label-md">My Account</span>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="mt-24 mb-32 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<!-- Header Profile Section -->
+<section class="relative mb-stack-lg">
+<div class="flex flex-col lg:flex-row gap-10 items-start lg:items-center bg-surface-container-lowest p-8 rounded-xl border border-surface-container-highest shadow-[0px_4px_20px_rgba(74,111,165,0.06)]">
+<div class="relative group">
+<div class="w-48 h-48 rounded-full overflow-hidden border-4 border-white shadow-lg">
+<img class="w-full h-full object-cover" data-alt="A professional and warm studio portrait of a female clinical psychologist in her 40s. She has a serene and empathetic expression, wearing professional attire in soft, neutral tones. The background is a blurred, high-end office with warm lighting and a soft-focus bookshelf, conveying trust, expertise, and psychological safety in a modern clinical setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBm3LkBXyLDJNRLRlCYy3F9k1fOmqO3U5o3gv5nnTMaRY2VWJ1D6QUXxmm5T4SHe0NN3BAJfhwTjqYXsYj1vwzl7KX_BD1YVUe7fgoow9kFAtOSWtAh2dsHJOm-872EOQPPJKckA5RI3BTKujpQl101uYD6emdWt_aY1XCjDnRHHWiSJ2CriGqOVYxePmTIA_FCfk33IMHZaR57PNOiHJ_dywDwwtfDnSgTwZpw9Kdpw2Zi5MpISp2gfwFw4_sqmi5gkWxYrq4S7w"/>
+</div>
+<div class="absolute bottom-2 right-2 bg-secondary text-white p-1 rounded-full shadow-md flex items-center justify-center border-2 border-white">
+<span class="material-symbols-outlined !text-[18px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+</div>
+<div class="flex-1 space-y-4">
+<div class="flex flex-wrap items-center gap-3">
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Dr. Sarah Rahmani</h1>
+<span class="px-3 py-1 bg-secondary/10 text-secondary font-label-sm rounded-full flex items-center gap-1 border border-secondary/20">
+<span class="material-symbols-outlined !text-[14px]">shield</span> Verified Clinician
+                        </span>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+                        Dedicated to helping individuals navigate trauma and anxiety through evidence-based cognitive behavioral therapy in a safe, confidential digital space.
+                    </p>
+<div class="flex flex-wrap gap-4">
+<div class="flex items-center gap-1 text-primary">
+<span class="material-symbols-outlined !text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md">4.9 (124 reviews)</span>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined !text-[20px]">location_on</span>
+<span class="font-label-md">Algiers, DZ (Online Only)</span>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined !text-[20px]">language</span>
+<span class="font-label-md">Arabic, French, English</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Main Layout with Sticky Sidebar (Mobile: Stacked) -->
+<div class="flex flex-col lg:flex-row gap-8">
+<!-- Left Column: Content -->
+<div class="lg:w-2/3 space-y-stack-lg">
+<!-- Bento Professional Info -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="p-6 bg-surface-container-low rounded-xl border border-outline-variant/30 flex flex-col justify-between">
+<span class="material-symbols-outlined text-primary mb-4">psychology</span>
+<h3 class="font-label-md text-on-surface-variant">Specialties</h3>
+<div class="mt-2 flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-secondary/5 text-secondary text-body-sm rounded-lg border border-secondary/10">Trauma &amp; PTSD</span>
+<span class="px-3 py-1 bg-secondary/5 text-secondary text-body-sm rounded-lg border border-secondary/10">CBT</span>
+<span class="px-3 py-1 bg-secondary/5 text-secondary text-body-sm rounded-lg border border-secondary/10">Anxiety</span>
+</div>
+</div>
+<div class="p-6 bg-surface-container-low rounded-xl border border-outline-variant/30">
+<span class="material-symbols-outlined text-primary mb-4">school</span>
+<h3 class="font-label-md text-on-surface-variant">Education</h3>
+<p class="mt-2 font-body-md text-on-surface">Ph.D. in Clinical Psychology</p>
+<p class="text-body-sm text-on-surface-variant">University of Algiers • 2012</p>
+</div>
+<div class="p-6 bg-surface-container-low rounded-xl border border-outline-variant/30 col-span-1 md:col-span-2 flex items-center gap-6">
+<div class="h-12 w-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">work_history</span>
+</div>
+<div>
+<h3 class="font-label-md text-on-surface-variant">Professional Experience</h3>
+<p class="font-body-md text-on-surface">12+ Years practicing in clinical and private settings.</p>
+</div>
+</div>
+</div>
+<!-- About & Methodology -->
+<div class="bg-surface-container-lowest p-8 rounded-xl border border-surface-container-highest shadow-sm">
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-4">About Me</h2>
+<div class="prose prose-slate font-body-md text-on-surface-variant leading-relaxed space-y-4">
+<p>I believe that therapy is a collaborative journey. My approach is rooted in Cognitive Behavioral Therapy (CBT), but I integrate mindfulness and trauma-informed practices to tailor our sessions to your unique needs.</p>
+<p>Throughout my twelve years of experience, I have worked with diverse populations in both Algeria and Europe, helping clients navigate the complexities of identity, modern stress, and deep-seated emotional hurdles. Our sessions are a safe, non-judgmental harbor where your voice is the most important element.</p>
+</div>
+</div>
+<!-- Verification Section -->
+<div class="bg-primary/5 p-8 rounded-xl border border-primary/10 flex flex-col md:flex-row items-center gap-8">
+<div class="flex-shrink-0 relative">
+<div class="w-32 h-32 bg-white rounded-lg flex items-center justify-center shadow-md border border-outline-variant/20 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A macro photograph of an official university diploma seal, featuring an intricate gold-embossed crest on heavy textured cream-colored parchment paper. The lighting is dramatic and focused, highlighting the physical texture of the paper and the metallic sheen of the seal, conveying authenticity, high achievement, and professional verification." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1QWl0NkMVPTgnuc292Pe1511gFrQcFJBGd3GiFtu7Iy4tU4L0IUVqDJpPC5d9LU0guuXYK4Xi2tiDzOKmTqAk-s5YHieK31wYAsMcGZCQW09x8p8KSC_HuIcXMbThmYcVgkudHKNXle12hD78sy37PZvZAOeQ5xIuKX-9BJGFfd8TXq_TD9FY_Z6n3NhtRFGNpshDpDvQNyvH1PGKDhoKVXDMhYKLkRKaiTBn9zAciOdP8-l0wNhFKTNzePeWCkuW07zkujBZwmE"/>
+</div>
+<div class="absolute -bottom-2 -right-2 bg-secondary rounded-full p-1 text-white flex items-center justify-center border-2 border-white shadow">
+<span class="material-symbols-outlined !text-[16px]">verified_user</span>
+</div>
+</div>
+<div class="space-y-2 text-center md:text-left">
+<h3 class="font-headline-sm text-headline-sm text-primary">Credentials Verified</h3>
+<p class="font-body-md text-on-surface-variant">This practitioner has completed PsyConnect’s rigorous 4-step verification process, including identity confirmation, degree authentication, and active license check.</p>
+<ul class="flex flex-wrap justify-center md:justify-start gap-x-6 gap-y-2 mt-4">
+<li class="flex items-center gap-2 text-body-sm font-medium text-secondary">
+<span class="material-symbols-outlined !text-[18px]">check_circle</span> Diploma Verified
+                            </li>
+<li class="flex items-center gap-2 text-body-sm font-medium text-secondary">
+<span class="material-symbols-outlined !text-[18px]">check_circle</span> Identity Secured
+                            </li>
+<li class="flex items-center gap-2 text-body-sm font-medium text-secondary">
+<span class="material-symbols-outlined !text-[18px]">check_circle</span> Background Checked
+                            </li>
+</ul>
+</div>
+</div>
+<!-- Reviews -->
+<div>
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Patient Testimonials</h2>
+<button class="text-primary font-label-md flex items-center gap-1 hover:underline">Read All Reviews <span class="material-symbols-outlined !text-[18px]">arrow_forward</span></button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="p-6 bg-surface-container-low rounded-xl border border-outline-variant/30 space-y-3">
+<div class="flex text-secondary">
+<span class="material-symbols-outlined !text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined !text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined !text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined !text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined !text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-body-md text-on-surface-variant italic">"Dr. Sarah helped me through a very dark period. Her calm approach and clear methodology made me feel in control again."</p>
+<p class="font-label-sm text-on-surface">Verified Patient • 3 months ago</p>
+</div>
+<div class="p-6 bg-surface-container-low rounded-xl border border-outline-variant/30 space-y-3">
+<div class="flex text-secondary">
+<span class="material-symbols-outlined !text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined !text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined !text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined !text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined !text-[16px]">star</span>
+</div>
+<p class="font-body-md text-on-surface-variant italic">"Excellent sessions. The digital platform is so easy to use and I feel just as comfortable as I would in an office."</p>
+<p class="font-label-sm text-on-surface">Verified Patient • 1 month ago</p>
+</div>
+</div>
+</div>
+<!-- FAQ Section -->
+<div class="space-y-4">
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-6">Frequently Asked Questions</h2>
+<details class="group bg-surface-container-lowest border border-surface-container-highest rounded-lg overflow-hidden">
+<summary class="flex justify-between items-center p-4 font-label-md cursor-pointer text-on-surface hover:bg-surface-container-low transition-colors list-none">
+                            Do you offer anonymous sessions?
+                            <span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<div class="p-4 border-t border-surface-container-highest text-on-surface-variant font-body-sm">
+                            Yes, your privacy is paramount. You can choose to remain completely anonymous, and all video calls use end-to-end encryption to ensure your data never leaves the room.
+                        </div>
+</details>
+<details class="group bg-surface-container-lowest border border-surface-container-highest rounded-lg overflow-hidden">
+<summary class="flex justify-between items-center p-4 font-label-md cursor-pointer text-on-surface hover:bg-surface-container-low transition-colors list-none">
+                            What is your cancellation policy?
+                            <span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<div class="p-4 border-t border-surface-container-highest text-on-surface-variant font-body-sm">
+                            Sessions can be rescheduled or cancelled for free up to 24 hours before the scheduled time. Cancellations within 24 hours may incur a small fee.
+                        </div>
+</details>
+</div>
+</div>
+<!-- Right Column: Sticky Sidebar / Calendar -->
+<div class="lg:w-1/3">
+<div class="sticky top-24 space-y-6">
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-surface-container-highest shadow-[0px_12px_32px_rgba(0,0,0,0.08)]">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Availability</h3>
+<span class="px-2 py-1 bg-primary/10 text-primary font-label-sm rounded">Online Now</span>
+</div>
+<!-- Visual Calendar Widget -->
+<div class="space-y-4">
+<div class="flex justify-between items-center px-1">
+<p class="font-label-md text-on-surface">Oct 21 - Oct 27</p>
+<div class="flex gap-2">
+<button class="p-1 rounded-full hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined !text-[18px]">chevron_left</span></button>
+<button class="p-1 rounded-full hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined !text-[18px]">chevron_right</span></button>
+</div>
+</div>
+<div class="grid grid-cols-5 gap-2 text-center">
+<div class="space-y-2">
+<p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-wider">Mon</p>
+<button class="w-full py-2 bg-secondary/10 text-secondary rounded-lg font-label-md hover:bg-secondary hover:text-white transition-all">09:00</button>
+<button class="w-full py-2 bg-secondary/10 text-secondary rounded-lg font-label-md hover:bg-secondary hover:text-white transition-all">14:30</button>
+</div>
+<div class="space-y-2">
+<p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-wider">Tue</p>
+<div class="w-full py-2 bg-surface-container-highest text-on-surface-variant/40 rounded-lg font-label-md">—</div>
+<button class="w-full py-2 bg-secondary/10 text-secondary rounded-lg font-label-md hover:bg-secondary hover:text-white transition-all">16:00</button>
+</div>
+<div class="space-y-2">
+<p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-wider">Wed</p>
+<button class="w-full py-2 bg-secondary/10 text-secondary rounded-lg font-label-md hover:bg-secondary hover:text-white transition-all">11:00</button>
+<button class="w-full py-2 bg-secondary/10 text-secondary rounded-lg font-label-md hover:bg-secondary hover:text-white transition-all">13:00</button>
+</div>
+<div class="space-y-2">
+<p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-wider">Thu</p>
+<button class="w-full py-2 bg-secondary/10 text-secondary rounded-lg font-label-md hover:bg-secondary hover:text-white transition-all">10:30</button>
+<div class="w-full py-2 bg-surface-container-highest text-on-surface-variant/40 rounded-lg font-label-md">—</div>
+</div>
+<div class="space-y-2">
+<p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-wider">Fri</p>
+<button class="w-full py-2 bg-secondary/10 text-secondary rounded-lg font-label-md hover:bg-secondary hover:text-white transition-all">09:00</button>
+<button class="w-full py-2 bg-secondary/10 text-secondary rounded-lg font-label-md hover:bg-secondary hover:text-white transition-all">15:00</button>
+</div>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-surface-container-highest space-y-4">
+<div class="flex justify-between items-center">
+<span class="font-body-md text-on-surface-variant">Session Price</span>
+<span class="font-headline-sm text-primary">4500 DZD</span>
+</div>
+<button class="w-full py-4 bg-primary text-white rounded-xl font-headline-sm hover:bg-primary/90 transition-all flex items-center justify-center gap-2 group">
+                                Book Session
+                                <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<p class="text-center text-body-sm text-on-surface-variant flex items-center justify-center gap-1">
+<span class="material-symbols-outlined !text-[16px] text-secondary">lock</span> Secure 256-bit Encrypted Session
+                            </p>
+</div>
+</div>
+<!-- Side Ad/Info -->
+<div class="p-6 rounded-xl bg-tertiary text-white space-y-3">
+<span class="material-symbols-outlined !text-[32px]">emergency_share</span>
+<h4 class="font-headline-sm">Emergency Support</h4>
+<p class="text-body-sm opacity-90">If you are in immediate danger or a crisis, please call 17 (Algeria) or visit your nearest emergency room.</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation (Mobile Only) -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 px-4 pb-safe bg-surface/95 backdrop-blur-sm border-t border-surface-container-highest shadow-lg">
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary font-bold" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">event</span>
+<span class="font-label-sm text-label-sm">Sessions</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">mail</span>
+<span class="font-label-sm text-label-sm">Chat</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">menu</span>
+<span class="font-label-sm text-label-sm">Menu</span>
+</a>
+</nav>
+<!-- Sticky Mobile CTA -->
+<div class="lg:hidden fixed bottom-20 left-1/2 -translate-x-1/2 w-[calc(100%-32px)] z-40">
+<button class="w-full py-4 bg-primary text-white rounded-xl font-headline-sm shadow-xl flex items-center justify-center gap-2">
+            Book Session (4500 DZD)
+        </button>
+</div>
+<!-- Footer -->
+<footer class="w-full py-stack-lg px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-4 bg-surface-container-lowest border-t border-surface-container-highest">
+<div class="flex flex-col items-center md:items-start gap-2">
+<div class="font-headline-sm text-headline-sm text-primary">PsyConnect</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">© 2024 PsyConnect. Secured for Algeria.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-6">
+<a class="text-on-surface-variant hover:text-primary transition-colors text-body-sm underline" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-body-sm" href="#">Terms of Service</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-body-sm" href="#">Contact Us</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-body-sm font-semibold" href="#">Clinician Portal</a>
+</div>
+</footer>
+<script>
+        // Simple micro-interaction for availability buttons
+        document.querySelectorAll('button.bg-secondary\\/10').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Reset all
+                document.querySelectorAll('button.bg-secondary\\/10').forEach(b => {
+                    b.classList.remove('bg-secondary', 'text-white');
+                    b.classList.add('bg-secondary/10', 'text-secondary');
+                });
+                // Set active
+                this.classList.remove('bg-secondary/10', 'text-secondary');
+                this.classList.add('bg-secondary', 'text-white');
+            });
+        });
+
+        // Add scroll effect to navbar
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 20) {
+                nav.classList.add('scrolled-nav');
+            } else {
+                nav.classList.remove('scrolled-nav');
+            }
+        });
+    </script>
+<script src="/raw/_nav.js"></script>
+</body></html>

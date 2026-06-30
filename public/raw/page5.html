@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Book your Session | PsyConnect</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "error": "#ba1a1a",
+                        "tertiary-container": "#48757a",
+                        "outline-variant": "#c3c6d1",
+                        "error-container": "#ffdad6",
+                        "on-primary-container": "#edf1ff",
+                        "tertiary-fixed-dim": "#a0cfd4",
+                        "on-secondary-fixed": "#072100",
+                        "inverse-surface": "#2d3130",
+                        "on-tertiary-fixed": "#002023",
+                        "on-background": "#181c1b",
+                        "primary-fixed-dim": "#a7c8ff",
+                        "on-secondary-fixed-variant": "#2e4f1d",
+                        "inverse-on-surface": "#eef1ef",
+                        "surface-tint": "#395f94",
+                        "secondary-fixed-dim": "#aad292",
+                        "on-tertiary-container": "#ccfaff",
+                        "background": "#f7faf8",
+                        "surface-container-lowest": "#ffffff",
+                        "outline": "#737780",
+                        "primary": "#30568b",
+                        "on-primary-fixed": "#001c3b",
+                        "surface-bright": "#f7faf8",
+                        "surface-container-low": "#f1f4f2",
+                        "on-secondary-container": "#496c36",
+                        "surface-container-highest": "#e0e3e1",
+                        "surface-container-high": "#e6e9e7",
+                        "on-surface-variant": "#43474f",
+                        "on-primary-fixed-variant": "#1e477b",
+                        "surface-variant": "#e0e3e1",
+                        "on-error": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "on-surface": "#181c1b",
+                        "secondary": "#456732",
+                        "on-tertiary-fixed-variant": "#1e4d52",
+                        "surface": "#f7faf8",
+                        "secondary-container": "#c3eba9",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed": "#bbebf1",
+                        "inverse-primary": "#a7c8ff",
+                        "on-primary": "#ffffff",
+                        "surface-container": "#ebefed",
+                        "secondary-fixed": "#c6eeac",
+                        "tertiary": "#2e5c61",
+                        "surface-dim": "#d7dbd9",
+                        "primary-container": "#4a6fa5",
+                        "primary-fixed": "#d5e3ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "16px",
+                        "margin-mobile": "16px",
+                        "container-max": "1200px",
+                        "stack-lg": "32px",
+                        "margin-desktop": "40px",
+                        "stack-sm": "8px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.03em", "fontWeight": "500"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #F4F7F5;
+            font-family: 'Inter', sans-serif;
+            color: #181c1b;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .step-indicator.active {
+            background-color: #30568b;
+            color: white;
+        }
+        .step-indicator.complete {
+            background-color: #456732;
+            color: white;
+        }
+        .card-shadow {
+            box-shadow: 0px 4px 20px rgba(74, 111, 165, 0.06);
+        }
+        .session-card.selected {
+            border-color: #30568b;
+            background-color: #edf1ff;
+        }
+        input:focus {
+            outline: none;
+            border-color: #30568b;
+            box-shadow: 0 0 0 2px rgba(48, 86, 139, 0.2);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #c3c6d1; border-radius: 10px; }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen" data-screen-id="5">
+<!-- Top Navigation Bar (Suppressed on focused journey - using minimal version) -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 bg-surface/90 backdrop-blur-md border-b border-surface-container-highest">
+<div class="flex items-center gap-4">
+<span class="font-headline-md text-headline-md font-semibold text-primary">PsyConnect</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center text-on-surface-variant font-label-md text-label-md gap-2">
+<span class="material-symbols-outlined text-secondary">verified_user</span>
+<span>Secure Booking</span>
+</div>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="#">Cancel</a>
+</div>
+</header>
+<main class="mt-24 mb-12 flex-grow container mx-auto max-w-[1200px] px-margin-mobile md:px-margin-desktop">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Booking Process (Left Column) -->
+<div class="lg:col-span-8 space-y-stack-lg">
+<!-- Progress Header -->
+<div class="flex justify-between items-center mb-8 bg-surface-container-lowest p-6 rounded-xl card-shadow">
+<div class="flex flex-col">
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Book Your Session</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Step 1 of 4: Session Type</p>
+</div>
+<div class="flex gap-2">
+<div class="step-indicator active w-10 h-10 rounded-full flex items-center justify-center font-bold">1</div>
+<div class="step-indicator w-10 h-10 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-bold">2</div>
+<div class="step-indicator w-10 h-10 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-bold">3</div>
+<div class="step-indicator w-10 h-10 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-bold">4</div>
+</div>
+</div>
+<!-- Step 1: Session Type -->
+<section class="space-y-stack-md bg-surface-container-lowest p-8 rounded-xl card-shadow">
+<h2 class="font-headline-sm text-headline-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">video_settings</span>
+                        Choose Session Type
+                    </h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<!-- Video Card -->
+<div class="session-card selected cursor-pointer border-2 border-surface-container-highest rounded-xl p-6 transition-all hover:border-primary group">
+<div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">videocam</span>
+</div>
+<h3 class="font-label-md text-label-md mb-1">Video Call</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-4">Face-to-face secure therapy</p>
+<span class="font-headline-sm text-headline-sm text-primary">3500 DA</span>
+</div>
+<!-- Audio Card -->
+<div class="session-card cursor-pointer border-2 border-surface-container-highest rounded-xl p-6 transition-all hover:border-primary group">
+<div class="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-4 text-secondary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">mic</span>
+</div>
+<h3 class="font-label-md text-label-md mb-1">Audio Only</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-4">Voice-led session for privacy</p>
+<span class="font-headline-sm text-headline-sm text-on-surface">2800 DA</span>
+</div>
+<!-- Chat Card -->
+<div class="session-card cursor-pointer border-2 border-surface-container-highest rounded-xl p-6 transition-all hover:border-primary group">
+<div class="w-12 h-12 bg-tertiary/10 rounded-lg flex items-center justify-center mb-4 text-tertiary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat</span>
+</div>
+<h3 class="font-label-md text-label-md mb-1">Live Chat</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-4">Real-time text consultation</p>
+<span class="font-headline-sm text-headline-sm text-on-surface">2000 DA</span>
+</div>
+</div>
+</section>
+<!-- Step 2: Calendar -->
+<section class="space-y-stack-md bg-surface-container-lowest p-8 rounded-xl card-shadow">
+<h2 class="font-headline-sm text-headline-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">calendar_month</span>
+                        Choose Date &amp; Time
+                    </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Calendar Placeholder View -->
+<div class="bg-surface-container p-4 rounded-xl">
+<div class="flex justify-between items-center mb-4">
+<span class="font-label-md text-label-md">June 2024</span>
+<div class="flex gap-2">
+<button class="material-symbols-outlined p-1 rounded hover:bg-surface-container-highest">chevron_left</button>
+<button class="material-symbols-outlined p-1 rounded hover:bg-surface-container-highest">chevron_right</button>
+</div>
+</div>
+<div class="grid grid-cols-7 gap-1 text-center text-label-sm font-label-sm">
+<div class="text-on-surface-variant py-2">S</div>
+<div class="text-on-surface-variant py-2">M</div>
+<div class="text-on-surface-variant py-2">T</div>
+<div class="text-on-surface-variant py-2">W</div>
+<div class="text-on-surface-variant py-2">T</div>
+<div class="text-on-surface-variant py-2">F</div>
+<div class="text-on-surface-variant py-2">S</div>
+<!-- Calendar days -->
+<div class="py-3 text-outline-variant">28</div>
+<div class="py-3 text-outline-variant">29</div>
+<div class="py-3 text-outline-variant">30</div>
+<div class="py-3 text-outline-variant">31</div>
+<div class="py-3 hover:bg-primary/20 cursor-pointer rounded-lg">1</div>
+<div class="py-3 hover:bg-primary/20 cursor-pointer rounded-lg">2</div>
+<div class="py-3 hover:bg-primary/20 cursor-pointer rounded-lg">3</div>
+<div class="py-3 hover:bg-primary/20 cursor-pointer rounded-lg">4</div>
+<div class="py-3 hover:bg-primary/20 cursor-pointer rounded-lg">5</div>
+<div class="py-3 hover:bg-primary/20 cursor-pointer rounded-lg">6</div>
+<div class="py-3 hover:bg-primary/20 cursor-pointer rounded-lg">7</div>
+<div class="py-3 hover:bg-primary/20 cursor-pointer rounded-lg">8</div>
+<div class="py-3 bg-primary text-white font-bold rounded-lg">9</div>
+<div class="py-3 hover:bg-primary/20 cursor-pointer rounded-lg">10</div>
+<div class="py-3 hover:bg-primary/20 cursor-pointer rounded-lg">11</div>
+<div class="py-3 hover:bg-primary/20 cursor-pointer rounded-lg">12</div>
+<div class="py-3 hover:bg-primary/20 cursor-pointer rounded-lg">13</div>
+</div>
+</div>
+<!-- Time Slots -->
+<div class="space-y-4">
+<span class="font-label-md text-label-md text-on-surface-variant">Available Slots (WAT)</span>
+<div class="grid grid-cols-2 gap-3">
+<button class="py-3 border border-outline-variant rounded-lg font-label-md text-label-md hover:border-primary hover:text-primary transition-all">09:00 AM</button>
+<button class="py-3 border border-outline-variant rounded-lg font-label-md text-label-md hover:border-primary hover:text-primary transition-all">10:30 AM</button>
+<button class="py-3 bg-primary/10 border-2 border-primary rounded-lg font-label-md text-label-md text-primary font-bold">02:00 PM</button>
+<button class="py-3 border border-outline-variant rounded-lg font-label-md text-label-md hover:border-primary hover:text-primary transition-all">03:30 PM</button>
+<button class="py-3 border border-outline-variant rounded-lg font-label-md text-label-md opacity-40 cursor-not-allowed">05:00 PM</button>
+<button class="py-3 border border-outline-variant rounded-lg font-label-md text-label-md hover:border-primary hover:text-primary transition-all">06:30 PM</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Step 3: Identity Mode -->
+<section class="space-y-stack-md bg-surface-container-lowest p-8 rounded-xl card-shadow">
+<div class="flex justify-between items-start">
+<div>
+<h2 class="font-headline-sm text-headline-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">visibility</span>
+                                Identity Mode
+                            </h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Control how your therapist sees your profile</p>
+</div>
+<!-- Toggle -->
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-14 h-8 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:start-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-secondary"></div>
+</label>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+<div class="p-4 rounded-lg border border-outline-variant bg-surface-container-low flex gap-4">
+<span class="material-symbols-outlined text-on-surface-variant">person</span>
+<div>
+<h4 class="font-label-md text-label-md">Standard Profile</h4>
+<p class="text-body-sm text-on-surface-variant">Share your name and history for better continuity.</p>
+</div>
+</div>
+<div class="p-4 rounded-lg border-2 border-secondary bg-secondary/5 flex gap-4">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">masks</span>
+<div>
+<h4 class="font-label-md text-label-md text-secondary">Anonymous Mode</h4>
+<p class="text-body-sm text-on-surface-variant">Use an alias. Identity is hidden from the clinician.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Step 4: Payment Selection -->
+<section class="space-y-stack-md bg-surface-container-lowest p-8 rounded-xl card-shadow">
+<h2 class="font-headline-sm text-headline-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">payments</span>
+                        Payment Selection
+                    </h2>
+<div class="grid grid-cols-1 gap-4">
+<!-- Baridi Mob -->
+<label class="flex items-center justify-between p-6 border-2 border-primary rounded-xl bg-primary/5 cursor-pointer hover:border-primary transition-all">
+<div class="flex items-center gap-4">
+<input checked="" class="w-5 h-5 text-primary border-outline-variant focus:ring-primary" name="payment" type="radio"/>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold">Baridi Mob</span>
+<span class="text-body-sm text-on-surface-variant">Instant transfer for Algeria Post accounts</span>
+</div>
+</div>
+<div class="flex gap-2">
+<div class="h-10 w-16 rounded bg-surface-container-highest flex items-center justify-center font-bold text-primary italic">BM</div>
+</div>
+</label>
+<!-- Local Card -->
+<label class="flex items-center justify-between p-6 border border-outline-variant rounded-xl cursor-pointer hover:border-primary transition-all">
+<div class="flex items-center gap-4">
+<input class="w-5 h-5 text-primary border-outline-variant focus:ring-primary" name="payment" type="radio"/>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md">Local Card (CIB / Dahabia)</span>
+<span class="text-body-sm text-on-surface-variant">Secure Algerian interbank payment</span>
+</div>
+</div>
+<div class="flex gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-4xl">credit_card</span>
+</div>
+</label>
+</div>
+</section>
+</div>
+<!-- Summary Sidebar (Right Column) -->
+<aside class="lg:col-span-4 sticky top-24">
+<div class="bg-surface-container-lowest rounded-xl card-shadow border border-surface-container-highest overflow-hidden">
+<div class="p-6 border-b border-surface-container-highest">
+<h2 class="font-headline-sm text-headline-sm mb-4">Summary</h2>
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-full overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a friendly Middle Eastern male psychiatrist in a clinical setting, wearing a white coat over a light blue shirt. He has a warm, empathetic expression. The background is a softly blurred office with books and a houseplant, maintaining a high-end corporate wellness aesthetic with clean lines and soft lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjVOKRxO8VBqocdj4lyJXV4KVUTQi3aSLpX0B0SX2lFKq0H773osiL4e55uAFc3Z7YHInPCNVcztQ8Srs5rClAzFtQ9xj7PAcm420kHPAKWUHHIPNiugSUrwXxUTzSO-TwjE4gZFeS4HJ85C-TJ15I2DyIP-o6c6mdJBxB79N0UvUipOPnPEZqf2ps1UJEMJgWAXadb-SAlOSlHSvZP3m_danGEUmGEdFA58kOdS6W6RQUMZh_rtzbMrW2t3V1rhuzMJqDE8sxSTs"/>
+</div>
+<div>
+<h3 class="font-label-md text-label-md">Dr. Mourad Khelifa</h3>
+<p class="text-body-sm text-on-surface-variant">Clinical Psychologist</p>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="text-label-sm font-label-sm">Verified Professional</span>
+</div>
+</div>
+</div>
+</div>
+<div class="p-6 space-y-4">
+<div class="flex justify-between text-body-sm text-on-surface-variant">
+<span>Session Type</span>
+<span class="text-on-surface font-semibold">Video Call (50 min)</span>
+</div>
+<div class="flex justify-between text-body-sm text-on-surface-variant">
+<span>Date</span>
+<span class="text-on-surface font-semibold">Sun, June 9, 2024</span>
+</div>
+<div class="flex justify-between text-body-sm text-on-surface-variant">
+<span>Time</span>
+<span class="text-on-surface font-semibold">02:00 PM WAT</span>
+</div>
+<div class="flex justify-between text-body-sm text-on-surface-variant">
+<span>Mode</span>
+<span class="text-secondary font-semibold">Anonymous</span>
+</div>
+<div class="pt-4 mt-4 border-t border-surface-container-highest">
+<div class="flex justify-between items-center">
+<span class="font-headline-sm text-headline-sm">Total Price</span>
+<span class="font-headline-md text-headline-md text-primary font-bold">3500 DA</span>
+</div>
+</div>
+<div class="bg-secondary/10 p-3 rounded-lg flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">security</span>
+<span class="text-label-sm font-label-sm text-secondary">Secure SSL-Encrypted Transaction</span>
+</div>
+<button class="w-full py-4 bg-primary text-white rounded-xl font-label-md text-label-md hover:bg-primary-container transition-all active:scale-95 shadow-md flex justify-center items-center gap-2">
+<span>Confirm &amp; Pay</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<p class="text-[10px] text-center text-on-surface-variant uppercase tracking-wider leading-relaxed">
+                            By confirming, you agree to the PsyConnect terms of service and professional ethics guidelines.
+                        </p>
+</div>
+</div>
+<!-- Assistance Card -->
+<div class="mt-6 p-4 border border-outline-variant rounded-xl flex items-center gap-3 bg-white/50">
+<span class="material-symbols-outlined text-on-surface-variant">help_outline</span>
+<div>
+<p class="text-label-sm font-label-sm">Need help booking?</p>
+<a class="text-primary text-body-sm font-semibold hover:underline" href="#">Chat with Support</a>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer (Minimal for transaction pages) -->
+<footer class="w-full py-stack-lg px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-4 bg-surface-container-lowest border-t border-surface-container-highest">
+<span class="font-body-sm text-body-sm text-on-surface-variant">© 2024 PsyConnect. Secured for Algeria.</span>
+<div class="flex gap-6">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-sm text-body-sm" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-sm text-body-sm" href="#">Terms of Service</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-sm text-body-sm" href="#">Support</a>
+</div>
+</footer>
+<script>
+        // Simple Micro-interactions for Session Selection
+        document.querySelectorAll('.session-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.session-card').forEach(c => c.classList.remove('selected', 'border-primary', 'bg-primary/5'));
+                card.classList.add('selected', 'border-primary', 'bg-primary/5');
+            });
+        });
+
+        // Identity toggle listener
+        const identityToggle = document.querySelector('input[type="checkbox"]');
+        identityToggle.addEventListener('change', (e) => {
+            // Optional visual feedback logic
+        });
+    </script>
+<script src="/raw/_nav.js"></script>
+</body></html>

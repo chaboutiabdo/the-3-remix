@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PsyConnect Admin | Verification Queue</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7faf8;
+            color: #181c1b;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(253, 253, 253, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid #E8EDE9;
+        }
+        .custom-shadow {
+            box-shadow: 0px 4px 20px rgba(74, 111, 165, 0.06);
+        }
+        /* Custom scrollbar for professional feel */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f4f2;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c3c6d1;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-dim": "#d7dbd9",
+                      "primary-fixed": "#d5e3ff",
+                      "on-secondary-fixed": "#072100",
+                      "secondary-fixed": "#c6eeac",
+                      "on-background": "#181c1b",
+                      "surface-container": "#ebefed",
+                      "on-primary-fixed": "#001c3b",
+                      "on-secondary-container": "#496c36",
+                      "on-secondary": "#ffffff",
+                      "secondary": "#456732",
+                      "inverse-on-surface": "#eef1ef",
+                      "on-tertiary-fixed": "#002023",
+                      "primary-fixed-dim": "#a7c8ff",
+                      "inverse-primary": "#a7c8ff",
+                      "surface-tint": "#395f94",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-low": "#f1f4f2",
+                      "primary": "#30568b",
+                      "primary-container": "#4a6fa5",
+                      "tertiary-container": "#48757a",
+                      "secondary-container": "#c3eba9",
+                      "on-primary-container": "#edf1ff",
+                      "surface-variant": "#e0e3e1",
+                      "on-tertiary": "#ffffff",
+                      "background": "#f7faf8",
+                      "on-primary-fixed-variant": "#1e477b",
+                      "error": "#ba1a1a",
+                      "error-container": "#ffdad6",
+                      "secondary-fixed-dim": "#aad292",
+                      "outline": "#737780",
+                      "on-secondary-fixed-variant": "#2e4f1d",
+                      "on-surface-variant": "#43474f",
+                      "surface-container-high": "#e6e9e7",
+                      "on-tertiary-fixed-variant": "#1e4d52",
+                      "surface-container-highest": "#e0e3e1",
+                      "inverse-surface": "#2d3130",
+                      "tertiary-fixed-dim": "#a0cfd4",
+                      "on-tertiary-container": "#ccfaff",
+                      "on-error": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "surface-bright": "#f7faf8",
+                      "tertiary-fixed": "#bbebf1",
+                      "on-surface": "#181c1b",
+                      "on-primary": "#ffffff",
+                      "outline-variant": "#c3c6d1",
+                      "surface": "#f7faf8",
+                      "tertiary": "#2e5c61"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "container-max": "1200px",
+                      "stack-lg": "32px",
+                      "gutter": "24px",
+                      "stack-sm": "8px",
+                      "margin-mobile": "16px",
+                      "stack-md": "16px",
+                      "margin-desktop": "40px"
+              },
+              "fontFamily": {
+                      "headline-sm": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "body-md": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "label-sm": ["Inter"],
+                      "headline-lg-mobile": ["Inter"],
+                      "label-md": ["Inter"],
+                      "headline-lg": ["Inter"]
+              },
+              "fontSize": {
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "500"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.03em", "fontWeight": "500"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="flex min-h-screen" data-screen-id="8">
+<!-- SideNavBar (Authority: JSON) -->
+<aside class="hidden lg:flex flex-col py-stack-lg px-4 gap-y-2 h-screen w-64 fixed left-0 top-0 bg-surface-container-low dark:bg-surface-container-lowest border-r border-surface-container-highest dark:border-outline-variant z-40">
+<div class="mb-stack-lg px-4">
+<span class="font-headline-sm text-headline-sm font-bold text-primary">PsyConnect</span>
+</div>
+<div class="mb-stack-lg px-4 flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional portrait of a medical administrator in a clean modern office, soft lighting, minimalist corporate aesthetic, neutral color palette with teal accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAp6-tNQ4B3Wg5mRTfHw0F3hhYs1Oh0OmcT_LgDJ-DhIkSYrj68VRUA5AD0mY50HeuhDTt5ep7E5AqCDsJyPoFYv1uGNTn_Qs_GPUiZxi09ENNTgHdPRmnaV5fkwDzW1Cr3lbHZlwbY9J4fkvGBvZ3bdhme6BJxp9PLgW2Sn0ZZvQQ4yV4S3gqrHxeiyO1tJ_QPFr3OtuNN5j7eC_Y4V4suSbPh-pyqRpn1VQvTlxm-DJL3keVH7vC7cJMECI-eVSdaOCT-nUTvRsg"/>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface font-semibold">Welcome back</p>
+<p class="text-xs text-on-surface-variant">Verified Member</p>
+</div>
+</div>
+<nav class="flex-grow space-y-1">
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<!-- Active State: Determining "Appointments" or generic but "Dashboard" logic applies to queue -->
+<a class="flex items-center gap-3 px-4 py-2 bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-lg font-semibold cursor-pointer active:scale-95" href="#">
+<span class="material-symbols-outlined">verified_user</span>
+<span class="font-label-md text-label-md">Verification Queue</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-label-md text-label-md">Appointments</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="font-label-md text-label-md">Messages</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-label-md">Profile</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-container rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto border-t border-surface-container-highest pt-4 space-y-1">
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-md text-label-md">Help Center</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md text-label-md">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-grow lg:ml-64 min-h-screen pb-20 lg:pb-0">
+<!-- Header Section -->
+<header class="p-margin-desktop bg-surface/80 backdrop-blur-md sticky top-0 z-30">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-primary">Verification Queue</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Review and approve psychologist applications for the Algerian market.</p>
+</div>
+<div class="flex items-center gap-2 px-4 py-2 bg-surface-container-low border border-outline-variant rounded-full w-full max-w-md">
+<span class="material-symbols-outlined text-on-surface-variant">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full" placeholder="Search by name or specialty..." type="text"/>
+</div>
+</div>
+<!-- Filters -->
+<div class="flex flex-wrap gap-4 mt-6">
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Specialty</span>
+<select class="bg-surface border border-outline-variant rounded-lg px-3 py-1.5 text-sm focus:border-primary focus:ring-1 focus:ring-primary/20">
+<option>All Specialties</option>
+<option>Clinical Psychologist</option>
+<option>CBT Specialist</option>
+<option>Child Therapist</option>
+</select>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Status</span>
+<select class="bg-surface border border-outline-variant rounded-lg px-3 py-1.5 text-sm">
+<option>Document Uploaded</option>
+<option>Pending Review</option>
+<option>Resubmission Requested</option>
+</select>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Date Range</span>
+<button class="flex items-center gap-2 bg-surface border border-outline-variant rounded-lg px-3 py-1.5 text-sm hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-sm">calendar_month</span>
+                        Last 30 Days
+                    </button>
+</div>
+</div>
+</header>
+<!-- Queue Content -->
+<div class="px-margin-desktop pb-stack-lg flex flex-col xl:flex-row gap-6">
+<!-- Table Container -->
+<div class="flex-grow bg-surface-container-lowest rounded-xl border border-surface-container-highest custom-shadow overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-surface-container-highest">
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant">Clinician Name</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant">Specialty</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant">Experience</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant">Diploma Status</th>
+<th class="px-6 py-4 font-label-md text-label-md text-on-surface-variant text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-highest">
+<!-- Row 1: Selected/Highlighted -->
+<tr class="bg-primary/5 hover:bg-primary/10 transition-colors cursor-pointer border-l-4 border-primary">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-dim flex items-center justify-center font-bold text-xs">AS</div>
+<span class="font-body-md text-body-md font-semibold">Dr. Amira Saidani</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-secondary/10 text-secondary rounded text-xs font-medium">Clinical Psychologist</span>
+</td>
+<td class="px-6 py-4 font-body-sm text-body-sm">8 Years</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-sm">Document Uploaded</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="px-4 py-1.5 bg-primary text-on-primary rounded-lg text-sm font-medium hover:bg-primary-container transition-all">Review Application</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-dim flex items-center justify-center font-bold text-xs text-on-surface-variant">KM</div>
+<span class="font-body-md text-body-md font-semibold">Dr. Khaled Mansour</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-secondary/10 text-secondary rounded text-xs font-medium">CBT Specialist</span>
+</td>
+<td class="px-6 py-4 font-body-sm text-body-sm">12 Years</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-surface-dim"></span>
+<span class="text-sm">Pending Verification</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="px-4 py-1.5 border border-outline-variant text-primary rounded-lg text-sm font-medium hover:bg-surface-container-high transition-all">Review</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-dim flex items-center justify-center font-bold text-xs text-on-surface-variant">LF</div>
+<span class="font-body-md text-body-md font-semibold">Lina Ferhat</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-secondary/10 text-secondary rounded text-xs font-medium">Family Counselor</span>
+</td>
+<td class="px-6 py-4 font-body-sm text-body-sm">4 Years</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-sm">Document Uploaded</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="px-4 py-1.5 border border-outline-variant text-primary rounded-lg text-sm font-medium hover:bg-surface-container-high transition-all">Review</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-dim flex items-center justify-center font-bold text-xs text-on-surface-variant">RB</div>
+<span class="font-body-md text-body-md font-semibold">Dr. Rachid Benali</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-secondary/10 text-secondary rounded text-xs font-medium">Neuropsychologist</span>
+</td>
+<td class="px-6 py-4 font-body-sm text-body-sm">15 Years</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2 text-error">
+<span class="material-symbols-outlined text-sm">warning</span>
+<span class="text-sm">Missing License</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="px-4 py-1.5 border border-outline-variant text-primary rounded-lg text-sm font-medium hover:bg-surface-container-high transition-all">Review</button>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="p-4 bg-surface-container-low flex justify-between items-center">
+<p class="text-xs text-on-surface-variant">Showing 1-10 of 42 pending applications</p>
+<div class="flex gap-2">
+<button class="p-1 hover:bg-surface-container-high rounded"><span class="material-symbols-outlined text-lg">chevron_left</span></button>
+<button class="p-1 hover:bg-surface-container-high rounded"><span class="material-symbols-outlined text-lg">chevron_right</span></button>
+</div>
+</div>
+</div>
+<!-- Quick Preview Sidebar -->
+<aside class="w-full xl:w-96 flex-shrink-0 flex flex-col gap-6">
+<div class="bg-surface-container-lowest rounded-xl border border-surface-container-highest custom-shadow p-6 sticky top-40">
+<div class="flex justify-between items-start mb-6">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Quick Preview</h2>
+<span class="material-symbols-outlined text-outline cursor-pointer hover:text-on-surface transition-colors">close</span>
+</div>
+<!-- Diploma Thumbnail -->
+<div class="mb-6">
+<p class="font-label-sm text-label-sm text-outline mb-2 uppercase tracking-wide">University Diploma</p>
+<div class="relative group cursor-zoom-in">
+<div class="aspect-[4/3] rounded-lg border border-outline-variant overflow-hidden bg-surface-container-high">
+<img class="w-full h-full object-cover" data-alt="A high-quality, professional photograph of a medical university diploma with official seals and elegant typography, presented in a minimalist, well-lit digital scanner preview style. Soft shadows and clean background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-YEIzuNefB3nGXxuP9ygCVpMQU-qzW5nqs5LTF_xgjnrV-GlHXRMTrYJRVhFkZRhxeyqnKzYZyAI0aaclXVRAovVa8dMfeUtKuixCvRSbfV0IiGNkJOUauhSo5Z0veA6bDFNdfNJWk8hdo0MLpkb9bdSRQ4WVKbpEHgzYxbWHlxHyWjLYaUc1fTTUnEJC1aG2xAUOFQGtaRC09avsNcGN3ZA2VwiBEclgU9c46uKPIK_jOaJe4v0QVQy4CgZRwQo_aySeumsDfSw"/>
+</div>
+<div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+<span class="bg-surface text-primary px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">fullscreen</span> View Large
+                                </span>
+</div>
+</div>
+</div>
+<!-- Details -->
+<div class="space-y-4 mb-6">
+<div>
+<p class="font-label-sm text-label-sm text-outline uppercase tracking-wide">License Number</p>
+<p class="font-body-md text-body-md font-mono text-on-surface bg-surface-container-low px-3 py-1.5 rounded mt-1 border border-outline-variant/30">DZ-PSY-2024-9981</p>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-outline uppercase tracking-wide">Issuing Authority</p>
+<p class="font-body-md text-body-md text-on-surface mt-1">Ministry of Higher Education and Scientific Research, Algeria</p>
+</div>
+</div>
+<!-- Notes Section -->
+<div class="mb-8">
+<label class="font-label-sm text-label-sm text-outline uppercase tracking-wide block mb-2">Internal Admin Notes</label>
+<textarea class="w-full h-24 bg-surface-container-lowest border border-outline-variant rounded-lg p-3 text-sm focus:border-primary focus:ring-1 focus:ring-primary/20 resize-none" placeholder="Add private notes about this application..."></textarea>
+</div>
+<!-- Action Buttons -->
+<div class="grid grid-cols-1 gap-3">
+<button class="w-full py-3 bg-secondary text-on-secondary rounded-lg font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-all">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            Verify &amp; Approve
+                        </button>
+<button class="w-full py-3 border border-outline text-on-surface-variant rounded-lg font-bold flex items-center justify-center gap-2 hover:bg-error-container hover:text-on-error-container hover:border-error transition-all">
+<span class="material-symbols-outlined text-sm">cancel</span>
+                            Reject / Request Info
+                        </button>
+</div>
+</div>
+<!-- Security Indicator Card -->
+<div class="bg-primary/5 rounded-xl border border-primary/20 p-4 flex items-start gap-4">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<div>
+<p class="text-sm font-bold text-primary">Security Protocol Active</p>
+<p class="text-xs text-on-surface-variant">All uploads are encrypted and scanned for integrity. Verify the holographic seal on the digital scan.</p>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- BottomNavBar (Authority: JSON - Mobile Only) -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 px-4 pb-safe bg-surface/95 backdrop-blur-sm border-t border-surface-container-highest dark:border-outline-variant shadow-lg">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant active:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm-mobile">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed-dim font-bold active:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">verified_user</span>
+<span class="font-label-sm text-label-sm-mobile">Verify</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant active:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">mail</span>
+<span class="font-label-sm text-label-sm-mobile">Chat</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant active:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">menu</span>
+<span class="font-label-sm text-label-sm-mobile">Menu</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for table rows
+        document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('click', () => {
+                document.querySelectorAll('tbody tr').forEach(r => {
+                    r.classList.remove('bg-primary/5', 'border-l-4', 'border-primary');
+                    r.classList.add('hover:bg-surface-container-low');
+                });
+                row.classList.add('bg-primary/5', 'border-l-4', 'border-primary');
+                row.classList.remove('hover:bg-surface-container-low');
+                
+                // Simulate updating the preview sidebar name
+                const name = row.querySelector('.font-semibold').innerText;
+                document.querySelector('h2').innerText = `Preview: ${name}`;
+            });
+        });
+    </script>
+<script src="/raw/_nav.js"></script>
+</body></html>

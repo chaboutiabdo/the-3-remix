@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PsyConnect | Review &amp; Submit Application</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(253, 253, 253, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid #E8EDE9;
+        }
+        .signature-pad {
+            background: #FDFDFD;
+            border: 2px dashed #D1D9D3;
+            height: 120px;
+            cursor: crosshair;
+        }
+        .step-completed {
+            background-color: #30568b;
+            color: #ffffff;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#1e4d52",
+                        "secondary-container": "#c3eba9",
+                        "surface": "#f7faf8",
+                        "on-secondary-fixed": "#072100",
+                        "primary-fixed": "#d5e3ff",
+                        "outline": "#737780",
+                        "on-primary": "#ffffff",
+                        "background": "#f7faf8",
+                        "tertiary-fixed": "#bbebf1",
+                        "on-primary-container": "#edf1ff",
+                        "outline-variant": "#c3c6d1",
+                        "tertiary": "#2e5c61",
+                        "surface-container": "#ebefed",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed-dim": "#aad292",
+                        "primary-container": "#4a6fa5",
+                        "on-background": "#181c1b",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#2d3130",
+                        "surface-bright": "#f7faf8",
+                        "error-container": "#ffdad6",
+                        "surface-container-high": "#e6e9e7",
+                        "primary": "#30568b",
+                        "primary-fixed-dim": "#a7c8ff",
+                        "inverse-on-surface": "#eef1ef",
+                        "surface-container-low": "#f1f4f2",
+                        "secondary-fixed": "#c6eeac",
+                        "inverse-primary": "#a7c8ff",
+                        "secondary": "#456732",
+                        "on-tertiary-fixed": "#002023",
+                        "surface-container-highest": "#e0e3e1",
+                        "on-surface": "#181c1b",
+                        "surface-tint": "#395f94",
+                        "on-primary-fixed": "#001c3b",
+                        "on-secondary-container": "#496c36",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#1e477b",
+                        "on-tertiary-container": "#ccfaff",
+                        "surface-dim": "#d7dbd9",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface-variant": "#43474f",
+                        "surface-variant": "#e0e3e1",
+                        "error": "#ba1a1a",
+                        "tertiary-container": "#48757a",
+                        "tertiary-fixed-dim": "#a0cfd4",
+                        "on-secondary-fixed-variant": "#2e4f1d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "16px",
+                        "container-max": "1200px",
+                        "gutter": "24px",
+                        "stack-sm": "8px",
+                        "stack-lg": "32px",
+                        "margin-desktop": "40px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.03em", "fontWeight": "500"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen" data-screen-id="11">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface border-b border-outline-variant flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 w-full">
+<div class="font-headline-md text-headline-md font-bold text-primary">PsyConnect</div>
+<div class="flex items-center gap-stack-md">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:bg-surface-container-low transition-colors p-2 rounded-full">help</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:bg-surface-container-low transition-colors p-2 rounded-full">notifications</span>
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a friendly Middle Eastern psychologist in a modern clinic office, wearing business casual attire, soft natural lighting, high-quality photography, calming tones of blue and sage green." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQ-7UFRhcOSz9ywOGh6CbIdF97pU8vb0VfYD14w5akNg9F1kjPthXZjaRheCIQcLOLf9wvm0wUnDnz08ikBDUV_OqlhKbWCwzZnVsPXvKHl5M-LXJJYQhuMIWVjor3pWX7c3qfZeElMJYFPE6P-IsrKXIjxyNma2ff5s7Sln7-8A4h3Dv1QeYp1MlwWogd8PIw6bxz8bR85o1FURGocm1O5EslxG8OwhKrYRPiJloVcESfXfXh-2-KxqawLEviShmvFeKlxSaKF_I"/>
+</div>
+</div>
+</header>
+<div class="flex pt-16 h-full min-h-[calc(100vh-64px)]">
+<!-- SideNavBar -->
+<aside class="h-screen w-64 hidden md:flex flex-col bg-surface-container-low border-r border-outline-variant p-gutter gap-stack-sm sticky top-16">
+<div class="mb-stack-lg">
+<p class="font-headline-sm text-headline-sm font-bold text-primary">Onboarding</p>
+<p class="font-label-md text-label-md text-on-surface-variant">Application Progress</p>
+</div>
+<nav class="flex flex-col gap-2">
+<div class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-label-md">Personal Info</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all">
+<span class="material-symbols-outlined">verified</span>
+<span class="font-label-md text-label-md">Credentials</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all">
+<span class="material-symbols-outlined">upload_file</span>
+<span class="font-label-md text-label-md">Documents</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-label-md text-label-md">Availability</span>
+</div>
+<div class="flex items-center gap-3 p-3 bg-secondary-container text-on-secondary-container rounded-lg font-bold">
+<span class="material-symbols-outlined">pending_actions</span>
+<span class="font-label-md text-label-md">Review Status</span>
+</div>
+</nav>
+<div class="mt-auto pt-stack-lg">
+<button class="w-full py-2 border border-outline text-primary font-label-md rounded-lg hover:bg-surface-container-high transition-all">
+                    Save Draft
+                </button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 px-margin-mobile md:px-margin-desktop py-stack-lg overflow-y-auto max-w-container-max mx-auto">
+<!-- Progress Stepper (Mobile & Desktop) -->
+<div class="mb-stack-lg">
+<div class="flex items-center justify-between max-w-2xl mx-auto md:mx-0">
+<div class="flex flex-col items-center gap-1">
+<div class="w-10 h-10 rounded-full flex items-center justify-center bg-primary text-white">
+<span class="material-symbols-outlined text-[20px]">check</span>
+</div>
+<span class="text-label-sm font-label-sm hidden md:block">Personal</span>
+</div>
+<div class="flex-1 h-[2px] bg-primary mx-2 mb-6"></div>
+<div class="flex flex-col items-center gap-1">
+<div class="w-10 h-10 rounded-full flex items-center justify-center bg-primary text-white">
+<span class="material-symbols-outlined text-[20px]">check</span>
+</div>
+<span class="text-label-sm font-label-sm hidden md:block">Professional</span>
+</div>
+<div class="flex-1 h-[2px] bg-primary mx-2 mb-6"></div>
+<div class="flex flex-col items-center gap-1">
+<div class="w-10 h-10 rounded-full flex items-center justify-center bg-primary text-white">
+<span class="material-symbols-outlined text-[20px]">check</span>
+</div>
+<span class="text-label-sm font-label-sm hidden md:block">Documents</span>
+</div>
+<div class="flex-1 h-[2px] bg-outline-variant mx-2 mb-6"></div>
+<div class="flex flex-col items-center gap-1">
+<div class="w-10 h-10 rounded-full flex items-center justify-center border-2 border-primary text-primary font-bold">4</div>
+<span class="text-label-sm font-label-sm hidden md:block">Review</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+<!-- Left Column: Review Sections -->
+<div class="md:col-span-8 space-y-8">
+<section>
+<h1 class="font-headline-lg text-headline-lg mb-2">Final Review</h1>
+<p class="text-on-surface-variant font-body-md max-w-2xl">Please take a moment to review all the information provided. Once submitted, your application will undergo a verification process by our clinical board.</p>
+</section>
+<!-- Bento Grid for Summary -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Personal Info Card -->
+<div class="glass-card p-6 rounded-xl flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<h3 class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant">Personal Identity</h3>
+<button class="text-primary hover:underline text-label-sm">Edit</button>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-full bg-surface-container-high overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional passport-style photo of a clinical psychologist, wearing a light grey blazer, neutral background, bright even lighting, high resolution, soft corporate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEvB_HDLf0kPsjcx72fYgmqgUFfKS6_LGMYfRzLMvCz-46uK7yzVpvarJkgCt8cAAvALk1xgGV5dLLR5wk7sBGTbb2gSTlKzP7AosgVsIee86jWMOO80iTrtcFIKpA9FqNSIguNs5Enxg6NvuPCZjNS4kSaICcDugf5C4IaarSOh9LhtuN9uakLh0wjwWlfNaVX6TvofpZVOqZa5psGRifD7u8OKFSAJR1eT7xF-yW4kgGh6goE1frEbjchgAulFLgma70rAAhuRM"/>
+</div>
+<div>
+<p class="font-bold text-body-lg">Dr. Amira Kaci</p>
+<p class="text-on-surface-variant text-body-sm">amira.kaci@email.dz</p>
+<p class="text-on-surface-variant text-body-sm">+213 550 12 34 56</p>
+</div>
+</div>
+</div>
+<!-- Professional Credentials -->
+<div class="glass-card p-6 rounded-xl flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<h3 class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant">Credentials</h3>
+<button class="text-primary hover:underline text-label-sm">Edit</button>
+</div>
+<div class="space-y-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">verified</span>
+<p class="font-label-md">License: #DZ-PSY-2024-882</p>
+</div>
+<div class="flex flex-wrap gap-2 pt-2">
+<span class="px-3 py-1 bg-secondary/10 text-secondary text-label-sm rounded-full">Cognitive Behavioral Therapy</span>
+<span class="px-3 py-1 bg-secondary/10 text-secondary text-label-sm rounded-full">Trauma-Informed</span>
+<span class="px-3 py-1 bg-secondary/10 text-secondary text-label-sm rounded-full">Anxiety Disorders</span>
+</div>
+</div>
+</div>
+<!-- Documents Section -->
+<div class="glass-card p-6 rounded-xl md:col-span-2">
+<div class="flex justify-between items-start mb-4">
+<h3 class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant">Verified Documents</h3>
+<button class="text-primary hover:underline text-label-sm">Edit</button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+<div class="flex items-center gap-3 p-3 border border-outline-variant rounded-lg bg-surface">
+<span class="material-symbols-outlined text-primary">description</span>
+<div class="overflow-hidden">
+<p class="font-label-sm truncate">Degree_Cert.pdf</p>
+<p class="text-[10px] text-on-surface-variant">2.4 MB • PDF</p>
+</div>
+</div>
+<div class="flex items-center gap-3 p-3 border border-outline-variant rounded-lg bg-surface">
+<span class="material-symbols-outlined text-primary">badge</span>
+<div class="overflow-hidden">
+<p class="font-label-sm truncate">Identity_Card_Front.jpg</p>
+<p class="text-[10px] text-on-surface-variant">1.1 MB • JPG</p>
+</div>
+</div>
+<div class="flex items-center gap-3 p-3 border border-outline-variant rounded-lg bg-surface">
+<span class="material-symbols-outlined text-primary">workspace_premium</span>
+<div class="overflow-hidden">
+<p class="font-label-sm truncate">Specialization_V3.pdf</p>
+<p class="text-[10px] text-on-surface-variant">3.8 MB • PDF</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Declarations & Signature -->
+<div class="glass-card p-8 rounded-xl space-y-6">
+<h3 class="font-headline-sm text-headline-sm">Final Submission Declaration</h3>
+<div class="space-y-4">
+<label class="flex items-start gap-3 cursor-pointer group">
+<input class="mt-1 rounded border-outline-variant text-primary focus:ring-primary h-5 w-5" type="checkbox"/>
+<span class="text-body-md text-on-surface">I certify that all information provided is accurate and that I am licensed to practice psychology within the Algerian regulatory framework.</span>
+</label>
+<label class="flex items-start gap-3 cursor-pointer group">
+<input class="mt-1 rounded border-outline-variant text-primary focus:ring-primary h-5 w-5" type="checkbox"/>
+<span class="text-body-md text-on-surface">I have read and agree to the <a class="text-primary hover:underline font-bold" href="#">Clinical Provider Terms of Service</a> and the Privacy Policy regarding patient data management.</span>
+</label>
+</div>
+<div class="pt-4">
+<p class="font-label-md mb-2">Digital Signature</p>
+<div class="signature-pad rounded-lg flex items-center justify-center relative">
+<span class="text-on-surface-variant font-body-sm opacity-40 select-none">Draw your signature here or click to upload image</span>
+<div class="absolute bottom-2 right-2">
+<button class="text-[12px] bg-surface-container-high px-2 py-1 rounded text-on-surface-variant">Clear</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Action Box -->
+<div class="md:col-span-4">
+<div class="sticky top-24 space-y-4">
+<div class="glass-card p-6 rounded-xl border-l-4 border-l-primary">
+<h4 class="font-bold text-headline-sm mb-4">Submission Ready</h4>
+<div class="space-y-4 mb-8">
+<div class="flex items-center gap-2 text-secondary">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+<span class="text-body-sm">All mandatory fields completed</span>
+</div>
+<div class="flex items-center gap-2 text-secondary">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+<span class="text-body-sm">ID Verification documents verified</span>
+</div>
+<div class="flex items-center gap-2 text-secondary">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+<span class="text-body-sm">Work schedule defined</span>
+</div>
+</div>
+<button class="w-full bg-primary text-white py-4 rounded-xl font-bold text-headline-sm hover:opacity-90 active:scale-[0.98] transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2 group">
+                                Submit Application
+                                <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">send</span>
+</button>
+<p class="text-center text-label-sm text-on-surface-variant mt-4">
+                                Typical review time: 48-72 hours
+                            </p>
+</div>
+<!-- Help Card -->
+<div class="bg-surface-container p-6 rounded-xl">
+<p class="font-bold text-body-md mb-2">Need assistance?</p>
+<p class="text-body-sm text-on-surface-variant mb-4">Our clinical onboarding team is here to help with any technical or professional questions.</p>
+<a class="text-primary font-label-md flex items-center gap-1 hover:gap-2 transition-all" href="#">
+                                Chat with support <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<!-- Spacer for mobile footer -->
+<div class="h-24 md:hidden"></div>
+</main>
+</div>
+<!-- BottomNavBar (Mobile only) -->
+<nav class="fixed bottom-0 left-0 w-full md:hidden flex justify-around items-center py-2 px-margin-mobile bg-surface border-t border-outline-variant shadow-lg z-50">
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-70">
+<span class="material-symbols-outlined">edit</span>
+<span class="font-label-sm text-label-sm">Step 1</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-70">
+<span class="material-symbols-outlined">school</span>
+<span class="font-label-sm text-label-sm">Step 2</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-70">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-sm text-label-sm">Step 3</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-3 py-1">
+<span class="material-symbols-outlined">hourglass_empty</span>
+<span class="font-label-sm text-label-sm">Status</span>
+</div>
+</nav>
+<script>
+        // Simple Micro-interaction for drawing signature placeholder
+        const signaturePad = document.querySelector('.signature-pad');
+        let isDrawing = false;
+        
+        signaturePad.addEventListener('mousedown', () => {
+            isDrawing = true;
+            signaturePad.classList.add('border-primary');
+            signaturePad.querySelector('span').textContent = 'Recording signature...';
+        });
+
+        window.addEventListener('mouseup', () => {
+            if(isDrawing) {
+                isDrawing = false;
+                signaturePad.classList.remove('border-primary');
+            }
+        });
+
+        // Toggle active states for checkboxes
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const submitBtn = document.querySelector('button.bg-primary');
+        
+        function updateSubmitState() {
+            const allChecked = Array.from(checkboxes).every(c => c.checked);
+            if (allChecked) {
+                submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                submitBtn.disabled = false;
+            } else {
+                submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                submitBtn.disabled = true;
+            }
+        }
+
+        checkboxes.forEach(c => c.addEventListener('change', updateSubmitState));
+        // Initialize state
+        updateSubmitState();
+    </script>
+<script src="/raw/_nav.js"></script>
+</body></html>

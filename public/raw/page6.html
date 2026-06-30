@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PsyConnect | Secure Consultation Room</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        /* Custom scrollbar for Chat to match Modern Corporate aesthetic */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e0e3e1;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #c3c6d1;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "error": "#ba1a1a",
+                      "tertiary-container": "#48757a",
+                      "outline-variant": "#c3c6d1",
+                      "error-container": "#ffdad6",
+                      "on-primary-container": "#edf1ff",
+                      "tertiary-fixed-dim": "#a0cfd4",
+                      "on-secondary-fixed": "#072100",
+                      "inverse-surface": "#2d3130",
+                      "on-tertiary-fixed": "#002023",
+                      "on-background": "#181c1b",
+                      "primary-fixed-dim": "#a7c8ff",
+                      "on-secondary-fixed-variant": "#2e4f1d",
+                      "inverse-on-surface": "#eef1ef",
+                      "surface-tint": "#395f94",
+                      "secondary-fixed-dim": "#aad292",
+                      "on-tertiary-container": "#ccfaff",
+                      "background": "#f7faf8",
+                      "surface-container-lowest": "#ffffff",
+                      "outline": "#737780",
+                      "primary": "#30568b",
+                      "on-primary-fixed": "#001c3b",
+                      "surface-bright": "#f7faf8",
+                      "surface-container-low": "#f1f4f2",
+                      "on-secondary-container": "#496c36",
+                      "surface-container-highest": "#e0e3e1",
+                      "surface-container-high": "#e6e9e7",
+                      "on-surface-variant": "#43474f",
+                      "on-primary-fixed-variant": "#1e477b",
+                      "surface-variant": "#e0e3e1",
+                      "on-error": "#ffffff",
+                      "on-tertiary": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "on-surface": "#181c1b",
+                      "secondary": "#456732",
+                      "on-tertiary-fixed-variant": "#1e4d52",
+                      "surface": "#f7faf8",
+                      "secondary-container": "#c3eba9",
+                      "on-secondary": "#ffffff",
+                      "tertiary-fixed": "#bbebf1",
+                      "inverse-primary": "#a7c8ff",
+                      "on-primary": "#ffffff",
+                      "surface-container": "#ebefed",
+                      "secondary-fixed": "#c6eeac",
+                      "tertiary": "#2e5c61",
+                      "surface-dim": "#d7dbd9",
+                      "primary-container": "#4a6fa5",
+                      "primary-fixed": "#d5e3ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-md": "16px",
+                      "margin-mobile": "16px",
+                      "container-max": "1200px",
+                      "stack-lg": "32px",
+                      "margin-desktop": "40px",
+                      "stack-sm": "8px",
+                      "gutter": "24px"
+              },
+              "fontFamily": {
+                      "label-sm": ["Inter"],
+                      "label-md": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "headline-sm": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "body-md": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "headline-lg-mobile": ["Inter"]
+              },
+              "fontSize": {
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.03em", "fontWeight": "500"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "500"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+      </script>
+</head>
+<body class="bg-surface-dim font-body-md text-on-surface flex flex-col h-screen overflow-hidden" data-screen-id="6">
+<!-- TopNavBar Strategy (Simplified for focused session) -->
+<header class="h-16 px-6 bg-surface-container-lowest border-b border-outline-variant flex items-center justify-between z-50">
+<div class="flex items-center gap-4">
+<span class="font-headline-md text-headline-md font-semibold text-primary">PsyConnect</span>
+<div class="h-6 w-px bg-outline-variant mx-2"></div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary fill-icon">lock</span>
+<span class="font-label-md text-label-md text-secondary">Secure Connection</span>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex flex-col items-end">
+<span class="font-label-md text-label-md text-on-surface">Dr. Amine Rahmani</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Clinical Psychologist</span>
+</div>
+<div class="flex items-center bg-error-container text-on-error-container px-4 py-1.5 rounded-full gap-2">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span class="font-label-md text-label-md font-bold" id="timer">45:00 remaining</span>
+</div>
+<button class="bg-error text-on-error px-5 py-2 rounded-lg font-label-md text-label-md hover:bg-opacity-90 transition-all active:scale-95">
+                End Session
+            </button>
+</div>
+</header>
+<!-- Main Content: Split Screen Layout -->
+<main class="flex-1 flex overflow-hidden">
+<!-- Left Side: Video/Audio Area -->
+<section class="flex-1 relative bg-black flex flex-col overflow-hidden">
+<!-- Professional Video Feed -->
+<div class="relative w-full h-full flex items-center justify-center group">
+<div class="absolute inset-0 z-0 overflow-hidden">
+<img class="w-full h-full object-cover opacity-90 transition-opacity duration-700 group-hover:opacity-100" data-alt="A cinematic, high-definition close-up of a professional male psychologist in a warm, dimly lit office. He wears a neutral-toned sweater and has a calm, empathetic expression. The background shows soft-focus bookshelves and a warm lamp, creating a safe and private atmosphere in a modern corporate style with soft Slate Blue undertones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeTM8yhDKMwydmcc1FiwLUCBa1RTBr7vGYrvD4HuMvAk_sIUCen1EP660ME0l5A5WsdzbrCIOquaE0rsDirRsculhXgaK5y6wusYzMsf8OEERUh_hbrzjEOf8uadXq93DHecutz_aqwMjJG7mTD8x_EpWiwMNKy3uV3Vbz1AGkfxWOVBM7O8I1oXwAPsFef3JHTEHHiCImCgsrJMaNDizOzlSGGB9sS4_mllCoF5MIJ0Q1ge-4s6hCnSxaVnPO3L0uIITKZ1iGdhs"/>
+</div>
+<!-- Patient Pip (Picture in Picture) -->
+<div class="absolute bottom-20 right-6 w-48 h-32 rounded-xl border-2 border-primary-fixed shadow-lg overflow-hidden bg-surface-container-high z-20">
+<img class="w-full h-full object-cover" data-alt="A mirror view of a patient participating in a teletherapy session from a brightly lit, clean minimalist room. The lighting is soft and high-key, highlighting a serene domestic environment. The image is crisp and professional, fitting the PsyConnect brand identity of clarity and safety." src="https://lh3.googleusercontent.com/aida-public/AB6AXuACu_CSzEikShD7lNEvPdji3Su0qg_zlQxSd87mrzAMyDEx6CaD7kgKTnCn27aGty_SFzsoSs6Tv03N2zc3jZNC3QsiOTcinW0iMCTZof1NMOnY_Fs2VQZJBskVNP3Nc3NuJDQBzqbw0AAEaqzP4h6gnWsX_VWFYY8HHnKxhSatTPyG8gXwbegM6UeE-sjJg-uEKU5oNhla0PMbj7l9q8f22Q14JNtixdXFmfk61Hn5eIO4jf42GIEbxNLtyRsA5wr8rNztnmnwpSE"/>
+<div class="absolute bottom-1 left-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[10px] text-white">mic</span>
+<span class="text-[10px] text-white font-label-sm">You</span>
+</div>
+</div>
+<!-- Overlay Controls (Floating) -->
+<div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-4 z-30">
+<button class="w-12 h-12 rounded-full bg-surface-container-lowest/20 backdrop-blur-md text-white flex items-center justify-center hover:bg-primary-container transition-all active:scale-90" title="Mute Microphone">
+<span class="material-symbols-outlined">mic</span>
+</button>
+<button class="w-12 h-12 rounded-full bg-surface-container-lowest/20 backdrop-blur-md text-white flex items-center justify-center hover:bg-primary-container transition-all active:scale-90" title="Toggle Camera">
+<span class="material-symbols-outlined">videocam</span>
+</button>
+<button class="w-12 h-12 rounded-full bg-surface-container-lowest/20 backdrop-blur-md text-white flex items-center justify-center hover:bg-primary-container transition-all active:scale-90" title="Share Screen">
+<span class="material-symbols-outlined">screen_share</span>
+</button>
+<button class="w-12 h-12 rounded-full bg-surface-container-lowest/20 backdrop-blur-md text-white flex items-center justify-center hover:bg-primary-container transition-all active:scale-90" title="Video Settings">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</div>
+<!-- Connection Status & Fallback -->
+<div class="absolute top-6 left-6 z-10 flex flex-col gap-1">
+<div class="flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-white text-xs font-label-sm">HD • Low Latency</span>
+</div>
+<a class="text-white/60 hover:text-white text-[11px] font-label-sm underline transition-colors" href="#">Trouble connecting?</a>
+</div>
+</section>
+<!-- Right Side: Secure Chat Panel -->
+<aside class="w-[400px] bg-surface-container-lowest border-l border-outline-variant flex flex-col z-40">
+<!-- Chat Header -->
+<div class="p-4 border-b border-outline-variant">
+<div class="flex items-center gap-2 text-on-surface-variant mb-1">
+<span class="material-symbols-outlined text-sm">security</span>
+<span class="font-label-sm text-label-sm tracking-wide uppercase">Confidential Session</span>
+</div>
+<p class="text-[11px] text-on-surface-variant leading-tight">Messages are encrypted and will not be stored after the session ends for your privacy.</p>
+</div>
+<!-- Chat Messages Container -->
+<div class="flex-1 overflow-y-auto p-4 flex flex-col gap-4 custom-scrollbar bg-surface-container-low/30">
+<!-- System Note -->
+<div class="text-center py-2">
+<span class="bg-surface-container-highest text-on-surface-variant px-3 py-1 rounded-full text-[10px] font-label-sm">Session started at 14:00</span>
+</div>
+<!-- Message: Doctor -->
+<div class="flex flex-col items-start max-w-[85%]">
+<div class="bg-surface-container-highest text-on-surface p-3 rounded-2xl rounded-tl-none">
+<p class="font-body-sm text-body-sm">Hello, how are you feeling today? We can start by reviewing our goals from last week.</p>
+</div>
+<span class="text-[10px] text-on-surface-variant mt-1 ml-1">14:02</span>
+</div>
+<!-- Message: Patient (User) -->
+<div class="flex flex-col items-end self-end max-w-[85%]">
+<div class="bg-primary text-on-primary p-3 rounded-2xl rounded-tr-none">
+<p class="font-body-sm text-body-sm">I've been feeling a bit better, but I had a stressful moment yesterday at work.</p>
+</div>
+<span class="text-[10px] text-on-surface-variant mt-1 mr-1">14:05</span>
+</div>
+<!-- Message: Doctor -->
+<div class="flex flex-col items-start max-w-[85%]">
+<div class="bg-surface-container-highest text-on-surface p-3 rounded-2xl rounded-tl-none">
+<p class="font-body-sm text-body-sm">I understand. Let's explore that moment. What triggered the stress specifically?</p>
+</div>
+<span class="text-[10px] text-on-surface-variant mt-1 ml-1">14:06</span>
+</div>
+</div>
+<!-- Chat Input -->
+<div class="p-4 bg-surface-container-lowest border-t border-outline-variant">
+<div class="relative flex items-center">
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-xl py-3 pl-4 pr-12 text-body-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" placeholder="Type your message..." type="text"/>
+<button class="absolute right-2 w-8 h-8 flex items-center justify-center text-primary hover:bg-primary-container/10 rounded-lg transition-colors">
+<span class="material-symbols-outlined fill-icon">send</span>
+</button>
+</div>
+<div class="mt-3 flex items-center justify-between">
+<button class="text-on-surface-variant hover:text-primary flex items-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-lg">attach_file</span>
+<span class="font-label-sm text-label-sm">Share Resource</span>
+</button>
+<span class="text-[10px] text-on-surface-variant italic">Only you and Dr. Rahmani can see this.</span>
+</div>
+</div>
+</aside>
+</main>
+<!-- Simple JS for Timer Interaction -->
+<script>
+        let timeLeft = 45 * 60;
+        const timerDisplay = document.getElementById('timer');
+
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            timerDisplay.textContent = `${minutes}:${seconds} remaining`;
+            if (timeLeft > 0) {
+                timeLeft--;
+            }
+        }
+
+        setInterval(updateTimer, 1000);
+
+        // Micro-interaction for buttons
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (btn.querySelector('.material-symbols-outlined') && btn.title !== 'End Session') {
+                    btn.classList.toggle('text-error');
+                    btn.classList.toggle('bg-error/20');
+                }
+            });
+        });
+    </script>
+<script src="/raw/_nav.js"></script>
+</body></html>

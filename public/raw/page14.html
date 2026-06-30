@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PsyConnect | Psychologist Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F4F7F5; /* Brand Level 0 */
+        }
+        .glass-card {
+            background: #FDFDFD;
+            border: 1px solid #E8EDE9;
+            box-shadow: 0px 4px 20px rgba(74, 111, 165, 0.06);
+        }
+        .sidebar-active {
+            background-color: #c3eba9; /* secondary-container */
+            color: #496c36; /* on-secondary-container */
+        }
+        .scroll-hide::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-surface": "#2d3130",
+                    "outline-variant": "#c3c6d1",
+                    "on-secondary": "#ffffff",
+                    "on-background": "#181c1b",
+                    "on-secondary-fixed-variant": "#2e4f1d",
+                    "primary": "#30568b",
+                    "on-secondary-container": "#496c36",
+                    "tertiary-fixed-dim": "#a0cfd4",
+                    "on-error-container": "#93000a",
+                    "error": "#ba1a1a",
+                    "surface": "#f7faf8",
+                    "on-primary-fixed": "#001c3b",
+                    "primary-container": "#4a6fa5",
+                    "secondary-fixed-dim": "#aad292",
+                    "on-tertiary-container": "#ccfaff",
+                    "on-primary": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed": "#bbebf1",
+                    "tertiary": "#2e5c61",
+                    "primary-fixed-dim": "#a7c8ff",
+                    "inverse-primary": "#a7c8ff",
+                    "background": "#f7faf8",
+                    "outline": "#737780",
+                    "tertiary-container": "#48757a",
+                    "surface-dim": "#d7dbd9",
+                    "secondary-container": "#c3eba9",
+                    "surface-container-low": "#f1f4f2",
+                    "surface-container-high": "#e6e9e7",
+                    "on-error": "#ffffff",
+                    "surface-variant": "#e0e3e1",
+                    "on-tertiary-fixed": "#002023",
+                    "on-primary-fixed-variant": "#1e477b",
+                    "error-container": "#ffdad6",
+                    "surface-tint": "#395f94",
+                    "surface-container": "#ebefed",
+                    "inverse-on-surface": "#eef1ef",
+                    "surface-container-highest": "#e0e3e1",
+                    "on-surface-variant": "#43474f",
+                    "primary-fixed": "#d5e3ff",
+                    "surface-bright": "#f7faf8",
+                    "on-tertiary-fixed-variant": "#1e4d52",
+                    "on-primary-container": "#edf1ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-lg": "32px",
+                    "stack-sm": "8px",
+                    "container-max": "1200px",
+                    "stack-md": "16px",
+                    "margin-desktop": "40px",
+                    "gutter": "24px",
+                    "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "headline-lg-mobile": ["Inter"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.03em", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-surface text-on-surface" data-screen-id="14">
+<!-- Sidebar Navigation (Mandatory Shared Component - SideNavBar Logic) -->
+<aside class="hidden lg:flex flex-col py-stack-lg px-4 gap-y-2 h-screen w-64 fixed left-0 top-0 bg-surface-container-low border-r border-surface-container-highest">
+<div class="px-4 mb-8">
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary">PsyConnect</h1>
+</div>
+<div class="px-4 mb-6">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-10 h-10 rounded-full overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of an Algerian female clinician in her 40s, Dr. Amira Kaci, wearing a modest professional attire. She has a warm, confident smile and is positioned against a soft, out-of-focus clinical office background with sage green and white accents. The lighting is bright, natural, and calming, reflecting a serene trust aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC96DzK3q-iO8-Davk23sTWN5tkRStP0G00sM8LpAQ7KgWscvDh0qJbtKXIbGc-hspF4GIRZL2QEyNrGefYeFBHTLCx-2kvTYRgf1sU2V9Wgm7zH90AsUMOumtct2AGro5UUeo6nSVHUPmtxwqmN26PKTIQlOA0GKb7s1WbzQNzUi0Mx5IRaw9J334QWUqVcwZ7qKJ4LGFShvqrzRjtJ6ac3t0FuhKPNupqiZo9N_qJGnvYDB80OiGkQBiY_uOSrxQ7dfERyMBmMvU"/>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Dr. Amira Kaci</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-wider">Verified Clinician</p>
+</div>
+</div>
+</div>
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-on-secondary-container rounded-lg font-semibold cursor-pointer active:scale-95 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg cursor-pointer active:scale-95 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-label-md text-label-md">Appointments</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg cursor-pointer active:scale-95 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="font-label-md text-label-md">Messages</span>
+<span class="ml-auto bg-primary text-white text-[10px] px-1.5 py-0.5 rounded-full">4</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg cursor-pointer active:scale-95 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-label-md">Profile</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg cursor-pointer active:scale-95 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto pt-8 border-t border-surface-container-highest">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-md text-label-md">Help Center</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md text-label-md">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Top Navigation for Mobile (TopNavBar Logic) -->
+<header class="lg:hidden fixed top-0 left-0 w-full z-50 flex justify-between items-center px-4 h-16 bg-surface/90 backdrop-blur-md border-b border-surface-container-highest">
+<h1 class="font-headline-md text-headline-md font-semibold text-primary">PsyConnect</h1>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant">account_circle</span>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="lg:ml-64 pt-16 lg:pt-0 min-h-screen pb-20 lg:pb-8">
+<div class="max-w-[1200px] mx-auto px-margin-mobile lg:px-margin-desktop py-8">
+<!-- Welcome Header -->
+<header class="mb-10">
+<h2 class="font-headline-lg text-headline-lg lg:text-headline-lg mb-2">Welcome back, Dr. Amira</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">You have 4 sessions scheduled for today and 2 new requests.</p>
+</header>
+<!-- Bento Grid Dashboard -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Today's Schedule (Widget) -->
+<section class="md:col-span-8 glass-card rounded-xl p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-sm text-headline-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">event</span>
+                            Today's Schedule
+                        </h3>
+<button class="text-primary font-label-md hover:underline">View All</button>
+</div>
+<div class="space-y-4">
+<!-- Session Item -->
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-lg hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full flex items-center justify-center bg-secondary-container text-on-secondary-container">
+<span class="material-symbols-outlined">videocam</span>
+</div>
+<div>
+<p class="font-label-md text-label-md">Sarah Bendali</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Video Consultation • Anxiety Management</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-label-md text-label-md text-primary">09:00 AM</p>
+<p class="text-[12px] text-on-surface-variant">50 mins</p>
+</div>
+</div>
+<!-- Session Item -->
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-lg hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full flex items-center justify-center bg-primary-container text-white">
+<span class="material-symbols-outlined">call</span>
+</div>
+<div>
+<p class="font-label-md text-label-md">Omar Meziani</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Audio Session • Post-Traumatic Stress</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-label-md text-label-md text-primary">11:30 AM</p>
+<p class="text-[12px] text-on-surface-variant">45 mins</p>
+</div>
+</div>
+<!-- Session Item -->
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-lg hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full flex items-center justify-center bg-tertiary-container text-white">
+<span class="material-symbols-outlined">chat</span>
+</div>
+<div>
+<p class="font-label-md text-label-md">Lina Kherifi</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Chat Support • Weekly Check-in</p>
+</div>
+</div>
+<div class="text-right">
+<p class="font-label-md text-label-md text-primary">02:00 PM</p>
+<p class="text-[12px] text-on-surface-variant">30 mins</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Quick Stats -->
+<section class="md:col-span-4 flex flex-col gap-gutter">
+<!-- Earnings Summary -->
+<div class="glass-card rounded-xl p-6 bg-gradient-to-br from-primary to-primary-container text-white">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="font-label-sm text-label-sm opacity-80 uppercase tracking-widest">Earnings Summary</p>
+<h3 class="font-headline-md text-headline-md">145,000 DZD</h3>
+<p class="text-body-sm opacity-90 mt-1">Total this month</p>
+</div>
+<span class="material-symbols-outlined opacity-50 text-4xl">account_balance_wallet</span>
+</div>
+<div class="pt-4 border-t border-white/20">
+<p class="text-[12px] flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+<span class="font-bold">12% increase</span> vs last month
+                            </p>
+</div>
+</div>
+<!-- Helped & Rating -->
+<div class="glass-card rounded-xl p-6 flex items-center justify-around text-center">
+<div>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-wider mb-1">Patients Helped</p>
+<p class="font-headline-sm text-headline-sm text-primary">124</p>
+</div>
+<div class="w-[1px] h-10 bg-outline-variant"></div>
+<div>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-wider mb-1">Avg Rating</p>
+<div class="flex items-center justify-center gap-1 text-primary">
+<p class="font-headline-sm text-headline-sm">4.9</p>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+</div>
+</section>
+<!-- New Appointment Requests -->
+<section class="md:col-span-6 glass-card rounded-xl p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-sm text-headline-sm">New Requests</h3>
+<span class="bg-error-container text-on-error-container text-[10px] px-2 py-0.5 rounded-full font-bold">2 PENDING</span>
+</div>
+<div class="space-y-4">
+<div class="p-4 border border-outline-variant rounded-lg">
+<div class="flex gap-4 mb-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">person</span>
+</div>
+<div>
+<p class="font-label-md text-label-md">Karim S.</p>
+<p class="text-body-sm text-on-surface-variant">Request for Oct 24, 10:00 AM</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 bg-primary text-white py-2 rounded-lg font-label-md transition-opacity active:opacity-80">Accept</button>
+<button class="flex-1 border border-outline-variant text-on-surface-variant py-2 rounded-lg font-label-md hover:bg-surface-container transition-all">Decline</button>
+</div>
+</div>
+<div class="p-4 border border-outline-variant rounded-lg">
+<div class="flex gap-4 mb-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">person</span>
+</div>
+<div>
+<p class="font-label-md text-label-md">Amel R.</p>
+<p class="text-body-sm text-on-surface-variant">Request for Oct 25, 04:00 PM</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 bg-primary text-white py-2 rounded-lg font-label-md transition-opacity active:opacity-80">Accept</button>
+<button class="flex-1 border border-outline-variant text-on-surface-variant py-2 rounded-lg font-label-md hover:bg-surface-container transition-all">Decline</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Recent Messages Preview -->
+<section class="md:col-span-6 glass-card rounded-xl p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-sm text-headline-sm">Recent Messages</h3>
+<button class="text-primary font-label-md hover:underline">Open Inbox</button>
+</div>
+<div class="space-y-4">
+<div class="flex items-start gap-4 pb-4 border-b border-surface-container-highest cursor-pointer hover:bg-surface-container-low p-2 rounded-lg transition-colors">
+<div class="w-10 h-10 rounded-full bg-secondary-container/20 flex-shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">chat_bubble</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-center mb-1">
+<p class="font-label-md text-label-md truncate">Driss Mahmoud</p>
+<span class="text-[10px] text-on-surface-variant">2m ago</span>
+</div>
+<p class="text-body-sm text-on-surface-variant truncate">Thank you for the resources you sent after our last session, they've been very helpful...</p>
+</div>
+<div class="w-2 h-2 rounded-full bg-primary mt-2"></div>
+</div>
+<div class="flex items-start gap-4 pb-4 border-b border-surface-container-highest cursor-pointer hover:bg-surface-container-low p-2 rounded-lg transition-colors">
+<div class="w-10 h-10 rounded-full bg-secondary-container/20 flex-shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">chat_bubble</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-center mb-1">
+<p class="font-label-md text-label-md truncate">Farah L.</p>
+<span class="text-[10px] text-on-surface-variant">1h ago</span>
+</div>
+<p class="text-body-sm text-on-surface-variant truncate">Can we move my Wednesday session to Friday instead? My work schedule changed.</p>
+</div>
+</div>
+<div class="flex items-start gap-4 cursor-pointer hover:bg-surface-container-low p-2 rounded-lg transition-colors">
+<div class="w-10 h-10 rounded-full bg-secondary-container/20 flex-shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">chat_bubble</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-center mb-1">
+<p class="font-label-md text-label-md truncate">Yacine B.</p>
+<span class="text-[10px] text-on-surface-variant">Yesterday</span>
+</div>
+<p class="text-body-sm text-on-surface-variant truncate">I've completed the mindfulness exercise we discussed. Looking forward to our next talk.</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation for Mobile (BottomNavBar Logic) -->
+<nav class="lg:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 px-4 pb-safe bg-surface/95 backdrop-blur-sm border-t border-surface-container-highest rounded-t-xl shadow-lg">
+<a class="flex flex-col items-center justify-center text-primary font-bold" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-[10px]">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">event</span>
+<span class="font-label-sm text-[10px]">Sessions</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">mail</span>
+<span class="font-label-sm text-[10px]">Chat</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">menu</span>
+<span class="font-label-sm text-[10px]">Menu</span>
+</a>
+</nav>
+<!-- Global Floating Action Button (Only on relevant screens) -->
+<button class="fixed bottom-20 lg:bottom-10 right-6 lg:right-10 w-14 h-14 bg-primary text-white rounded-full shadow-xl flex items-center justify-center cursor-pointer hover:scale-105 active:scale-95 transition-all z-40">
+<span class="material-symbols-outlined">add</span>
+</button>
+<footer class="lg:ml-64 w-full py-stack-lg px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-4 bg-surface-container-lowest border-t border-surface-container-highest">
+<div class="font-headline-sm text-headline-sm text-primary">PsyConnect</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">© 2024 PsyConnect. Secured for Algeria.</p>
+<div class="flex gap-6">
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Terms</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Contact</a>
+</div>
+</footer>
+<script>
+        // Micro-interactions for accepting requests
+        document.querySelectorAll('button').forEach(btn => {
+            if (btn.innerText === 'Accept') {
+                btn.addEventListener('click', function() {
+                    const card = this.closest('.border-outline-variant');
+                    card.style.transition = 'all 0.4s ease';
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateX(20px)';
+                    setTimeout(() => {
+                        card.remove();
+                    }, 400);
+                });
+            }
+        });
+    </script>
+<script src="/raw/_nav.js"></script>
+</body></html>

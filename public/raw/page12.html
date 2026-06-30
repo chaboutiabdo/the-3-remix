@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PsyConnect - Professional Credentials Onboarding</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7faf8;
+            color: #181c1b;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f4f2;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c3c6d1;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#1e4d52",
+                        "secondary-container": "#c3eba9",
+                        "surface": "#f7faf8",
+                        "on-secondary-fixed": "#072100",
+                        "primary-fixed": "#d5e3ff",
+                        "outline": "#737780",
+                        "on-primary": "#ffffff",
+                        "background": "#f7faf8",
+                        "tertiary-fixed": "#bbebf1",
+                        "on-primary-container": "#edf1ff",
+                        "outline-variant": "#c3c6d1",
+                        "tertiary": "#2e5c61",
+                        "surface-container": "#ebefed",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed-dim": "#aad292",
+                        "primary-container": "#4a6fa5",
+                        "on-background": "#181c1b",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#2d3130",
+                        "surface-bright": "#f7faf8",
+                        "error-container": "#ffdad6",
+                        "surface-container-high": "#e6e9e7",
+                        "primary": "#30568b",
+                        "primary-fixed-dim": "#a7c8ff",
+                        "inverse-on-surface": "#eef1ef",
+                        "surface-container-low": "#f1f4f2",
+                        "secondary-fixed": "#c6eeac",
+                        "inverse-primary": "#a7c8ff",
+                        "secondary": "#456732",
+                        "on-tertiary-fixed": "#002023",
+                        "surface-container-highest": "#e0e3e1",
+                        "on-surface": "#181c1b",
+                        "surface-tint": "#395f94",
+                        "on-primary-fixed": "#001c3b",
+                        "on-secondary-container": "#496c36",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#1e477b",
+                        "on-tertiary-container": "#ccfaff",
+                        "surface-dim": "#d7dbd9",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface-variant": "#43474f",
+                        "surface-variant": "#e0e3e1",
+                        "error": "#ba1a1a",
+                        "tertiary-container": "#48757a",
+                        "tertiary-fixed-dim": "#a0cfd4",
+                        "on-secondary-fixed-variant": "#2e4f1d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "16px",
+                        "container-max": "1200px",
+                        "gutter": "24px",
+                        "stack-sm": "8px",
+                        "stack-lg": "32px",
+                        "margin-desktop": "40px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.03em", "fontWeight": "500"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col" data-screen-id="12">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface border-b border-outline-variant flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16">
+<div class="flex items-center gap-stack-sm">
+<span class="font-headline-md text-headline-md font-bold text-primary">PsyConnect</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant p-2 hover:bg-surface-container-low transition-colors rounded-full" data-icon="help">help</button>
+<button class="material-symbols-outlined text-on-surface-variant p-2 hover:bg-surface-container-low transition-colors rounded-full" data-icon="notifications">notifications</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a friendly psychologist candidate for a profile avatar. The person has a warm, confident expression, set against a soft, out-of-focus interior office background with cool-toned lighting that complements a modern healthcare UI. The aesthetic is clean, professional, and trustworthy, using a soft-focus minimalist approach." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3IrTMiZydoQAInlGP8eceBtgHjzz8diiO6e7rV9JjYX1_flNRFnX9Lstzf_eyMCR37jQC9tpNrCpdlNQ0LTCH74osdOoDesf2CJlXOaJauP-EbiAVGqOEW3ahSLc2GBS0y2okY7JZ6yLq4DEWnHFCdHBCy14OpqIjcrC1G1eRO-hvUyhE2GjnPe2phNxjVyf6wUxC1P4kns6BD-G-aBnryZpBq-wzxUvmKSxdT5xWCN8yniuZSzgDrD-VqX23XPPYcM8EFMXi4VA"/>
+</div>
+</div>
+</header>
+<div class="flex flex-1 pt-16 h-full">
+<!-- SideNavBar -->
+<aside class="h-[calc(100vh-64px)] w-64 hidden md:flex flex-col border-r border-outline-variant bg-surface-container-low p-gutter sticky top-16">
+<div class="mb-stack-lg">
+<h2 class="font-headline-sm text-headline-sm font-bold text-primary">Onboarding</h2>
+<p class="font-label-sm text-label-sm text-on-surface-variant opacity-70 uppercase tracking-wider mt-1">Application Progress</p>
+</div>
+<nav class="flex flex-col gap-stack-sm flex-1">
+<div class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg cursor-pointer">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-md text-label-md">Personal Info</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-on-secondary-container rounded-lg font-bold shadow-sm transition-all cursor-pointer">
+<span class="material-symbols-outlined" data-icon="verified">verified</span>
+<span class="font-label-md text-label-md">Credentials</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg cursor-pointer">
+<span class="material-symbols-outlined" data-icon="upload_file">upload_file</span>
+<span class="font-label-md text-label-md">Documents</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg cursor-pointer">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="font-label-md text-label-md">Availability</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg cursor-pointer">
+<span class="material-symbols-outlined" data-icon="pending_actions">pending_actions</span>
+<span class="font-label-md text-label-md">Review Status</span>
+</div>
+</nav>
+<button class="mt-auto py-3 px-4 border border-primary text-primary font-label-md text-label-md rounded-lg hover:bg-primary-container hover:text-on-primary-container transition-colors">
+                Save Draft
+            </button>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto px-margin-mobile md:px-12 py-8 md:py-12 bg-surface">
+<div class="max-w-3xl mx-auto">
+<!-- Header & Progress -->
+<div class="mb-stack-lg">
+<div class="flex items-center justify-between mb-4">
+<h1 class="font-headline-lg text-headline-lg text-primary">Professional Credentials</h1>
+<span class="font-label-md text-label-md text-on-surface-variant">Step 2 of 4</span>
+</div>
+<!-- Progress Bar -->
+<div class="w-full h-2 bg-surface-container-highest rounded-full overflow-hidden flex">
+<div class="h-full bg-secondary w-1/4 border-r border-surface"></div>
+<div class="h-full bg-secondary w-1/4"></div>
+<div class="h-full w-1/4"></div>
+<div class="h-full w-1/4"></div>
+</div>
+</div>
+<!-- Forms Area -->
+<div class="space-y-stack-lg">
+<!-- Form Section: Expertise -->
+<section class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-[0px_4px_20px_rgba(74,111,165,0.06)]">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="psychology">psychology</span>
+                            Specialization &amp; Experience
+                        </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md text-on-surface-variant">Primary Specialty</label>
+<div class="relative">
+<select class="w-full h-12 bg-surface-container-lowest border border-outline-variant rounded-lg px-4 text-body-md focus:ring-2 focus:ring-primary focus:border-primary appearance-none">
+<option>Clinical Psychology</option>
+<option>Cognitive Behavioral Therapy (CBT)</option>
+<option>Child &amp; Adolescent Therapy</option>
+<option>Family &amp; Marriage Counseling</option>
+<option>Trauma-Informed Care</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3 pointer-events-none text-on-surface-variant" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md text-on-surface-variant">Years of Experience</label>
+<input class="w-full h-12 bg-surface-container-lowest border border-outline-variant rounded-lg px-4 text-body-md focus:ring-2 focus:ring-primary focus:border-primary" placeholder="e.g. 5" type="number"/>
+</div>
+<div class="col-span-full flex flex-col gap-2">
+<label class="font-label-md text-label-md text-on-surface-variant">Areas of Expertise (Multi-select)</label>
+<div class="flex flex-wrap gap-2 p-3 border border-outline-variant rounded-lg min-h-[3rem]">
+<span class="bg-secondary/10 text-secondary px-3 py-1 rounded-full font-label-sm text-label-sm flex items-center gap-1">
+                                        Anxiety <button class="material-symbols-outlined text-[16px]" data-icon="close">close</button>
+</span>
+<span class="bg-secondary/10 text-secondary px-3 py-1 rounded-full font-label-sm text-label-sm flex items-center gap-1">
+                                        Depression <button class="material-symbols-outlined text-[16px]" data-icon="close">close</button>
+</span>
+<span class="bg-secondary/10 text-secondary px-3 py-1 rounded-full font-label-sm text-label-sm flex items-center gap-1">
+                                        PTSD <button class="material-symbols-outlined text-[16px]" data-icon="close">close</button>
+</span>
+<button class="text-primary font-label-sm text-label-sm px-3 py-1 border border-primary/20 rounded-full hover:bg-primary/5">+ Add More</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Form Section: Education -->
+<section class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-[0px_4px_20px_rgba(74,111,165,0.06)]">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="school">school</span>
+                                Educational Background
+                            </h3>
+<button class="text-primary font-label-md text-label-md flex items-center gap-1 hover:underline">
+<span class="material-symbols-outlined text-[20px]" data-icon="add">add</span> Add Degree
+                            </button>
+</div>
+<div class="space-y-6">
+<div class="p-4 border border-outline-variant rounded-lg bg-surface-container-low/50">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md text-on-surface-variant">Degree Type</label>
+<input class="w-full h-10 bg-surface-container-lowest border border-outline-variant rounded-lg px-3 text-body-sm focus:ring-2 focus:ring-primary" type="text" value="Ph.D. in Clinical Psychology"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md text-on-surface-variant">Institution</label>
+<input class="w-full h-10 bg-surface-container-lowest border border-outline-variant rounded-lg px-3 text-body-sm focus:ring-2 focus:ring-primary" type="text" value="University of Algiers"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md text-on-surface-variant">Graduation Year</label>
+<input class="w-full h-10 bg-surface-container-lowest border border-outline-variant rounded-lg px-3 text-body-sm focus:ring-2 focus:ring-primary" type="text" value="2018"/>
+</div>
+<div class="flex items-end justify-end">
+<button class="text-error font-label-sm text-label-sm p-2 hover:bg-error/5 rounded-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]" data-icon="delete">delete</span> Remove
+                                        </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Form Section: Memberships -->
+<section class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-[0px_4px_20px_rgba(74,111,165,0.06)]">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="groups">groups</span>
+                            Professional Memberships
+                        </h3>
+<div class="flex flex-col gap-4">
+<div class="flex gap-4">
+<input class="flex-1 h-12 bg-surface-container-lowest border border-outline-variant rounded-lg px-4 text-body-md focus:ring-2 focus:ring-primary" placeholder="e.g. Algerian Psychological Association" type="text"/>
+<button class="bg-primary text-on-primary px-6 rounded-lg font-label-md text-label-md hover:bg-primary/90 transition-colors">Add</button>
+</div>
+<ul class="space-y-2">
+<li class="flex items-center justify-between px-4 py-2 bg-surface-container-low rounded-lg text-body-sm">
+<span>International Union of Psychological Science</span>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-error" data-icon="close">close</button>
+</li>
+</ul>
+</div>
+</section>
+</div>
+<!-- Footer Actions -->
+<div class="mt-12 flex justify-between items-center pb-24 md:pb-12">
+<button class="flex items-center gap-2 px-8 py-3 rounded-lg border border-outline-variant text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span> Previous
+                    </button>
+<button class="flex items-center gap-2 px-10 py-3 rounded-lg bg-primary text-on-primary font-label-md text-label-md hover:shadow-lg active:scale-95 transition-all">
+                        Next Step <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</main>
+</div>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center py-2 px-margin-mobile md:hidden bg-surface border-t border-outline-variant z-50 shadow-lg">
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 transition-all">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+<span class="font-label-sm text-label-sm">Step 1</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-4 py-1 shadow-sm transition-all">
+<span class="material-symbols-outlined" data-icon="school">school</span>
+<span class="font-label-sm text-label-sm">Step 2</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 transition-all">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-label-sm text-label-sm">Step 3</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 transition-all">
+<span class="material-symbols-outlined" data-icon="hourglass_empty">hourglass_empty</span>
+<span class="font-label-sm text-label-sm">Status</span>
+</div>
+</nav>
+<script>
+        // Optional interaction logic
+        document.querySelectorAll('select, input').forEach(element => {
+            element.addEventListener('focus', () => {
+                element.parentElement.classList.add('ring-2', 'ring-primary/20');
+            });
+            element.addEventListener('blur', () => {
+                element.parentElement.classList.remove('ring-2', 'ring-primary/20');
+            });
+        });
+    </script>
+<script src="/raw/_nav.js"></script>
+</body></html>
