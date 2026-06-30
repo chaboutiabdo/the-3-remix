@@ -6,7 +6,9 @@ import {
   Inbox,
   LifeBuoy,
   Loader2,
+  MessageSquareReply,
   Search,
+
 } from "lucide-react";
 import { PageHeader, Card, StatCard, Pill } from "@/components/page-bits";
 import {
@@ -143,6 +145,8 @@ function AdminSupport() {
                   <th className="px-4 py-3 text-start">Status</th>
                   <th className="px-4 py-3 text-start hidden md:table-cell">Created</th>
                   <th className="px-4 py-3 text-start hidden lg:table-cell">Updated</th>
+                  <th className="px-4 py-3 text-end">Action</th>
+
                 </tr>
               </thead>
               <tbody>
@@ -177,6 +181,18 @@ function AdminSupport() {
                     <td className="px-4 py-3 text-muted-foreground hidden lg:table-cell">
                       {new Date(t.updatedAt).toLocaleString()}
                     </td>
+                    <td className="px-4 py-3 text-end">
+                      <Link
+                        to="/admin/support/$id"
+                        params={{ id: t.id }}
+                        search={{ reply: 1 }}
+                        className="inline-flex items-center gap-1.5 rounded-full bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground hover:opacity-90"
+                      >
+                        <MessageSquareReply className="h-3.5 w-3.5" />
+                        Respond
+                      </Link>
+                    </td>
+
                   </tr>
                 ))}
               </tbody>
