@@ -35,6 +35,7 @@ import { Route as PsychologistNotesRouteImport } from './routes/psychologist.not
 import { Route as PsychologistMessagesRouteImport } from './routes/psychologist.messages'
 import { Route as PsychologistAvailabilityRouteImport } from './routes/psychologist.availability'
 import { Route as PsychologistAppointmentsRouteImport } from './routes/psychologist.appointments'
+import { Route as PatientSupportRouteImport } from './routes/patient.support'
 import { Route as PatientSettingsRouteImport } from './routes/patient.settings'
 import { Route as PatientRecordsRouteImport } from './routes/patient.records'
 import { Route as PatientProfileRouteImport } from './routes/patient.profile'
@@ -199,6 +200,11 @@ const PsychologistAppointmentsRoute =
     path: '/appointments',
     getParentRoute: () => PsychologistRoute,
   } as any)
+const PatientSupportRoute = PatientSupportRouteImport.update({
+  id: '/support',
+  path: '/support',
+  getParentRoute: () => PatientRoute,
+} as any)
 const PatientSettingsRoute = PatientSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -393,6 +399,7 @@ export interface FileRoutesByFullPath {
   '/patient/profile': typeof PatientProfileRoute
   '/patient/records': typeof PatientRecordsRoute
   '/patient/settings': typeof PatientSettingsRoute
+  '/patient/support': typeof PatientSupportRoute
   '/psychologist/appointments': typeof PsychologistAppointmentsRoute
   '/psychologist/availability': typeof PsychologistAvailabilityRoute
   '/psychologist/messages': typeof PsychologistMessagesRoute
@@ -447,6 +454,7 @@ export interface FileRoutesByTo {
   '/patient/profile': typeof PatientProfileRoute
   '/patient/records': typeof PatientRecordsRoute
   '/patient/settings': typeof PatientSettingsRoute
+  '/patient/support': typeof PatientSupportRoute
   '/psychologist/appointments': typeof PsychologistAppointmentsRoute
   '/psychologist/availability': typeof PsychologistAvailabilityRoute
   '/psychologist/messages': typeof PsychologistMessagesRoute
@@ -507,6 +515,7 @@ export interface FileRoutesById {
   '/patient/profile': typeof PatientProfileRoute
   '/patient/records': typeof PatientRecordsRoute
   '/patient/settings': typeof PatientSettingsRoute
+  '/patient/support': typeof PatientSupportRoute
   '/psychologist/appointments': typeof PsychologistAppointmentsRoute
   '/psychologist/availability': typeof PsychologistAvailabilityRoute
   '/psychologist/messages': typeof PsychologistMessagesRoute
@@ -568,6 +577,7 @@ export interface FileRouteTypes {
     | '/patient/profile'
     | '/patient/records'
     | '/patient/settings'
+    | '/patient/support'
     | '/psychologist/appointments'
     | '/psychologist/availability'
     | '/psychologist/messages'
@@ -622,6 +632,7 @@ export interface FileRouteTypes {
     | '/patient/profile'
     | '/patient/records'
     | '/patient/settings'
+    | '/patient/support'
     | '/psychologist/appointments'
     | '/psychologist/availability'
     | '/psychologist/messages'
@@ -681,6 +692,7 @@ export interface FileRouteTypes {
     | '/patient/profile'
     | '/patient/records'
     | '/patient/settings'
+    | '/patient/support'
     | '/psychologist/appointments'
     | '/psychologist/availability'
     | '/psychologist/messages'
@@ -903,6 +915,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/psychologist/appointments'
       preLoaderRoute: typeof PsychologistAppointmentsRouteImport
       parentRoute: typeof PsychologistRoute
+    }
+    '/patient/support': {
+      id: '/patient/support'
+      path: '/support'
+      fullPath: '/patient/support'
+      preLoaderRoute: typeof PatientSupportRouteImport
+      parentRoute: typeof PatientRoute
     }
     '/patient/settings': {
       id: '/patient/settings'
@@ -1211,6 +1230,7 @@ interface PatientRouteChildren {
   PatientProfileRoute: typeof PatientProfileRoute
   PatientRecordsRoute: typeof PatientRecordsRoute
   PatientSettingsRoute: typeof PatientSettingsRoute
+  PatientSupportRoute: typeof PatientSupportRoute
   PatientIndexRoute: typeof PatientIndexRoute
   PatientBookIdRoute: typeof PatientBookIdRoute
   PatientPsychologistIdRoute: typeof PatientPsychologistIdRoute
@@ -1225,6 +1245,7 @@ const PatientRouteChildren: PatientRouteChildren = {
   PatientProfileRoute: PatientProfileRoute,
   PatientRecordsRoute: PatientRecordsRoute,
   PatientSettingsRoute: PatientSettingsRoute,
+  PatientSupportRoute: PatientSupportRoute,
   PatientIndexRoute: PatientIndexRoute,
   PatientBookIdRoute: PatientBookIdRoute,
   PatientPsychologistIdRoute: PatientPsychologistIdRoute,
