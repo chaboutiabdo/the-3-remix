@@ -146,13 +146,20 @@
 
 @layer base {
   * { border-color: var(--color-border); }
-  html { font-family: var(--font-body); }
+  html { font-family: var(--font-body); -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-feature-settings: "ss01", "cv11";
   }
-  [dir="rtl"] body { font-family: "Noto Kufi Arabic", "Plus Jakarta Sans", system-ui, sans-serif; }
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+    font-weight: 400;
+  }
+  h1 { line-height: 1.05; }
+  h2 { line-height: 1.1; }
+  [dir="rtl"] body, [dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3 { font-family: "Noto Kufi Arabic", "Work Sans", system-ui, sans-serif; }
 }
 
 @utility bg-gradient-primary { background-image: var(--gradient-primary); }
