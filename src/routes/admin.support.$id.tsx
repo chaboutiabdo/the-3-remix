@@ -1,6 +1,7 @@
-import { createFileRoute, Link, useParams } from "@tanstack/react-router";
-import { useState } from "react";
-import { ArrowLeft, FileText, Lock, Send } from "lucide-react";
+import { createFileRoute, Link, useParams, useSearch } from "@tanstack/react-router";
+import { useEffect, useRef, useState } from "react";
+import { ArrowLeft, FileText, Lock, MessageSquareReply, Send } from "lucide-react";
+
 import { PageHeader, Card, Pill } from "@/components/page-bits";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -17,8 +18,12 @@ import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/admin/support/$id")({
   head: ({ params }) => ({ meta: [{ title: `Ticket ${params.id} — PsyConnect` }] }),
+  validateSearch: (s: Record<string, unknown>) => ({
+    reply: s.reply === 1 || s.reply === "1" ? 1 : undefined,
+  }),
   component: TicketDetail,
 });
+
 
 function priorityTone(p: TicketPriority): "success" | "warning" | "danger" {
   return p === "low" ? "success" : p === "medium" ? "warning" : "danger";
@@ -31,11 +36,21 @@ function statusTone(s: TicketStatus): "default" | "success" | "warning" | "dange
 
 function TicketDetail() {
   const { id } = useParams({ from: "/admin/support/$id" });
+  const { reply: replyFlag } = useSearch({ from: "/admin/support/$id" });
   const ticket = useTicket(id);
   const [reply, setReply] = useState("");
   const [internal, setInternal] = useState(false);
+  const replyRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (replyFlag && replyRef.current) {
+      replyRef.current.focus();
+      replyRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [replyFlag]);
 
   if (!ticket) {
+
     return (
       <div>
         <PageHeader title="Ticket not found" subtitle={`No ticket with id ${id}.`} />
