@@ -147,6 +147,7 @@ function RootComponent() {
           <ClientGate>
             <RouteProgress />
             <Outlet />
+            <Toaster position="top-right" richColors />
           </ClientGate>
         </AuthProvider>
       </LanguageProvider>
