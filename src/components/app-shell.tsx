@@ -152,9 +152,9 @@ export function AppShell({ role, children }: { role: Role; children: ReactNode }
       )}
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-border bg-background/80 px-4 backdrop-blur md:px-6">
+        <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-border/70 bg-background/70 px-4 backdrop-blur-xl md:px-6">
           <button
-            className="rounded-md p-2 hover:bg-accent md:hidden"
+            className="rounded-xl p-2 transition-colors hover:bg-accent/40 md:hidden"
             onClick={() => setMobileOpen(true)}
             aria-label="Menu"
           >
@@ -163,20 +163,24 @@ export function AppShell({ role, children }: { role: Role; children: ReactNode }
           <div className="ms-auto flex items-center gap-2">
             <button
               onClick={toggle}
-              className="flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1.5 text-xs font-medium hover:bg-accent"
+              className="flex items-center gap-1.5 rounded-full border border-border/70 bg-card/60 px-3 py-1.5 text-xs font-medium transition-all hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-soft"
               title={t("lang.label")}
             >
               <Globe className="h-3.5 w-3.5" />
               {lang === "en" ? "العربية" : "English"}
             </button>
-            <button className="rounded-full border border-border bg-card p-2 hover:bg-accent" aria-label="Notifications">
+            <button
+              className="relative rounded-full border border-border/70 bg-card/60 p-2 transition-all hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-soft"
+              aria-label="Notifications"
+            >
               <Bell className="h-4 w-4" />
+              <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-accent" />
             </button>
-            <div className="flex items-center gap-2 rounded-full border border-border bg-card px-2 py-1">
-              <div className="grid h-7 w-7 place-items-center rounded-full bg-primary/15 text-xs font-semibold text-primary">
+            <div className="flex items-center gap-2 rounded-full border border-border/70 bg-card/60 px-2 py-1">
+              <div className="grid h-7 w-7 place-items-center rounded-full bg-gradient-primary text-xs font-semibold text-primary-foreground shadow-soft">
                 {session?.name?.charAt(0) ?? "U"}
               </div>
-              <div className="hidden text-xs sm:block">
+              <div className="hidden pe-1 text-xs sm:block">
                 <div className="font-medium leading-tight">{session?.name ?? "Guest"}</div>
                 <div className="text-muted-foreground capitalize leading-tight">{role}</div>
               </div>
@@ -184,7 +188,7 @@ export function AppShell({ role, children }: { role: Role; children: ReactNode }
           </div>
         </header>
 
-        <main className="min-w-0 flex-1 px-4 py-6 md:px-8 md:py-8">{children}</main>
+        <main className="min-w-0 flex-1 px-4 py-6 md:px-8 md:py-10 animate-fade-in-up">{children}</main>
 
         {/* Mobile bottom nav */}
         <nav className="sticky bottom-0 z-30 grid grid-cols-5 border-t border-border bg-background md:hidden">
