@@ -57,6 +57,7 @@ import { Route as AuthForgotRouteImport } from './routes/auth.forgot'
 import { Route as AuthAccountCreatedRouteImport } from './routes/auth.account-created'
 import { Route as AdminVerificationRouteImport } from './routes/admin.verification'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
+import { Route as AdminSupportRouteImport } from './routes/admin.support'
 import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
 import { Route as AdminReportsRouteImport } from './routes/admin.reports'
 import { Route as AdminContentRouteImport } from './routes/admin.content'
@@ -311,6 +312,11 @@ const AdminUsersRoute = AdminUsersRouteImport.update({
   path: '/users',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminSupportRoute = AdminSupportRouteImport.update({
+  id: '/support',
+  path: '/support',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminSettingsRoute = AdminSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -337,9 +343,9 @@ const AdminVerificationIndexRoute = AdminVerificationIndexRouteImport.update({
   getParentRoute: () => AdminVerificationRoute,
 } as any)
 const AdminSupportIndexRoute = AdminSupportIndexRouteImport.update({
-  id: '/support/',
-  path: '/support/',
-  getParentRoute: () => AdminRoute,
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminSupportRoute,
 } as any)
 const PsychologistPatientsIdRoute = PsychologistPatientsIdRouteImport.update({
   id: '/$id',
@@ -384,6 +390,7 @@ export interface FileRoutesByFullPath {
   '/admin/content': typeof AdminContentRoute
   '/admin/reports': typeof AdminReportsRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/admin/support': typeof AdminSupportRouteWithChildren
   '/admin/users': typeof AdminUsersRoute
   '/admin/verification': typeof AdminVerificationRouteWithChildren
   '/auth/account-created': typeof AuthAccountCreatedRoute
@@ -502,6 +509,7 @@ export interface FileRoutesById {
   '/admin/content': typeof AdminContentRoute
   '/admin/reports': typeof AdminReportsRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/admin/support': typeof AdminSupportRouteWithChildren
   '/admin/users': typeof AdminUsersRoute
   '/admin/verification': typeof AdminVerificationRouteWithChildren
   '/auth/account-created': typeof AuthAccountCreatedRoute
@@ -565,6 +573,7 @@ export interface FileRouteTypes {
     | '/admin/content'
     | '/admin/reports'
     | '/admin/settings'
+    | '/admin/support'
     | '/admin/users'
     | '/admin/verification'
     | '/auth/account-created'
@@ -682,6 +691,7 @@ export interface FileRouteTypes {
     | '/admin/content'
     | '/admin/reports'
     | '/admin/settings'
+    | '/admin/support'
     | '/admin/users'
     | '/admin/verification'
     | '/auth/account-created'
@@ -1082,6 +1092,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminUsersRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/support': {
+      id: '/admin/support'
+      path: '/support'
+      fullPath: '/admin/support'
+      preLoaderRoute: typeof AdminSupportRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/settings': {
       id: '/admin/settings'
       path: '/settings'
@@ -1119,10 +1136,10 @@ declare module '@tanstack/react-router' {
     }
     '/admin/support/': {
       id: '/admin/support/'
-      path: '/support'
+      path: '/'
       fullPath: '/admin/support/'
       preLoaderRoute: typeof AdminSupportIndexRouteImport
-      parentRoute: typeof AdminRoute
+      parentRoute: typeof AdminSupportRoute
     }
     '/psychologist/patients/$id': {
       id: '/psychologist/patients/$id'
@@ -1162,6 +1179,18 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AdminSupportRouteChildren {
+  AdminSupportIndexRoute: typeof AdminSupportIndexRoute
+}
+
+const AdminSupportRouteChildren: AdminSupportRouteChildren = {
+  AdminSupportIndexRoute: AdminSupportIndexRoute,
+}
+
+const AdminSupportRouteWithChildren = AdminSupportRoute._addFileChildren(
+  AdminSupportRouteChildren,
+)
+
 interface AdminVerificationRouteChildren {
   AdminVerificationIdRoute: typeof AdminVerificationIdRoute
   AdminVerificationIndexRoute: typeof AdminVerificationIndexRoute
@@ -1180,10 +1209,10 @@ interface AdminRouteChildren {
   AdminContentRoute: typeof AdminContentRoute
   AdminReportsRoute: typeof AdminReportsRoute
   AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminSupportRoute: typeof AdminSupportRouteWithChildren
   AdminUsersRoute: typeof AdminUsersRoute
   AdminVerificationRoute: typeof AdminVerificationRouteWithChildren
   AdminIndexRoute: typeof AdminIndexRoute
-  AdminSupportIndexRoute: typeof AdminSupportIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
@@ -1191,10 +1220,10 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminContentRoute: AdminContentRoute,
   AdminReportsRoute: AdminReportsRoute,
   AdminSettingsRoute: AdminSettingsRoute,
+  AdminSupportRoute: AdminSupportRouteWithChildren,
   AdminUsersRoute: AdminUsersRoute,
   AdminVerificationRoute: AdminVerificationRouteWithChildren,
   AdminIndexRoute: AdminIndexRoute,
-  AdminSupportIndexRoute: AdminSupportIndexRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
