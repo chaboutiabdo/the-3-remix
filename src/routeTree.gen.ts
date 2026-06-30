@@ -69,6 +69,7 @@ import { Route as PatientSessionIdRouteImport } from './routes/patient.session.$
 import { Route as PatientPsychologistIdRouteImport } from './routes/patient.psychologist.$id'
 import { Route as PatientBookIdRouteImport } from './routes/patient.book.$id'
 import { Route as AdminVerificationIdRouteImport } from './routes/admin.verification.$id'
+import { Route as AdminSupportIdRouteImport } from './routes/admin.support.$id'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
@@ -372,6 +373,11 @@ const AdminVerificationIdRoute = AdminVerificationIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => AdminVerificationRoute,
 } as any)
+const AdminSupportIdRoute = AdminSupportIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AdminSupportRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -427,6 +433,7 @@ export interface FileRoutesByFullPath {
   '/patient/': typeof PatientIndexRoute
   '/psychologist/': typeof PsychologistIndexRoute
   '/screens/': typeof ScreensIndexRoute
+  '/admin/support/$id': typeof AdminSupportIdRoute
   '/admin/verification/$id': typeof AdminVerificationIdRoute
   '/patient/book/$id': typeof PatientBookIdRoute
   '/patient/psychologist/$id': typeof PatientPsychologistIdRoute
@@ -483,6 +490,7 @@ export interface FileRoutesByTo {
   '/patient': typeof PatientIndexRoute
   '/psychologist': typeof PsychologistIndexRoute
   '/screens': typeof ScreensIndexRoute
+  '/admin/support/$id': typeof AdminSupportIdRoute
   '/admin/verification/$id': typeof AdminVerificationIdRoute
   '/patient/book/$id': typeof PatientBookIdRoute
   '/patient/psychologist/$id': typeof PatientPsychologistIdRoute
@@ -546,6 +554,7 @@ export interface FileRoutesById {
   '/patient/': typeof PatientIndexRoute
   '/psychologist/': typeof PsychologistIndexRoute
   '/screens/': typeof ScreensIndexRoute
+  '/admin/support/$id': typeof AdminSupportIdRoute
   '/admin/verification/$id': typeof AdminVerificationIdRoute
   '/patient/book/$id': typeof PatientBookIdRoute
   '/patient/psychologist/$id': typeof PatientPsychologistIdRoute
@@ -610,6 +619,7 @@ export interface FileRouteTypes {
     | '/patient/'
     | '/psychologist/'
     | '/screens/'
+    | '/admin/support/$id'
     | '/admin/verification/$id'
     | '/patient/book/$id'
     | '/patient/psychologist/$id'
@@ -666,6 +676,7 @@ export interface FileRouteTypes {
     | '/patient'
     | '/psychologist'
     | '/screens'
+    | '/admin/support/$id'
     | '/admin/verification/$id'
     | '/patient/book/$id'
     | '/patient/psychologist/$id'
@@ -728,6 +739,7 @@ export interface FileRouteTypes {
     | '/patient/'
     | '/psychologist/'
     | '/screens/'
+    | '/admin/support/$id'
     | '/admin/verification/$id'
     | '/patient/book/$id'
     | '/patient/psychologist/$id'
@@ -1176,14 +1188,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminVerificationIdRouteImport
       parentRoute: typeof AdminVerificationRoute
     }
+    '/admin/support/$id': {
+      id: '/admin/support/$id'
+      path: '/$id'
+      fullPath: '/admin/support/$id'
+      preLoaderRoute: typeof AdminSupportIdRouteImport
+      parentRoute: typeof AdminSupportRoute
+    }
   }
 }
 
 interface AdminSupportRouteChildren {
+  AdminSupportIdRoute: typeof AdminSupportIdRoute
   AdminSupportIndexRoute: typeof AdminSupportIndexRoute
 }
 
 const AdminSupportRouteChildren: AdminSupportRouteChildren = {
+  AdminSupportIdRoute: AdminSupportIdRoute,
   AdminSupportIndexRoute: AdminSupportIndexRoute,
 }
 
