@@ -37,6 +37,7 @@ const navByRole: Record<Role, NavItem[]> = {
     { to: "/patient/assessment", label: "patient.assessmentNav", icon: ClipboardList },
     { to: "/patient/records", label: "patient.records", icon: FileText },
     { to: "/patient/messages", label: "patient.messages", icon: MessageSquare },
+    { to: "/patient/support", label: "Support", icon: LifeBuoy },
     { to: "/patient/profile", label: "common.profile", icon: Users },
     { to: "/patient/settings", label: "common.settings", icon: Settings },
   ],
