@@ -17,7 +17,7 @@ import {
   type TicketStatus,
 } from "@/lib/support-store";
 
-export const Route = createFileRoute("/admin/support")({
+export const Route = createFileRoute("/admin/support/")({
   head: () => ({ meta: [{ title: "Support Center — PsyConnect" }] }),
   component: AdminSupport,
 });
