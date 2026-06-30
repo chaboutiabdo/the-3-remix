@@ -142,14 +142,20 @@ function TicketDetail() {
               })}
             </div>
 
-            <form onSubmit={send} className="mt-4 space-y-2 border-t border-border pt-3">
+            <form onSubmit={send} className="mt-4 space-y-2 rounded-2xl border border-primary/30 bg-primary/5 p-3">
+              <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
+                <MessageSquareReply className="h-4 w-4 text-primary" />
+                {internal ? "Add internal note" : "Respond to patient"}
+              </div>
               <textarea
+                ref={replyRef}
                 value={reply}
                 onChange={(e) => setReply(e.target.value)}
-                rows={3}
-                placeholder={internal ? "Internal note for the team…" : "Reply to the patient…"}
-                className="w-full rounded-xl border border-input bg-card px-3 py-2 text-sm"
+                rows={4}
+                placeholder={internal ? "Internal note for the team…" : "Write your response to the patient…"}
+                className="w-full rounded-xl border border-input bg-card px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
               />
+
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <label className="flex items-center gap-2 text-xs text-muted-foreground">
                   <input
