@@ -14,6 +14,7 @@ import "../i18n";
 import { AuthProvider } from "@/lib/auth";
 import { LanguageProvider } from "@/lib/lang";
 import { RouteProgress } from "@/components/route-progress";
+import { Toaster } from "@/components/ui/sonner";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
