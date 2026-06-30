@@ -80,20 +80,20 @@ export function AppShell({ role, children }: { role: Role; children: ReactNode }
   const sidebar = (
     <aside
       className={cn(
-        "flex h-full flex-col border-e border-sidebar-border bg-sidebar text-sidebar-foreground transition-[width]",
-        collapsed ? "w-[68px]" : "w-64"
+        "flex h-full flex-col border-e border-sidebar-border bg-sidebar/80 backdrop-blur-xl text-sidebar-foreground transition-[width] duration-300 ease-out",
+        collapsed ? "w-[72px]" : "w-64"
       )}
     >
       <div className="flex h-16 items-center gap-2 px-4">
         <BrandLogo />
         {!collapsed && (
           <div className="min-w-0">
-            <div className="truncate text-sm font-semibold text-primary">{t("brand")}</div>
+            <div className="truncate font-display text-base font-medium tracking-tight text-foreground">{t("brand")}</div>
             <div className="truncate text-[11px] text-muted-foreground capitalize">{role}</div>
           </div>
         )}
       </div>
-      <nav className="flex-1 space-y-1 px-2 py-3">
+      <nav className="flex-1 space-y-0.5 px-3 py-3">
         {items.map((it) => {
           const active = pathname === it.to || (it.to !== `/${role}` && pathname.startsWith(it.to + "/"));
           const Icon = it.icon;
@@ -102,13 +102,16 @@ export function AppShell({ role, children }: { role: Role; children: ReactNode }
               key={it.to}
               to={it.to}
               className={cn(
-                "flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors",
+                "group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-all duration-200",
                 active
-                  ? "bg-primary/10 font-medium text-primary"
-                  : "text-sidebar-foreground/80 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                  ? "bg-primary/10 font-medium text-primary shadow-[inset_0_0_0_1px_color-mix(in_oklab,var(--color-primary)_18%,transparent)]"
+                  : "text-sidebar-foreground/75 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
               )}
             >
-              <Icon className="h-4 w-4 shrink-0" />
+              {active && (
+                <span aria-hidden className="absolute inset-y-2 start-0 w-0.5 rounded-full bg-primary" />
+              )}
+              <Icon className={cn("h-4 w-4 shrink-0 transition-transform duration-200 group-hover:scale-110", active && "text-primary")} />
               {!collapsed && <span className="truncate">{t(it.label)}</span>}
             </Link>
           );
@@ -120,16 +123,16 @@ export function AppShell({ role, children }: { role: Role; children: ReactNode }
             signOut();
             navigate({ to: "/" });
           }}
-          className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-sidebar-foreground/80 hover:bg-sidebar-accent"
+          className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-sidebar-foreground/75 transition-colors hover:bg-sidebar-accent"
         >
           <LogOut className="h-4 w-4 shrink-0" />
           {!collapsed && <span>{t("nav.logout")}</span>}
         </button>
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="mt-1 hidden w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-sidebar-foreground/60 hover:bg-sidebar-accent md:flex"
+          className="mt-1 hidden w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-sidebar-foreground/55 hover:bg-sidebar-accent md:flex"
         >
-          <ChevronsLeft className={cn("h-4 w-4 shrink-0 transition-transform", collapsed && "rotate-180")} />
+          <ChevronsLeft className={cn("h-4 w-4 shrink-0 transition-transform duration-300", collapsed && "rotate-180")} />
           {!collapsed && <span>Collapse</span>}
         </button>
       </div>
@@ -149,9 +152,9 @@ export function AppShell({ role, children }: { role: Role; children: ReactNode }
       )}
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-border bg-background/80 px-4 backdrop-blur md:px-6">
+        <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-border/70 bg-background/70 px-4 backdrop-blur-xl md:px-6">
           <button
-            className="rounded-md p-2 hover:bg-accent md:hidden"
+            className="rounded-xl p-2 transition-colors hover:bg-accent/40 md:hidden"
             onClick={() => setMobileOpen(true)}
             aria-label="Menu"
           >
@@ -160,20 +163,24 @@ export function AppShell({ role, children }: { role: Role; children: ReactNode }
           <div className="ms-auto flex items-center gap-2">
             <button
               onClick={toggle}
-              className="flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1.5 text-xs font-medium hover:bg-accent"
+              className="flex items-center gap-1.5 rounded-full border border-border/70 bg-card/60 px-3 py-1.5 text-xs font-medium transition-all hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-soft"
               title={t("lang.label")}
             >
               <Globe className="h-3.5 w-3.5" />
               {lang === "en" ? "العربية" : "English"}
             </button>
-            <button className="rounded-full border border-border bg-card p-2 hover:bg-accent" aria-label="Notifications">
+            <button
+              className="relative rounded-full border border-border/70 bg-card/60 p-2 transition-all hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-soft"
+              aria-label="Notifications"
+            >
               <Bell className="h-4 w-4" />
+              <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-accent" />
             </button>
-            <div className="flex items-center gap-2 rounded-full border border-border bg-card px-2 py-1">
-              <div className="grid h-7 w-7 place-items-center rounded-full bg-primary/15 text-xs font-semibold text-primary">
+            <div className="flex items-center gap-2 rounded-full border border-border/70 bg-card/60 px-2 py-1">
+              <div className="grid h-7 w-7 place-items-center rounded-full bg-gradient-primary text-xs font-semibold text-primary-foreground shadow-soft">
                 {session?.name?.charAt(0) ?? "U"}
               </div>
-              <div className="hidden text-xs sm:block">
+              <div className="hidden pe-1 text-xs sm:block">
                 <div className="font-medium leading-tight">{session?.name ?? "Guest"}</div>
                 <div className="text-muted-foreground capitalize leading-tight">{role}</div>
               </div>
@@ -181,7 +188,7 @@ export function AppShell({ role, children }: { role: Role; children: ReactNode }
           </div>
         </header>
 
-        <main className="min-w-0 flex-1 px-4 py-6 md:px-8 md:py-8">{children}</main>
+        <main className="min-w-0 flex-1 px-4 py-6 md:px-8 md:py-10 animate-fade-in-up">{children}</main>
 
         {/* Mobile bottom nav */}
         <nav className="sticky bottom-0 z-30 grid grid-cols-5 border-t border-border bg-background md:hidden">
