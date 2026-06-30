@@ -11,6 +11,7 @@ import {
   Globe,
   Home,
   LayoutDashboard,
+  LifeBuoy,
   LogOut,
   Menu,
   MessageSquare,
