@@ -1,9 +1,11 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { PageHeader, Card } from "@/components/page-bits";
 import { messages } from "@/data/mock";
-import { Send } from "lucide-react";
+import { LifeBuoy, Send } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { SupportFormDialog } from "@/components/support-form";
 
 export const Route = createFileRoute("/patient/messages")({
   head: () => ({ meta: [{ title: "Messages — PsyConnect" }] }),
@@ -14,9 +16,22 @@ function Msgs() {
   const { t } = useTranslation();
   const [active, setActive] = useState(messages[0].id);
   const [text, setText] = useState("");
+  const [supportOpen, setSupportOpen] = useState(false);
   return (
     <div>
-      <PageHeader title={t("patient.messages")} />
+      <PageHeader
+        title={t("patient.messages")}
+        action={
+          <div className="flex items-center gap-2">
+            <Button asChild variant="outline" size="sm">
+              <Link to="/patient/support">My requests</Link>
+            </Button>
+            <Button onClick={() => setSupportOpen(true)} className="gap-2" size="sm">
+              <LifeBuoy className="h-4 w-4" /> Contact Support
+            </Button>
+          </div>
+        }
+      />
       <div className="grid gap-4 lg:grid-cols-[280px_1fr]">
         <Card className="!p-0">
           <ul className="divide-y divide-border">
@@ -48,6 +63,7 @@ function Msgs() {
           </form>
         </Card>
       </div>
+      <SupportFormDialog open={supportOpen} onOpenChange={setSupportOpen} />
     </div>
   );
 }
