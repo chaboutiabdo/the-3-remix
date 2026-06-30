@@ -1,6 +1,7 @@
-import { createFileRoute, Link, useParams } from "@tanstack/react-router";
-import { useState } from "react";
-import { ArrowLeft, FileText, Lock, Send } from "lucide-react";
+import { createFileRoute, Link, useParams, useSearch } from "@tanstack/react-router";
+import { useEffect, useRef, useState } from "react";
+import { ArrowLeft, FileText, Lock, MessageSquareReply, Send } from "lucide-react";
+
 import { PageHeader, Card, Pill } from "@/components/page-bits";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -17,8 +18,12 @@ import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/admin/support/$id")({
   head: ({ params }) => ({ meta: [{ title: `Ticket ${params.id} — PsyConnect` }] }),
+  validateSearch: (s: Record<string, unknown>) => ({
+    reply: s.reply === 1 || s.reply === "1" ? 1 : undefined,
+  }),
   component: TicketDetail,
 });
+
 
 function priorityTone(p: TicketPriority): "success" | "warning" | "danger" {
   return p === "low" ? "success" : p === "medium" ? "warning" : "danger";
@@ -31,11 +36,21 @@ function statusTone(s: TicketStatus): "default" | "success" | "warning" | "dange
 
 function TicketDetail() {
   const { id } = useParams({ from: "/admin/support/$id" });
+  const { reply: replyFlag } = useSearch({ from: "/admin/support/$id" });
   const ticket = useTicket(id);
   const [reply, setReply] = useState("");
   const [internal, setInternal] = useState(false);
+  const replyRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (replyFlag && replyRef.current) {
+      replyRef.current.focus();
+      replyRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [replyFlag]);
 
   if (!ticket) {
+
     return (
       <div>
         <PageHeader title="Ticket not found" subtitle={`No ticket with id ${id}.`} />
@@ -127,14 +142,20 @@ function TicketDetail() {
               })}
             </div>
 
-            <form onSubmit={send} className="mt-4 space-y-2 border-t border-border pt-3">
+            <form onSubmit={send} className="mt-4 space-y-2 rounded-2xl border border-primary/30 bg-primary/5 p-3">
+              <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
+                <MessageSquareReply className="h-4 w-4 text-primary" />
+                {internal ? "Add internal note" : "Respond to patient"}
+              </div>
               <textarea
+                ref={replyRef}
                 value={reply}
                 onChange={(e) => setReply(e.target.value)}
-                rows={3}
-                placeholder={internal ? "Internal note for the team…" : "Reply to the patient…"}
-                className="w-full rounded-xl border border-input bg-card px-3 py-2 text-sm"
+                rows={4}
+                placeholder={internal ? "Internal note for the team…" : "Write your response to the patient…"}
+                className="w-full rounded-xl border border-input bg-card px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
               />
+
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <label className="flex items-center gap-2 text-xs text-muted-foreground">
                   <input
