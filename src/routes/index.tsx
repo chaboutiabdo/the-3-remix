@@ -390,12 +390,35 @@ function Hero() {
 }
 
 function HeroVisual() {
+  const reduced = useReducedMotion();
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const rotateY = useSpring(useTransform(mx, [-1, 1], [-8, 8]), { stiffness: 120, damping: 14 });
+  const rotateX = useSpring(useTransform(my, [-1, 1], [6, -6]), { stiffness: 120, damping: 14 });
+  const tx = useSpring(useTransform(mx, [-1, 1], [-10, 10]), { stiffness: 120, damping: 16 });
+  const ty = useSpring(useTransform(my, [-1, 1], [-10, 10]), { stiffness: 120, damping: 16 });
+
+  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (reduced) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    mx.set(((e.clientX - r.left) / r.width) * 2 - 1);
+    my.set(((e.clientY - r.top) / r.height) * 2 - 1);
+  };
+  const onLeave = () => {
+    mx.set(0);
+    my.set(0);
+  };
+
   return (
-    <div className="relative mx-auto w-full max-w-lg [perspective:1200px]">
+    <div
+      className="relative mx-auto w-full max-w-lg [perspective:1200px]"
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+    >
       <motion.div
-        whileHover={{ rotateY: -6, rotateX: 4, scale: 1.02 }}
+        style={{ rotateY, rotateX }}
         transition={{ type: "spring", stiffness: 200, damping: 18 }}
-        className="relative overflow-hidden rounded-[2rem] border border-primary/15 bg-gradient-to-br from-primary/15 via-card to-accent p-3 shadow-elegant animate-floaty"
+        className="relative overflow-hidden rounded-[2rem] border border-primary/15 bg-gradient-to-br from-primary/15 via-card to-accent p-3 shadow-elegant animate-floaty [transform-style:preserve-3d]"
       >
         <motion.img
           src={therapyHero}
@@ -403,27 +426,40 @@ function HeroVisual() {
           width={1280}
           height={1024}
           className="block w-full rounded-[1.5rem] object-cover"
-          initial={{ scale: 1.05, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+          initial={{ scale: 1.08, opacity: 0, filter: "blur(14px)" }}
+          animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
+          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
           whileHover={{ scale: 1.04 }}
         />
         <span className="pointer-events-none absolute inset-0 rounded-[2rem] ring-1 ring-inset ring-white/30" />
+        {/* subtle sheen tracking the cursor */}
+        <motion.span
+          aria-hidden
+          className="pointer-events-none absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_var(--px,50%)_var(--py,50%),rgba(255,255,255,0.18),transparent_55%)]"
+          style={{
+            // @ts-expect-error CSS vars via motion values
+            "--px": useTransform(mx, [-1, 1], ["10%", "90%"]),
+            // @ts-expect-error CSS vars via motion values
+            "--py": useTransform(my, [-1, 1], ["10%", "90%"]),
+          }}
+        />
       </motion.div>
 
-      {/* floating cards */}
-      <FloatCard className="-left-4 top-8 sm:-left-10" delay={0}>
-        <HoverReplay animation="pop"><BadgeCheck className="h-4 w-4 text-success" /></HoverReplay> Verified Psychologists
-      </FloatCard>
-      <FloatCard className="-right-2 top-32 sm:-right-8" delay={0.6}>
-        <HoverReplay animation="wobble"><ShieldCheck className="h-4 w-4 text-primary" /></HoverReplay> Secure Consultations
-      </FloatCard>
-      <FloatCard className="-left-2 bottom-24 sm:-left-12" delay={1.2}>
-        <HoverReplay animation="bounce"><FileLock2 className="h-4 w-4 text-coral" /></HoverReplay> Confidential Data
-      </FloatCard>
-      <FloatCard className="-right-2 -bottom-2 sm:-right-10" delay={1.8}>
-        <HoverReplay animation="spin"><MonitorSmartphone className="h-4 w-4 text-primary" /></HoverReplay> Online & In-Person
-      </FloatCard>
+      {/* floating cards — subtle mouse parallax */}
+      <motion.div style={{ x: tx, y: ty }} className="absolute inset-0 pointer-events-none">
+        <FloatCard className="-left-4 top-8 sm:-left-10" delay={0}>
+          <HoverReplay animation="pop"><BadgeCheck className="h-4 w-4 text-success" /></HoverReplay> Verified Psychologists
+        </FloatCard>
+        <FloatCard className="-right-2 top-32 sm:-right-8" delay={0.6}>
+          <HoverReplay animation="wobble"><ShieldCheck className="h-4 w-4 text-primary" /></HoverReplay> Secure Consultations
+        </FloatCard>
+        <FloatCard className="-left-2 bottom-24 sm:-left-12" delay={1.2}>
+          <HoverReplay animation="bounce"><FileLock2 className="h-4 w-4 text-coral" /></HoverReplay> Confidential Data
+        </FloatCard>
+        <FloatCard className="-right-2 -bottom-2 sm:-right-10" delay={1.8}>
+          <HoverReplay animation="spin"><MonitorSmartphone className="h-4 w-4 text-primary" /></HoverReplay> Online & In-Person
+        </FloatCard>
+      </motion.div>
     </div>
   );
 }
