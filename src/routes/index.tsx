@@ -437,12 +437,11 @@ function HeroVisual() {
           aria-hidden
           className="pointer-events-none absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_var(--px,50%)_var(--py,50%),rgba(255,255,255,0.18),transparent_55%)]"
           style={{
-            // @ts-expect-error CSS vars via motion values
-            "--px": useTransform(mx, [-1, 1], ["10%", "90%"]),
-            // @ts-expect-error CSS vars via motion values
-            "--py": useTransform(my, [-1, 1], ["10%", "90%"]),
-          }}
+            ["--px" as string]: useTransform(mx, [-1, 1], ["10%", "90%"]),
+            ["--py" as string]: useTransform(my, [-1, 1], ["10%", "90%"]),
+          } as React.CSSProperties}
         />
+
       </motion.div>
 
       {/* floating cards — subtle mouse parallax */}
