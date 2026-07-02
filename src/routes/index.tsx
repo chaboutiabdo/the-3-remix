@@ -28,8 +28,94 @@ import {
   Video,
 } from "lucide-react";
 import { BrandLogo } from "@/components/brand-logo";
-import { motion, useReducedMotion, type Variants, type TargetAndTransition } from "framer-motion";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+  useMotionValue,
+  useSpring,
+  type Variants,
+  type TargetAndTransition,
+} from "framer-motion";
 import therapyHero from "@/assets/therapy-hero.jpg";
+
+/** Cinematic word-by-word headline reveal (blur → sharp, scale 0.8 → 1, from below). */
+function AnimatedHeadline({
+  lines,
+  className = "",
+}: {
+  lines: Array<Array<{ text: string; gradient?: boolean }>>;
+  className?: string;
+}) {
+  const reduced = useReducedMotion();
+  if (reduced) {
+    return (
+      <h1 className={className}>
+        {lines.map((line, li) => (
+          <span key={li} className="block">
+            {line.map((seg, si) => (
+              <span
+                key={si}
+                className={
+                  seg.gradient
+                    ? "bg-gradient-to-r from-primary via-primary-glow to-coral bg-clip-text text-transparent"
+                    : ""
+                }
+              >
+                {seg.text}
+              </span>
+            ))}
+          </span>
+        ))}
+      </h1>
+    );
+  }
+
+  let wordIndex = 0;
+  return (
+    <h1 className={className} aria-label={lines.map((l) => l.map((s) => s.text).join("")).join(" ")}>
+      {lines.map((line, li) => (
+        <span key={li} className="block overflow-hidden pb-1">
+          {line.map((seg, si) => {
+            const words = seg.text.split(/(\s+)/); // keep spaces
+            return (
+              <span
+                key={si}
+                className={
+                  seg.gradient
+                    ? "bg-gradient-to-r from-primary via-primary-glow to-coral bg-clip-text text-transparent"
+                    : ""
+                }
+              >
+                {words.map((w, wi) => {
+                  if (!w.trim()) return <span key={wi}>{w}</span>;
+                  const idx = wordIndex++;
+                  return (
+                    <motion.span
+                      key={wi}
+                      className="inline-block will-change-transform"
+                      initial={{ opacity: 0, y: "0.6em", scale: 0.8, filter: "blur(12px)" }}
+                      animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+                      transition={{
+                        duration: 0.9,
+                        delay: 0.15 + idx * 0.07 + li * 0.08,
+                        ease: [0.22, 1, 0.36, 1],
+                      }}
+                      aria-hidden
+                    >
+                      {w}
+                    </motion.span>
+                  );
+                })}
+              </span>
+            );
+          })}
+        </span>
+      ))}
+    </h1>
+  );
+}
 
 /** Re-triggers its child animation on every mouseenter by bumping a key. */
 function HoverReplay({
@@ -206,8 +292,15 @@ function Nav() {
 /* ----------------------------- HERO ----------------------------- */
 
 function Hero() {
+  const ref = useRef<HTMLDivElement>(null);
+  const reduced = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const visualY = useTransform(scrollYProgress, [0, 1], reduced ? [0, 0] : [0, -80]);
+  const visualScale = useTransform(scrollYProgress, [0, 1], reduced ? [1, 1] : [1, 1.06]);
+  const visualRotate = useTransform(scrollYProgress, [0, 1], reduced ? [0, 0] : [0, -3]);
+
   return (
-    <section className="relative overflow-hidden">
+    <section ref={ref} className="relative overflow-hidden">
       <div className="absolute inset-0 -z-10 bg-gradient-hero" />
       <div className="absolute inset-0 -z-10 bg-grid opacity-60" />
       {/* floating shapes */}
@@ -216,46 +309,78 @@ function Hero() {
       <div className="pointer-events-none absolute bottom-0 left-1/3 -z-10 h-72 w-72 rounded-full bg-success/15 blur-3xl animate-blob" style={{ animationDelay: "-8s" }} />
 
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 md:py-24 lg:grid-cols-[1.05fr_1fr]">
-        <motion.div initial="hidden" animate="show" variants={stagger}>
-          <motion.span variants={fadeUp} className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-card/80 px-3 py-1 text-xs font-medium text-primary shadow-soft backdrop-blur">
+        <div>
+          <motion.span
+            initial={{ opacity: 0, y: 12, filter: "blur(8px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-card/80 px-3 py-1 text-xs font-medium text-primary shadow-soft backdrop-blur"
+          >
             <Sparkles className="h-3.5 w-3.5 text-coral animate-pulse" /> A calmer way to find care
           </motion.span>
-          <motion.h1 variants={fadeUp} className="mt-6 text-4xl font-bold leading-[1.05] tracking-tight md:text-6xl">
-            Your Mental Wellbeing{" "}
-            <span className="bg-gradient-to-r from-primary via-primary-glow to-coral bg-clip-text text-transparent animate-gradient">Starts Here.</span>
-          </motion.h1>
-          <motion.p variants={fadeUp} className="mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground">
+
+          <AnimatedHeadline
+            className="mt-6 text-4xl font-bold leading-[1.05] tracking-tight md:text-6xl"
+            lines={[
+              [{ text: "Your Mental Wellbeing" }],
+              [{ text: "Starts Here.", gradient: true }],
+            ]}
+          />
+
+          <motion.p
+            initial={{ opacity: 0, y: 14, filter: "blur(6px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.8, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground"
+          >
             Connect with verified psychologists through a secure and confidential platform designed to support
             your mental health journey.
           </motion.p>
-          <motion.div variants={fadeUp} className="mt-8 flex flex-wrap gap-3">
-            <Link
-              to="/patient/find"
-              className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-elegant transition-all hover:shadow-glow hover:-translate-y-0.5"
-            >
-              <span className="relative z-10 inline-flex items-center gap-2">
-                Book an Appointment <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1 rtl:rotate-180" />
-              </span>
-              <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
-            </Link>
-            <Link
-              to="/patient/find"
-              className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-6 py-3 text-sm font-semibold transition-all hover:border-primary/40 hover:text-primary hover:-translate-y-0.5"
-            >
-              Find a Psychologist
-            </Link>
+
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1.15, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-8 flex flex-wrap gap-3"
+          >
+            <motion.div whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.98 }} transition={{ type: "spring", stiffness: 380, damping: 22 }}>
+              <Link
+                to="/patient/find"
+                className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-elegant transition-shadow hover:shadow-glow"
+              >
+                <span className="relative z-10 inline-flex items-center gap-2">
+                  Book an Appointment <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1 rtl:rotate-180" />
+                </span>
+                <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+              </Link>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.98 }} transition={{ type: "spring", stiffness: 380, damping: 22 }}>
+              <Link
+                to="/patient/find"
+                className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-6 py-3 text-sm font-semibold transition-colors hover:border-primary/40 hover:text-primary"
+              >
+                Find a Psychologist
+              </Link>
+            </motion.div>
           </motion.div>
-          <motion.div variants={fadeUp} className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-muted-foreground">
+
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1.35, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-muted-foreground"
+          >
             <span className="inline-flex items-center gap-1.5"><BadgeCheck className="h-4 w-4 text-success" /> Licensed clinicians</span>
             <span className="inline-flex items-center gap-1.5"><Lock className="h-4 w-4 text-primary" /> End-to-end encrypted</span>
             <span className="inline-flex items-center gap-1.5"><Globe className="h-4 w-4 text-coral" /> AR · FR · EN</span>
           </motion.div>
-        </motion.div>
+        </div>
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.92, y: 30 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+          style={{ y: visualY, scale: visualScale, rotate: visualRotate }}
+          initial={{ opacity: 0, scale: 0.92, y: 30, filter: "blur(10px)" }}
+          animate={{ opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
         >
           <HeroVisual />
         </motion.div>
@@ -265,12 +390,35 @@ function Hero() {
 }
 
 function HeroVisual() {
+  const reduced = useReducedMotion();
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const rotateY = useSpring(useTransform(mx, [-1, 1], [-8, 8]), { stiffness: 120, damping: 14 });
+  const rotateX = useSpring(useTransform(my, [-1, 1], [6, -6]), { stiffness: 120, damping: 14 });
+  const tx = useSpring(useTransform(mx, [-1, 1], [-10, 10]), { stiffness: 120, damping: 16 });
+  const ty = useSpring(useTransform(my, [-1, 1], [-10, 10]), { stiffness: 120, damping: 16 });
+
+  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (reduced) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    mx.set(((e.clientX - r.left) / r.width) * 2 - 1);
+    my.set(((e.clientY - r.top) / r.height) * 2 - 1);
+  };
+  const onLeave = () => {
+    mx.set(0);
+    my.set(0);
+  };
+
   return (
-    <div className="relative mx-auto w-full max-w-lg [perspective:1200px]">
+    <div
+      className="relative mx-auto w-full max-w-lg [perspective:1200px]"
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+    >
       <motion.div
-        whileHover={{ rotateY: -6, rotateX: 4, scale: 1.02 }}
+        style={{ rotateY, rotateX }}
         transition={{ type: "spring", stiffness: 200, damping: 18 }}
-        className="relative overflow-hidden rounded-[2rem] border border-primary/15 bg-gradient-to-br from-primary/15 via-card to-accent p-3 shadow-elegant animate-floaty"
+        className="relative overflow-hidden rounded-[2rem] border border-primary/15 bg-gradient-to-br from-primary/15 via-card to-accent p-3 shadow-elegant animate-floaty [transform-style:preserve-3d]"
       >
         <motion.img
           src={therapyHero}
@@ -278,27 +426,39 @@ function HeroVisual() {
           width={1280}
           height={1024}
           className="block w-full rounded-[1.5rem] object-cover"
-          initial={{ scale: 1.05, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+          initial={{ scale: 1.08, opacity: 0, filter: "blur(14px)" }}
+          animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
+          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
           whileHover={{ scale: 1.04 }}
         />
         <span className="pointer-events-none absolute inset-0 rounded-[2rem] ring-1 ring-inset ring-white/30" />
+        {/* subtle sheen tracking the cursor */}
+        <motion.span
+          aria-hidden
+          className="pointer-events-none absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_var(--px,50%)_var(--py,50%),rgba(255,255,255,0.18),transparent_55%)]"
+          style={{
+            ["--px" as string]: useTransform(mx, [-1, 1], ["10%", "90%"]),
+            ["--py" as string]: useTransform(my, [-1, 1], ["10%", "90%"]),
+          } as React.CSSProperties}
+        />
+
       </motion.div>
 
-      {/* floating cards */}
-      <FloatCard className="-left-4 top-8 sm:-left-10" delay={0}>
-        <HoverReplay animation="pop"><BadgeCheck className="h-4 w-4 text-success" /></HoverReplay> Verified Psychologists
-      </FloatCard>
-      <FloatCard className="-right-2 top-32 sm:-right-8" delay={0.6}>
-        <HoverReplay animation="wobble"><ShieldCheck className="h-4 w-4 text-primary" /></HoverReplay> Secure Consultations
-      </FloatCard>
-      <FloatCard className="-left-2 bottom-24 sm:-left-12" delay={1.2}>
-        <HoverReplay animation="bounce"><FileLock2 className="h-4 w-4 text-coral" /></HoverReplay> Confidential Data
-      </FloatCard>
-      <FloatCard className="-right-2 -bottom-2 sm:-right-10" delay={1.8}>
-        <HoverReplay animation="spin"><MonitorSmartphone className="h-4 w-4 text-primary" /></HoverReplay> Online & In-Person
-      </FloatCard>
+      {/* floating cards — subtle mouse parallax */}
+      <motion.div style={{ x: tx, y: ty }} className="absolute inset-0 pointer-events-none">
+        <FloatCard className="-left-4 top-8 sm:-left-10" delay={0}>
+          <HoverReplay animation="pop"><BadgeCheck className="h-4 w-4 text-success" /></HoverReplay> Verified Psychologists
+        </FloatCard>
+        <FloatCard className="-right-2 top-32 sm:-right-8" delay={0.6}>
+          <HoverReplay animation="wobble"><ShieldCheck className="h-4 w-4 text-primary" /></HoverReplay> Secure Consultations
+        </FloatCard>
+        <FloatCard className="-left-2 bottom-24 sm:-left-12" delay={1.2}>
+          <HoverReplay animation="bounce"><FileLock2 className="h-4 w-4 text-coral" /></HoverReplay> Confidential Data
+        </FloatCard>
+        <FloatCard className="-right-2 -bottom-2 sm:-right-10" delay={1.8}>
+          <HoverReplay animation="spin"><MonitorSmartphone className="h-4 w-4 text-primary" /></HoverReplay> Online & In-Person
+        </FloatCard>
+      </motion.div>
     </div>
   );
 }
