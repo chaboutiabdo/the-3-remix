@@ -28,8 +28,94 @@ import {
   Video,
 } from "lucide-react";
 import { BrandLogo } from "@/components/brand-logo";
-import { motion, useReducedMotion, type Variants, type TargetAndTransition } from "framer-motion";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+  useMotionValue,
+  useSpring,
+  type Variants,
+  type TargetAndTransition,
+} from "framer-motion";
 import therapyHero from "@/assets/therapy-hero.jpg";
+
+/** Cinematic word-by-word headline reveal (blur → sharp, scale 0.8 → 1, from below). */
+function AnimatedHeadline({
+  lines,
+  className = "",
+}: {
+  lines: Array<Array<{ text: string; gradient?: boolean }>>;
+  className?: string;
+}) {
+  const reduced = useReducedMotion();
+  if (reduced) {
+    return (
+      <h1 className={className}>
+        {lines.map((line, li) => (
+          <span key={li} className="block">
+            {line.map((seg, si) => (
+              <span
+                key={si}
+                className={
+                  seg.gradient
+                    ? "bg-gradient-to-r from-primary via-primary-glow to-coral bg-clip-text text-transparent"
+                    : ""
+                }
+              >
+                {seg.text}
+              </span>
+            ))}
+          </span>
+        ))}
+      </h1>
+    );
+  }
+
+  let wordIndex = 0;
+  return (
+    <h1 className={className} aria-label={lines.map((l) => l.map((s) => s.text).join("")).join(" ")}>
+      {lines.map((line, li) => (
+        <span key={li} className="block overflow-hidden pb-1">
+          {line.map((seg, si) => {
+            const words = seg.text.split(/(\s+)/); // keep spaces
+            return (
+              <span
+                key={si}
+                className={
+                  seg.gradient
+                    ? "bg-gradient-to-r from-primary via-primary-glow to-coral bg-clip-text text-transparent"
+                    : ""
+                }
+              >
+                {words.map((w, wi) => {
+                  if (!w.trim()) return <span key={wi}>{w}</span>;
+                  const idx = wordIndex++;
+                  return (
+                    <motion.span
+                      key={wi}
+                      className="inline-block will-change-transform"
+                      initial={{ opacity: 0, y: "0.6em", scale: 0.8, filter: "blur(12px)" }}
+                      animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+                      transition={{
+                        duration: 0.9,
+                        delay: 0.15 + idx * 0.07 + li * 0.08,
+                        ease: [0.22, 1, 0.36, 1],
+                      }}
+                      aria-hidden
+                    >
+                      {w}
+                    </motion.span>
+                  );
+                })}
+              </span>
+            );
+          })}
+        </span>
+      ))}
+    </h1>
+  );
+}
 
 /** Re-triggers its child animation on every mouseenter by bumping a key. */
 function HoverReplay({
