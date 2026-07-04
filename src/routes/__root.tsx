@@ -128,11 +128,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         {children}
         <Scripts />
       </body>
@@ -145,39 +146,52 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <LanguageProvider>
-        <AuthProvider>
-          <ClientGate>
-            <RouteProgress />
-            <Outlet />
-            <Toaster position="top-right" richColors />
-          </ClientGate>
-        </AuthProvider>
-      </LanguageProvider>
+      <ThemeProvider>
+        <LanguageProvider>
+          <AuthProvider>
+            <ClientGate>
+              <RouteProgress />
+              <AnimatedOutlet />
+              <Toaster position="top-right" richColors theme="system" />
+            </ClientGate>
+          </AuthProvider>
+        </LanguageProvider>
+      </ThemeProvider>
     </QueryClientProvider>
+  );
+}
+
+function AnimatedOutlet() {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const reduce = useReducedMotion();
+  return (
+    <AnimatePresence mode="wait" initial={false}>
+      <motion.div
+        key={pathname}
+        initial={reduce ? { opacity: 0 } : { opacity: 0, y: 20, filter: "blur(6px)" }}
+        animate={reduce ? { opacity: 1 } : { opacity: 1, y: 0, filter: "blur(0px)" }}
+        exit={reduce ? { opacity: 0 } : { opacity: 0, y: -10, filter: "blur(4px)" }}
+        transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+        style={{ willChange: "opacity, transform, filter" }}
+      >
+        <Outlet />
+      </motion.div>
+    </AnimatePresence>
   );
 }
 
 function ClientGate({ children }: { children: ReactNode }) {
   // Avoid SSR/CSR hydration mismatches caused by language/auth restored from
-  // localStorage. We render a neutral splash on the first paint (which matches
-  // the server) and swap in the real tree after mount.
+  // localStorage. Splash uses theme tokens so it never flashes white in dark mode.
   const [ready, setReady] = useState(false);
   useEffect(() => setReady(true), []);
   if (!ready) {
     return (
       <div
         suppressHydrationWarning
-        style={{
-          minHeight: "100vh",
-          display: "grid",
-          placeItems: "center",
-          background: "#f8fafc",
-          color: "#0f172a",
-          fontFamily: "ui-sans-serif, system-ui",
-        }}
+        className="grid min-h-screen place-items-center bg-background text-foreground"
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <div className="flex items-center gap-2.5">
           <div
             style={{
               width: 28,
@@ -186,10 +200,11 @@ function ClientGate({ children }: { children: ReactNode }) {
               background: "linear-gradient(135deg, #14b8a6, #6366f1)",
             }}
           />
-          <span style={{ fontWeight: 600 }}>PsyConnect</span>
+          <span className="font-semibold">PsyConnect</span>
         </div>
       </div>
     );
   }
   return <>{children}</>;
 }
+
