@@ -26,6 +26,7 @@ import {
 import { useAuth, type Role } from "@/lib/auth";
 import { useLang } from "@/lib/lang";
 import { cn } from "@/lib/utils";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 type NavItem = { to: string; label: string; icon: typeof Home };
 
@@ -161,6 +162,7 @@ export function AppShell({ role, children }: { role: Role; children: ReactNode }
             <Menu className="h-5 w-5" />
           </button>
           <div className="ms-auto flex items-center gap-2">
+            <ThemeToggle compact />
             <button
               onClick={toggle}
               className="flex items-center gap-1.5 rounded-full border border-border/70 bg-card/60 px-3 py-1.5 text-xs font-medium transition-all hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-soft"
