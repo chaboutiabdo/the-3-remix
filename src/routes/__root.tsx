@@ -165,14 +165,14 @@ function AnimatedOutlet() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const reduce = useReducedMotion();
   return (
-    <AnimatePresence mode="wait" initial={false}>
+    <AnimatePresence initial={false}>
       <motion.div
         key={pathname}
-        initial={reduce ? { opacity: 0 } : { opacity: 0, y: 20, filter: "blur(6px)" }}
-        animate={reduce ? { opacity: 1 } : { opacity: 1, y: 0, filter: "blur(0px)" }}
-        exit={reduce ? { opacity: 0 } : { opacity: 0, y: -10, filter: "blur(4px)" }}
-        transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-        style={{ willChange: "opacity, transform, filter" }}
+        initial={reduce ? { opacity: 0 } : { opacity: 0, y: 8 }}
+        animate={reduce ? { opacity: 1 } : { opacity: 1, y: 0 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+        style={{ willChange: "opacity, transform" }}
       >
         <Outlet />
       </motion.div>
@@ -182,29 +182,20 @@ function AnimatedOutlet() {
 
 function ClientGate({ children }: { children: ReactNode }) {
   // Avoid SSR/CSR hydration mismatches caused by language/auth restored from
-  // localStorage. Splash uses theme tokens so it never flashes white in dark mode.
+  // localStorage. Render an invisible background-matched placeholder — no logo,
+  // no text — so users never see a splash between navigations or on first paint.
   const [ready, setReady] = useState(false);
   useEffect(() => setReady(true), []);
   if (!ready) {
     return (
       <div
         suppressHydrationWarning
-        className="grid min-h-screen place-items-center bg-background text-foreground"
-      >
-        <div className="flex items-center gap-2.5">
-          <div
-            style={{
-              width: 28,
-              height: 28,
-              borderRadius: 10,
-              background: "linear-gradient(135deg, #14b8a6, #6366f1)",
-            }}
-          />
-          <span className="font-semibold">PsyConnect</span>
-        </div>
-      </div>
+        aria-hidden
+        className="min-h-screen bg-background"
+      />
     );
   }
   return <>{children}</>;
 }
+
 
