@@ -26,6 +26,7 @@ import {
 import { useAuth, type Role } from "@/lib/auth";
 import { useLang } from "@/lib/lang";
 import { cn } from "@/lib/utils";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 type NavItem = { to: string; label: string; icon: typeof Home };
 
