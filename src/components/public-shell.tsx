@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Globe } from "lucide-react";
 import { useLang } from "@/lib/lang";
 import { BrandLogo } from "@/components/brand-logo";
+import { ThemeToggle } from "@/components/theme-toggle";
 import type { ReactNode } from "react";
 
 export function PublicShell({
