@@ -32,6 +32,7 @@ export function PublicShell({
             <Link to="/contact" className="hover:text-foreground">{t("nav.contact")}</Link>
             <Link to="/patient/find" className="hover:text-foreground">{t("nav.psychologists")}</Link>
           </nav>
+          <ThemeToggle compact />
           <button
             onClick={toggle}
             className="flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1.5 text-xs font-medium hover:bg-accent"
