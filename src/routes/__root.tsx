@@ -4,15 +4,18 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 import appCss from "../styles.css?url";
 import "../i18n";
 import { AuthProvider } from "@/lib/auth";
 import { LanguageProvider } from "@/lib/lang";
+import { ThemeProvider, themeInitScript } from "@/lib/theme";
 import { RouteProgress } from "@/components/route-progress";
 import { Toaster } from "@/components/ui/sonner";
 import { reportLovableError } from "../lib/lovable-error-reporting";
