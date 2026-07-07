@@ -2,9 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { PageHeader, Card } from "@/components/page-bits";
 import { messages } from "@/data/mock";
+import { MessagesPageSkeleton } from "@/components/page-states";
 
 export const Route = createFileRoute("/psychologist/messages")({
   head: () => ({ meta: [{ title: "Messages — PsyConnect" }] }),
+  pendingComponent: MessagesPageSkeleton,
   component: () => {
     const { t } = useTranslation();
     return (
