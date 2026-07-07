@@ -19,6 +19,7 @@ import { ThemeProvider, themeInitScript } from "@/lib/theme";
 import { RouteProgress } from "@/components/route-progress";
 import { Toaster } from "@/components/ui/sonner";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { NotFoundPage, RouteErrorBoundary, OfflineBanner } from "@/components/page-states";
 
 function NotFoundComponent() {
   return (
