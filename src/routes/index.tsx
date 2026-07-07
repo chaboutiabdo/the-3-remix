@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { LandingPageSkeleton } from "@/components/page-states";
 import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
@@ -195,6 +196,7 @@ export const Route = createFileRoute("/")({
     ],
   }),
   component: Landing,
+  pendingComponent: LandingPageSkeleton,
 });
 
 function Landing() {

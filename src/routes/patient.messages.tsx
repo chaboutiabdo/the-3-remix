@@ -7,9 +7,12 @@ import { LifeBuoy, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SupportFormDialog } from "@/components/support-form";
 
+import { MessagesPageSkeleton } from "@/components/page-states";
+
 export const Route = createFileRoute("/patient/messages")({
   head: () => ({ meta: [{ title: "Messages — PsyConnect" }] }),
   component: Msgs,
+  pendingComponent: MessagesPageSkeleton,
 });
 
 function Msgs() {

@@ -1,6 +1,7 @@
 import { QueryClient } from "@tanstack/react-query";
 import { createRouter } from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";
+import { DashboardPageSkeleton, NotFoundPage, RouteErrorBoundary } from "./components/page-states";
 
 export const getRouter = () => {
   const queryClient = new QueryClient({
@@ -21,7 +22,13 @@ export const getRouter = () => {
     defaultPreload: "intent",
     defaultPreloadDelay: 50,
     defaultPreloadStaleTime: 0,
+    defaultPendingComponent: DashboardPageSkeleton,
+    defaultPendingMs: 150,
+    defaultPendingMinMs: 400,
+    defaultErrorComponent: RouteErrorBoundary,
+    defaultNotFoundComponent: NotFoundPage,
   });
 
   return router;
 };
+

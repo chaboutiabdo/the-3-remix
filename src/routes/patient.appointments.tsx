@@ -4,9 +4,12 @@ import { Video } from "lucide-react";
 import { PageHeader, Pill } from "@/components/page-bits";
 import { appointments, psychologists } from "@/data/mock";
 
+import { ListPageSkeleton } from "@/components/page-states";
+
 export const Route = createFileRoute("/patient/appointments")({
   head: () => ({ meta: [{ title: "Appointments — PsyConnect" }] }),
   component: Appts,
+  pendingComponent: () => <ListPageSkeleton rows={5} />,
 });
 
 function Appts() {
