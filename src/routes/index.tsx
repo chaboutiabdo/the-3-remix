@@ -196,6 +196,7 @@ export const Route = createFileRoute("/")({
     ],
   }),
   component: Landing,
+  pendingComponent: LandingPageSkeleton,
 });
 
 function Landing() {
