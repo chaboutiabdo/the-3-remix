@@ -102,6 +102,7 @@ function RootComponent() {
         <LanguageProvider>
           <AuthProvider>
             <ClientGate>
+              <OfflineBanner />
               <RouteProgress />
               <AnimatedOutlet />
               <Toaster position="top-right" richColors theme="system" />
