@@ -2,10 +2,12 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { useAuth, roleHome, type Role } from "@/lib/auth";
+import { FormPageSkeleton } from "@/components/page-states";
 
 export const Route = createFileRoute("/auth/signup")({
   head: () => ({ meta: [{ title: "Create account — PsyConnect" }] }),
   component: Signup,
+  pendingComponent: FormPageSkeleton,
 });
 
 function Signup() {
