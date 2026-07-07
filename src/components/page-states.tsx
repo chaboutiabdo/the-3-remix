@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Link, useRouter } from "@tanstack/react-router";
 import { motion, useReducedMotion } from "framer-motion";
 import {
@@ -14,7 +14,6 @@ import {
 import { Skeleton, SkeletonText } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useEffect } from "react";
 import { reportLovableError } from "@/lib/lovable-error-reporting";
 
 /* --------------------------------- Loading -------------------------------- */
