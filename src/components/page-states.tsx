@@ -442,8 +442,21 @@ export function ForbiddenPage() {
 /* ---------------------------- Offline detection --------------------------- */
 
 export function OfflineBanner() {
-  const [offline, setOffline] = useOnlineStatus();
-  if (!offline) return null;
+  const [mounted, setMounted] = useState(false);
+  const [offline, setOffline] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+    setOffline(!navigator.onLine);
+    const on = () => setOffline(false);
+    const off = () => setOffline(true);
+    window.addEventListener("online", on);
+    window.addEventListener("offline", off);
+    return () => {
+      window.removeEventListener("online", on);
+      window.removeEventListener("offline", off);
+    };
+  }, []);
+  if (!mounted || !offline) return null;
   return (
     <div
       role="status"
@@ -460,31 +473,3 @@ export function OfflineBanner() {
   );
 }
 
-function useOnlineStatus(): [boolean, (v: boolean) => void] {
-  // Client-only; renders nothing during SSR
-  const [offline, setOffline] = useClientState(() => typeof navigator !== "undefined" && !navigator.onLine);
-  useEffect(() => {
-    const on = () => setOffline(false);
-    const off = () => setOffline(true);
-    window.addEventListener("online", on);
-    window.addEventListener("offline", off);
-    return () => {
-      window.removeEventListener("online", on);
-      window.removeEventListener("offline", off);
-    };
-  }, [setOffline]);
-  return [offline, setOffline];
-}
-
-function useClientState<T>(init: () => T): [T, (v: T) => void] {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const React = require("react") as typeof import("react");
-  const [mounted, setMounted] = React.useState(false);
-  const [value, setValue] = React.useState<T>(() => (undefined as unknown as T));
-  React.useEffect(() => {
-    setValue(init());
-    setMounted(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  return [mounted ? value : (false as unknown as T), setValue];
-}
