@@ -3,195 +3,46 @@ import { LandingPageSkeleton } from "@/components/page-states";
 import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
+  ArrowUpRight,
   BadgeCheck,
-  Bell,
-  CalendarCheck,
   CalendarClock,
   ChevronDown,
-  ClipboardList,
   FileLock2,
-  FileText,
   Globe,
   HeartPulse,
   Lock,
   MessageCircle,
-  Mic,
   Minus,
   MonitorSmartphone,
-  Phone,
   Plus,
   ShieldCheck,
   Sparkles,
   Star,
   Stethoscope,
   UserCheck,
-  Users,
   Video,
 } from "lucide-react";
 import { BrandLogo } from "@/components/brand-logo";
 import {
   motion,
+  useMotionValue,
+  useMotionValueEvent,
   useReducedMotion,
   useScroll,
-  useTransform,
-  useMotionValue,
   useSpring,
-  type Variants,
-  type TargetAndTransition,
+  useTransform,
+  type MotionValue,
 } from "framer-motion";
 import therapyHero from "@/assets/therapy-hero.jpg";
-
-/** Cinematic word-by-word headline reveal (blur → sharp, scale 0.8 → 1, from below). */
-function AnimatedHeadline({
-  lines,
-  className = "",
-}: {
-  lines: Array<Array<{ text: string; gradient?: boolean }>>;
-  className?: string;
-}) {
-  const reduced = useReducedMotion();
-  if (reduced) {
-    return (
-      <h1 className={className}>
-        {lines.map((line, li) => (
-          <span key={li} className="block">
-            {line.map((seg, si) => (
-              <span
-                key={si}
-                className={
-                  seg.gradient
-                    ? "bg-gradient-to-r from-primary via-primary-glow to-coral bg-clip-text text-transparent"
-                    : ""
-                }
-              >
-                {seg.text}
-              </span>
-            ))}
-          </span>
-        ))}
-      </h1>
-    );
-  }
-
-  let wordIndex = 0;
-  return (
-    <h1 className={className} aria-label={lines.map((l) => l.map((s) => s.text).join("")).join(" ")}>
-      {lines.map((line, li) => (
-        <span key={li} className="block overflow-hidden pb-1">
-          {line.map((seg, si) => {
-            const words = seg.text.split(/(\s+)/); // keep spaces
-            return (
-              <span
-                key={si}
-                className={
-                  seg.gradient
-                    ? "bg-gradient-to-r from-primary via-primary-glow to-coral bg-clip-text text-transparent"
-                    : ""
-                }
-              >
-                {words.map((w, wi) => {
-                  if (!w.trim()) return <span key={wi}>{w}</span>;
-                  const idx = wordIndex++;
-                  return (
-                    <motion.span
-                      key={wi}
-                      className="inline-block will-change-transform"
-                      initial={{ opacity: 0, y: "0.6em", scale: 0.8, filter: "blur(12px)" }}
-                      animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-                      transition={{
-                        duration: 0.9,
-                        delay: 0.15 + idx * 0.07 + li * 0.08,
-                        ease: [0.22, 1, 0.36, 1],
-                      }}
-                      aria-hidden
-                    >
-                      {w}
-                    </motion.span>
-                  );
-                })}
-              </span>
-            );
-          })}
-        </span>
-      ))}
-    </h1>
-  );
-}
-
-/** Re-triggers its child animation on every mouseenter by bumping a key. */
-function HoverReplay({
-  children,
-  animation = "bounce",
-  className,
-}: {
-  children: React.ReactNode;
-  animation?: "bounce" | "wobble" | "pop" | "spin";
-  className?: string;
-}) {
-  const [k, setK] = useState(0);
-  const reduced = useReducedMotion();
-  const variants: Record<string, TargetAndTransition> = {
-    bounce: { y: [0, -10, 0, -5, 0], transition: { duration: 0.7, ease: "easeOut" } },
-    wobble: { rotate: [0, -12, 10, -6, 4, 0], transition: { duration: 0.7 } },
-    pop: { scale: [1, 1.25, 0.95, 1.1, 1], transition: { duration: 0.6 } },
-    spin: { rotate: [0, 360], transition: { duration: 0.8, ease: "easeInOut" } },
-  };
-  if (reduced) return <span className={className}>{children}</span>;
-  return (
-    <motion.span
-      className={`inline-flex ${className ?? ""}`}
-      onMouseEnter={() => setK((v) => v + 1)}
-      onTouchStart={() => setK((v) => v + 1)}
-    >
-      <motion.span key={k} animate={variants[animation]} className="inline-flex">
-        {children}
-      </motion.span>
-    </motion.span>
-  );
-}
-
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
-};
-const stagger: Variants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
-};
-
-function Reveal({
-  children,
-  className,
-  delay = 0,
-  y = 24,
-}: {
-  children: React.ReactNode;
-  className?: string;
-  delay?: number;
-  y?: number;
-}) {
-  const reduced = useReducedMotion();
-  return (
-    <motion.div
-      className={className}
-      initial={reduced ? false : { opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay }}
-    >
-      {children}
-    </motion.div>
-  );
-}
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "PsyConnect — Your Mental Wellbeing Starts Here" },
+      { title: "PsyConnect — Mental wellbeing, in motion." },
       {
         name: "description",
         content:
-          "Connect with verified psychologists through a secure, confidential platform. Book online or in-person sessions in minutes.",
+          "An immersive space to find verified psychologists in Algeria. Secure video, audio and messaging — designed with the calm of a clinician's office and the craft of great software.",
       },
     ],
   }),
@@ -199,19 +50,24 @@ export const Route = createFileRoute("/")({
   pendingComponent: LandingPageSkeleton,
 });
 
+/* ============================================================
+   ROOT
+   ============================================================ */
+
 function Landing() {
   return (
-    <div className="min-h-screen bg-background text-foreground antialiased">
+    <div className="relative min-h-screen bg-background text-foreground antialiased selection:bg-primary/25 selection:text-foreground">
+      <ScrollProgressBar />
+      <AmbientCursor />
       <Nav />
-      <main>
+      <main className="relative">
         <Hero />
-        <TrustIndicators />
-        <WhyChoose />
-        <HowItWorks />
-        <ForPsychologists />
-        <Features />
-        <Security />
-        <Testimonials />
+        <Manifesto />
+        <Journey />
+        <Capabilities />
+        <ForClinicians />
+        <TrustBand />
+        <Voices />
         <FAQ />
         <FinalCTA />
       </main>
@@ -220,47 +76,102 @@ function Landing() {
   );
 }
 
-/* ----------------------------- NAV ----------------------------- */
+/* ============================================================
+   AMBIENT: cursor + scroll progress
+   ============================================================ */
+
+function ScrollProgressBar() {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 140, damping: 24, mass: 0.3 });
+  return (
+    <motion.div
+      aria-hidden
+      style={{ scaleX }}
+      className="fixed inset-x-0 top-0 z-[60] h-[2px] origin-left bg-gradient-to-r from-primary via-primary-glow to-coral"
+    />
+  );
+}
+
+function AmbientCursor() {
+  const reduced = useReducedMotion();
+  const x = useMotionValue(-100);
+  const y = useMotionValue(-100);
+  const sx = useSpring(x, { stiffness: 220, damping: 26, mass: 0.4 });
+  const sy = useSpring(y, { stiffness: 220, damping: 26, mass: 0.4 });
+  const [enabled, setEnabled] = useState(false);
+
+  useEffect(() => {
+    if (reduced) return;
+    const mq = window.matchMedia("(pointer: fine)");
+    setEnabled(mq.matches);
+    const move = (e: MouseEvent) => {
+      x.set(e.clientX);
+      y.set(e.clientY);
+    };
+    window.addEventListener("mousemove", move, { passive: true });
+    return () => window.removeEventListener("mousemove", move);
+  }, [reduced, x, y]);
+
+  if (!enabled) return null;
+  return (
+    <motion.div
+      aria-hidden
+      className="pointer-events-none fixed left-0 top-0 z-[55] h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-70 mix-blend-plus-lighter"
+      style={{
+        x: sx,
+        y: sy,
+        background:
+          "radial-gradient(circle, oklch(0.62 0.18 255 / 0.18) 0%, oklch(0.74 0.15 35 / 0.10) 35%, transparent 65%)",
+        filter: "blur(20px)",
+      }}
+    />
+  );
+}
+
+/* ============================================================
+   NAV — transparent → glass, magnetic CTA
+   ============================================================ */
 
 const navLinks = [
-  { to: "/", label: "Home" },
-  { to: "/patient/find", label: "Find a Psychologist" },
-  { to: "/#how", label: "How It Works", hash: true },
-  { to: "/onboarding/welcome", label: "For Psychologists" },
+  { to: "/patient/find", label: "Find care" },
+  { to: "/#journey", label: "The journey", hash: true },
+  { to: "/onboarding/welcome", label: "For clinicians" },
   { to: "/faq", label: "FAQ" },
-  { to: "/contact", label: "Contact" },
 ];
 
 function Nav() {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
-    const on = () => setScrolled(window.scrollY > 8);
+    const on = () => setScrolled(window.scrollY > 12);
     on();
     window.addEventListener("scroll", on, { passive: true });
     return () => window.removeEventListener("scroll", on);
   }, []);
+
   return (
     <header
-      className={`sticky top-0 z-40 transition-all ${
+      className={`fixed inset-x-0 top-0 z-50 transition-[background,backdrop-filter,border-color,box-shadow] duration-500 ${
         scrolled
-          ? "border-b border-border bg-background/70 backdrop-blur-xl"
-          : "border-b border-transparent bg-background/0"
+          ? "border-b border-border/60 bg-background/60 shadow-[0_1px_20px_-12px_oklch(0.3_0.05_250/0.35)] backdrop-blur-xl backdrop-saturate-150"
+          : "border-b border-transparent bg-transparent"
       }`}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-6 px-4 sm:px-6">
-        <Link to="/" className="flex items-center gap-2">
-          <BrandLogo />
+        <Link to="/" className="group flex items-center gap-2">
+          <BrandLogo className="transition-transform duration-500 group-hover:rotate-[8deg]" />
           <span className="text-base font-semibold tracking-tight text-primary">PsyConnect</span>
         </Link>
-        <nav className="ms-auto hidden items-center gap-6 text-sm text-muted-foreground lg:flex">
+        <nav className="ms-auto hidden items-center gap-7 text-sm text-muted-foreground lg:flex">
           {navLinks.map((l) =>
             l.hash ? (
-              <a key={l.label} href={l.to} className="hover:text-foreground transition-colors">
-                {l.label}
+              <a key={l.label} href={l.to} className="group relative">
+                <span className="transition-colors group-hover:text-foreground">{l.label}</span>
+                <span className="absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100" />
               </a>
             ) : (
-              <Link key={l.label} to={l.to} className="hover:text-foreground transition-colors">
-                {l.label}
+              <Link key={l.label} to={l.to} className="group relative">
+                <span className="transition-colors group-hover:text-foreground">{l.label}</span>
+                <span className="absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100" />
               </Link>
             ),
           )}
@@ -268,109 +179,161 @@ function Nav() {
         <div className="ms-auto flex items-center gap-2 lg:ms-0">
           <Link
             to="/auth/login"
-            className="hidden rounded-full px-4 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors sm:inline-flex"
+            className="hidden rounded-full px-4 py-2 text-sm font-medium text-foreground/80 transition-colors hover:text-primary sm:inline-flex"
           >
             Login
           </Link>
-          <Link
-            to="/auth/signup"
-            className="hidden rounded-full border border-border bg-card px-4 py-2 text-sm font-medium hover:border-primary/40 hover:bg-accent transition-colors sm:inline-flex"
-          >
-            Register
-          </Link>
-          <Link
+          <MagneticButton
             to="/patient/find"
-            className="inline-flex items-center gap-1.5 rounded-full bg-gradient-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-soft hover:shadow-glow transition-shadow"
+            className="inline-flex items-center gap-1.5 rounded-full bg-gradient-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-elegant transition-shadow hover:shadow-glow"
           >
-            Book an Appointment
-            <ArrowRight className="h-3.5 w-3.5" />
-          </Link>
+            Book a session
+            <ArrowRight className="h-3.5 w-3.5 rtl:rotate-180" />
+          </MagneticButton>
         </div>
       </div>
     </header>
   );
 }
 
-/* ----------------------------- HERO ----------------------------- */
-
-function Hero() {
-  const ref = useRef<HTMLDivElement>(null);
+function MagneticButton({
+  to,
+  className,
+  children,
+  strength = 18,
+}: {
+  to: string;
+  className?: string;
+  children: React.ReactNode;
+  strength?: number;
+}) {
+  const ref = useRef<HTMLAnchorElement>(null);
   const reduced = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const visualY = useTransform(scrollYProgress, [0, 1], reduced ? [0, 0] : [0, -80]);
-  const visualScale = useTransform(scrollYProgress, [0, 1], reduced ? [1, 1] : [1, 1.06]);
-  const visualRotate = useTransform(scrollYProgress, [0, 1], reduced ? [0, 0] : [0, -3]);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const sx = useSpring(x, { stiffness: 260, damping: 20, mass: 0.4 });
+  const sy = useSpring(y, { stiffness: 260, damping: 20, mass: 0.4 });
+
+  const onMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (reduced) return;
+    const el = ref.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    const cx = r.left + r.width / 2;
+    const cy = r.top + r.height / 2;
+    x.set(((e.clientX - cx) / r.width) * strength * 2);
+    y.set(((e.clientY - cy) / r.height) * strength * 2);
+  };
+  const onLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
 
   return (
-    <section ref={ref} className="relative overflow-hidden">
-      <div className="absolute inset-0 -z-10 bg-gradient-hero" />
-      <div className="absolute inset-0 -z-10 bg-grid opacity-60" />
-      {/* floating shapes */}
-      <div className="pointer-events-none absolute -top-24 -left-24 -z-10 h-72 w-72 rounded-full bg-primary/20 blur-3xl animate-blob" />
-      <div className="pointer-events-none absolute top-40 -right-20 -z-10 h-80 w-80 rounded-full bg-coral/15 blur-3xl animate-blob" style={{ animationDelay: "-4s" }} />
-      <div className="pointer-events-none absolute bottom-0 left-1/3 -z-10 h-72 w-72 rounded-full bg-success/15 blur-3xl animate-blob" style={{ animationDelay: "-8s" }} />
+    <motion.span style={{ x: sx, y: sy }} className="inline-block">
+      <Link ref={ref} to={to} onMouseMove={onMove} onMouseLeave={onLeave} className={className}>
+        {children}
+      </Link>
+    </motion.span>
+  );
+}
 
-      <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 md:py-24 lg:grid-cols-[1.05fr_1fr]">
-        <div>
+/* ============================================================
+   HERO — full viewport cinematic intro
+   ============================================================ */
+
+function Hero() {
+  const ref = useRef<HTMLElement>(null);
+  const reduced = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+
+  const heroY = useTransform(scrollYProgress, [0, 1], reduced ? [0, 0] : [0, -60]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0]);
+  const bgY = useTransform(scrollYProgress, [0, 1], reduced ? [0, 0] : [0, 180]);
+  const imgScale = useTransform(scrollYProgress, [0, 1], reduced ? [1, 1] : [1, 1.14]);
+  const imgY = useTransform(scrollYProgress, [0, 1], reduced ? [0, 0] : [0, -40]);
+
+  return (
+    <section
+      ref={ref}
+      className="relative flex min-h-[100svh] items-center overflow-hidden pt-24"
+    >
+      {/* backdrop layers */}
+      <motion.div
+        aria-hidden
+        style={{ y: bgY }}
+        className="absolute inset-0 -z-30 bg-gradient-hero"
+      />
+      <div aria-hidden className="absolute inset-0 -z-30 bg-grid opacity-40" />
+      <FloatingOrbs />
+
+      {/* Content */}
+      <motion.div
+        style={{ y: heroY, opacity: heroOpacity }}
+        className="relative mx-auto grid w-full max-w-7xl items-center gap-14 px-4 sm:px-6 lg:grid-cols-[1.15fr_1fr]"
+      >
+        <div className="relative z-10">
           <motion.span
-            initial={{ opacity: 0, y: 12, filter: "blur(8px)" }}
+            initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-card/80 px-3 py-1 text-xs font-medium text-primary shadow-soft backdrop-blur"
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-card/70 px-3 py-1 text-xs font-medium text-primary shadow-soft backdrop-blur"
           >
-            <Sparkles className="h-3.5 w-3.5 text-coral animate-pulse" /> A calmer way to find care
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary/60" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
+            </span>
+            Verified psychologists across Algeria
           </motion.span>
 
-          <AnimatedHeadline
-            className="mt-6 text-4xl font-bold leading-[1.05] tracking-tight md:text-6xl"
+          <KineticHeadline
+            className="mt-6 font-semibold leading-[0.95] tracking-[-0.03em] text-[clamp(2.75rem,7.5vw,6.5rem)]"
             lines={[
-              [{ text: "Your Mental Wellbeing" }],
-              [{ text: "Starts Here.", gradient: true }],
+              { text: "Mental wellbeing," },
+              { text: "in motion.", gradient: true },
             ]}
           />
 
           <motion.p
             initial={{ opacity: 0, y: 14, filter: "blur(6px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 0.8, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground"
+            transition={{ duration: 0.9, delay: 1.0, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground md:text-xl"
           >
-            Connect with verified psychologists through a secure and confidential platform designed to support
-            your mental health journey.
+            An immersive space to meet the right psychologist — secure video, audio and messaging,
+            designed with the calm of a clinician's office and the craft of great software.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.15, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-8 flex flex-wrap gap-3"
+            transition={{ duration: 0.7, delay: 1.25, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-9 flex flex-wrap items-center gap-3"
           >
-            <motion.div whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.98 }} transition={{ type: "spring", stiffness: 380, damping: 22 }}>
-              <Link
-                to="/patient/find"
-                className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-elegant transition-shadow hover:shadow-glow"
-              >
-                <span className="relative z-10 inline-flex items-center gap-2">
-                  Book an Appointment <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1 rtl:rotate-180" />
-                </span>
-                <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
-              </Link>
-            </motion.div>
-            <motion.div whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.98 }} transition={{ type: "spring", stiffness: 380, damping: 22 }}>
-              <Link
-                to="/patient/find"
-                className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-6 py-3 text-sm font-semibold transition-colors hover:border-primary/40 hover:text-primary"
-              >
-                Find a Psychologist
-              </Link>
-            </motion.div>
+            <MagneticButton
+              to="/patient/find"
+              className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-elegant transition-shadow hover:shadow-glow"
+            >
+              <span className="relative z-10 inline-flex items-center gap-2">
+                Begin your journey
+                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </span>
+              <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-[900ms] group-hover:translate-x-full" />
+            </MagneticButton>
+            <a
+              href="#journey"
+              className="group inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-6 py-3.5 text-sm font-semibold backdrop-blur transition-colors hover:border-primary/40 hover:text-primary"
+            >
+              How it works
+              <ChevronDown className="h-4 w-4 transition-transform group-hover:translate-y-0.5" />
+            </a>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.35, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-muted-foreground"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.9, delay: 1.5 }}
+            className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs text-muted-foreground"
           >
             <span className="inline-flex items-center gap-1.5"><BadgeCheck className="h-4 w-4 text-success" /> Licensed clinicians</span>
             <span className="inline-flex items-center gap-1.5"><Lock className="h-4 w-4 text-primary" /> End-to-end encrypted</span>
@@ -378,27 +341,74 @@ function Hero() {
           </motion.div>
         </div>
 
-        <motion.div
-          style={{ y: visualY, scale: visualScale, rotate: visualRotate }}
-          initial={{ opacity: 0, scale: 0.92, y: 30, filter: "blur(10px)" }}
-          animate={{ opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-        >
-          <HeroVisual />
+        {/* Cinematic visual */}
+        <motion.div style={{ y: imgY, scale: imgScale }} className="relative">
+          <HeroScene />
         </motion.div>
-      </div>
+      </motion.div>
+
+      <ScrollHint />
     </section>
   );
 }
 
-function HeroVisual() {
+function KineticHeadline({
+  lines,
+  className = "",
+}: {
+  lines: { text: string; gradient?: boolean }[];
+  className?: string;
+}) {
   const reduced = useReducedMotion();
+  let wordIndex = 0;
+  return (
+    <h1 className={className} aria-label={lines.map((l) => l.text).join(" ")}>
+      {lines.map((line, li) => (
+        <span key={li} className="block overflow-hidden pb-[0.12em]">
+          <span
+            className={
+              line.gradient
+                ? "bg-gradient-to-br from-primary via-primary-glow to-coral bg-clip-text text-transparent"
+                : ""
+            }
+          >
+            {line.text.split(/(\s+)/).map((w, wi) => {
+              if (!w.trim()) return <span key={wi}>{w}</span>;
+              const idx = wordIndex++;
+              if (reduced) return <span key={wi} className="inline-block">{w}</span>;
+              return (
+                <motion.span
+                  key={wi}
+                  className="inline-block will-change-transform"
+                  initial={{ opacity: 0, y: "0.9em", scale: 0.82, filter: "blur(14px)" }}
+                  animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+                  transition={{
+                    duration: 1.05,
+                    delay: 0.22 + idx * 0.09 + li * 0.06,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  aria-hidden
+                >
+                  {w}
+                </motion.span>
+              );
+            })}
+          </span>
+        </span>
+      ))}
+    </h1>
+  );
+}
+
+function HeroScene() {
+  const reduced = useReducedMotion();
+  const wrap = useRef<HTMLDivElement>(null);
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
-  const rotateY = useSpring(useTransform(mx, [-1, 1], [-8, 8]), { stiffness: 120, damping: 14 });
-  const rotateX = useSpring(useTransform(my, [-1, 1], [6, -6]), { stiffness: 120, damping: 14 });
-  const tx = useSpring(useTransform(mx, [-1, 1], [-10, 10]), { stiffness: 120, damping: 16 });
-  const ty = useSpring(useTransform(my, [-1, 1], [-10, 10]), { stiffness: 120, damping: 16 });
+  const rotateY = useSpring(useTransform(mx, [-1, 1], [-9, 9]), { stiffness: 120, damping: 14 });
+  const rotateX = useSpring(useTransform(my, [-1, 1], [7, -7]), { stiffness: 120, damping: 14 });
+  const px = useTransform(mx, [-1, 1], ["15%", "85%"]);
+  const py = useTransform(my, [-1, 1], ["15%", "85%"]);
 
   const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (reduced) return;
@@ -413,112 +423,564 @@ function HeroVisual() {
 
   return (
     <div
-      className="relative mx-auto w-full max-w-lg [perspective:1200px]"
+      ref={wrap}
+      className="relative mx-auto w-full max-w-lg [perspective:1400px]"
       onMouseMove={onMove}
       onMouseLeave={onLeave}
     >
       <motion.div
         style={{ rotateY, rotateX }}
         transition={{ type: "spring", stiffness: 200, damping: 18 }}
-        className="relative overflow-hidden rounded-[2rem] border border-primary/15 bg-gradient-to-br from-primary/15 via-card to-accent p-3 shadow-elegant animate-floaty [transform-style:preserve-3d]"
+        className="relative overflow-hidden rounded-[2.25rem] border border-primary/15 bg-gradient-to-br from-primary/15 via-card to-accent/10 p-3 shadow-elegant animate-floaty [transform-style:preserve-3d]"
       >
         <motion.img
           src={therapyHero}
-          alt="Online therapy session with a verified psychologist"
+          alt="A calm therapy scene — sunlight through window, warm tones"
           width={1280}
           height={1024}
-          className="block w-full rounded-[1.5rem] object-cover"
-          initial={{ scale: 1.08, opacity: 0, filter: "blur(14px)" }}
+          className="block w-full rounded-[1.75rem] object-cover"
+          initial={{ scale: 1.12, opacity: 0, filter: "blur(18px)" }}
           animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
-          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-          whileHover={{ scale: 1.04 }}
+          transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
         />
-        <span className="pointer-events-none absolute inset-0 rounded-[2rem] ring-1 ring-inset ring-white/30" />
-        {/* subtle sheen tracking the cursor */}
+        <span className="pointer-events-none absolute inset-0 rounded-[2.25rem] ring-1 ring-inset ring-white/25" />
         <motion.span
           aria-hidden
-          className="pointer-events-none absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_var(--px,50%)_var(--py,50%),rgba(255,255,255,0.18),transparent_55%)]"
+          className="pointer-events-none absolute inset-0 rounded-[2.25rem]"
           style={{
-            ["--px" as string]: useTransform(mx, [-1, 1], ["10%", "90%"]),
-            ["--py" as string]: useTransform(my, [-1, 1], ["10%", "90%"]),
-          } as React.CSSProperties}
+            background: `radial-gradient(320px circle at ${px.get()} ${py.get()}, oklch(1 0 0 / 0.22), transparent 60%)`,
+            ["--px" as string]: px,
+            ["--py" as string]: py,
+            backgroundImage:
+              "radial-gradient(320px circle at var(--px) var(--py), oklch(1 0 0 / 0.20), transparent 60%)",
+          }}
         />
-
       </motion.div>
 
-      {/* floating cards — subtle mouse parallax */}
-      <motion.div style={{ x: tx, y: ty }} className="absolute inset-0 pointer-events-none">
-        <FloatCard className="-left-4 top-8 sm:-left-10" delay={0}>
-          <HoverReplay animation="pop"><BadgeCheck className="h-4 w-4 text-success" /></HoverReplay> Verified Psychologists
-        </FloatCard>
-        <FloatCard className="-right-2 top-32 sm:-right-8" delay={0.6}>
-          <HoverReplay animation="wobble"><ShieldCheck className="h-4 w-4 text-primary" /></HoverReplay> Secure Consultations
-        </FloatCard>
-        <FloatCard className="-left-2 bottom-24 sm:-left-12" delay={1.2}>
-          <HoverReplay animation="bounce"><FileLock2 className="h-4 w-4 text-coral" /></HoverReplay> Confidential Data
-        </FloatCard>
-        <FloatCard className="-right-2 -bottom-2 sm:-right-10" delay={1.8}>
-          <HoverReplay animation="spin"><MonitorSmartphone className="h-4 w-4 text-primary" /></HoverReplay> Online & In-Person
-        </FloatCard>
-      </motion.div>
+      {/* floating badges */}
+      <FloatBadge className="-left-6 top-6" delay={0.9} icon={<BadgeCheck className="h-4 w-4 text-success" />}>
+        Verified
+      </FloatBadge>
+      <FloatBadge className="-right-4 top-28" delay={1.2} icon={<ShieldCheck className="h-4 w-4 text-primary" />}>
+        Encrypted
+      </FloatBadge>
+      <FloatBadge className="-left-2 bottom-16" delay={1.5} icon={<HeartPulse className="h-4 w-4 text-coral" />}>
+        Human care
+      </FloatBadge>
+      <FloatBadge className="-right-6 -bottom-3" delay={1.8} icon={<MonitorSmartphone className="h-4 w-4 text-primary" />}>
+        Any device
+      </FloatBadge>
     </div>
   );
 }
 
-function FloatCard({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
+function FloatBadge({
+  children,
+  icon,
+  className = "",
+  delay = 0,
+}: {
+  children: React.ReactNode;
+  icon: React.ReactNode;
+  className?: string;
+  delay?: number;
+}) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 12, scale: 0.9 }}
+      initial={{ opacity: 0, y: 14, scale: 0.9 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ delay: 0.6 + delay, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className={`absolute hidden items-center gap-2 rounded-2xl border border-border bg-card/90 px-3 py-2 text-xs font-medium shadow-elegant backdrop-blur md:inline-flex animate-floaty ${className}`}
+      transition={{ delay, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      className={`absolute hidden items-center gap-2 rounded-2xl border border-border bg-card/85 px-3 py-2 text-xs font-medium shadow-elegant backdrop-blur md:inline-flex animate-floaty ${className}`}
       style={{ animationDelay: `${delay}s` }}
     >
-      {children}
+      {icon} {children}
     </motion.div>
   );
 }
 
-/* ----------------------- TRUST INDICATORS ----------------------- */
-
-function TrustIndicators() {
-  const trust = [
-    { icon: BadgeCheck, label: "Verified Professionals" },
-    { icon: ShieldCheck, label: "Secure Platform" },
-    { icon: Lock, label: "Confidential Consultations" },
-    { icon: CalendarCheck, label: "Fast Appointment Booking" },
-    { icon: HeartPulse, label: "Responsive Support" },
-  ];
-  const stats = [
-    { v: 500, suffix: "+", label: "Psychologists" },
-    { v: 5000, suffix: "+", label: "Patients" },
-    { v: 20000, suffix: "+", label: "Consultations" },
-    { v: 98, suffix: "%", label: "Patient Satisfaction" },
-  ];
+function FloatingOrbs() {
   return (
-    <section className="border-y border-border bg-surface-soft">
-      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6">
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-          {trust.map(({ icon: Icon, label }) => (
-            <div
-              key={label}
-              className="flex items-center gap-3 rounded-2xl border border-border bg-card px-4 py-3 shadow-soft hover:shadow-elegant hover:-translate-y-0.5 transition-all"
-            >
-              <div className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
-                <Icon className="h-4.5 w-4.5" />
+    <div aria-hidden className="pointer-events-none absolute inset-0 -z-20 overflow-hidden">
+      <div className="absolute -left-24 top-16 h-[420px] w-[420px] rounded-full bg-primary/25 blur-3xl animate-blob" />
+      <div
+        className="absolute right-[-6rem] top-40 h-[420px] w-[420px] rounded-full bg-coral/20 blur-3xl animate-blob"
+        style={{ animationDelay: "-5s" }}
+      />
+      <div
+        className="absolute bottom-[-10rem] left-1/3 h-[360px] w-[360px] rounded-full bg-success/20 blur-3xl animate-blob"
+        style={{ animationDelay: "-9s" }}
+      />
+    </div>
+  );
+}
+
+function ScrollHint() {
+  const reduced = useReducedMotion();
+  return (
+    <motion.a
+      href="#manifesto"
+      aria-label="Scroll"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 1.8, duration: 1 }}
+      className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-muted-foreground"
+    >
+      <span>Scroll</span>
+      <span className="relative flex h-8 w-5 items-start justify-center rounded-full border border-border/70">
+        <motion.span
+          className="mt-1 h-1.5 w-1 rounded-full bg-foreground/70"
+          animate={reduced ? undefined : { y: [0, 10, 0], opacity: [1, 0.2, 1] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </span>
+    </motion.a>
+  );
+}
+
+/* ============================================================
+   MANIFESTO — sticky, word-by-word progress reveal
+   ============================================================ */
+
+function Manifesto() {
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const words =
+    "We built PsyConnect for the quiet moment before you reach out — so finding the right psychologist feels less like a search, and more like an exhale.".split(
+      " ",
+    );
+
+  return (
+    <section
+      id="manifesto"
+      ref={ref}
+      className="relative"
+      style={{ minHeight: "160vh" }}
+    >
+      <div className="sticky top-0 flex min-h-[100svh] items-center overflow-hidden">
+        <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-b from-background via-surface-soft to-background" />
+        <div aria-hidden className="pointer-events-none absolute -left-40 top-1/3 -z-10 h-[420px] w-[420px] rounded-full bg-primary/15 blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute -right-40 bottom-10 -z-10 h-[420px] w-[420px] rounded-full bg-coral/15 blur-3xl" />
+
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-card/70 px-3 py-1 text-xs font-medium uppercase tracking-[0.3em] text-primary backdrop-blur">
+            <Sparkles className="h-3.5 w-3.5" /> Manifesto
+          </span>
+          <p className="mt-8 text-[clamp(1.75rem,4.6vw,3.75rem)] font-medium leading-[1.12] tracking-[-0.02em]">
+            {words.map((w, i) => (
+              <ManifestoWord key={i} progress={scrollYProgress} index={i} total={words.length}>
+                {w}{" "}
+              </ManifestoWord>
+            ))}
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ManifestoWord({
+  children,
+  progress,
+  index,
+  total,
+}: {
+  children: React.ReactNode;
+  progress: MotionValue<number>;
+  index: number;
+  total: number;
+}) {
+  // Reveal window: each word lights up between p1 and p2 of overall scroll.
+  const span = 0.6 / total;
+  const p1 = 0.15 + index * span;
+  const p2 = p1 + span * 2.5;
+  const opacity = useTransform(progress, [p1, p2], [0.18, 1]);
+  const blur = useTransform(progress, [p1, p2], [6, 0]);
+  const filter = useTransform(blur, (b) => `blur(${b}px)`);
+  return (
+    <motion.span style={{ opacity, filter }} className="inline-block">
+      {children}
+    </motion.span>
+  );
+}
+
+/* ============================================================
+   JOURNEY — pinned scroll-story with vertical progress rail
+   ============================================================ */
+
+const journeySteps = [
+  {
+    title: "Sign in with calm.",
+    body: "A single, private account. No inbox spam, no dark patterns. Just a door that opens gently.",
+    tag: "01 · Arrive",
+  },
+  {
+    title: "Meet the right clinician.",
+    body: "Filter by specialty, language and approach. Every profile is human-verified by our medical team.",
+    tag: "02 · Match",
+  },
+  {
+    title: "Book in under a minute.",
+    body: "Pick a slot online or in-person. Reschedule freely — life doesn't move in a straight line.",
+    tag: "03 · Book",
+  },
+  {
+    title: "Meet, encrypted end-to-end.",
+    body: "Video, audio or chat. No downloads. Your words stay yours; the platform never listens.",
+    tag: "04 · Meet",
+  },
+  {
+    title: "Keep going, at your pace.",
+    body: "Messages between sessions, gentle reminders, shared notes. Continuity, without pressure.",
+    tag: "05 · Continue",
+  },
+];
+
+function Journey() {
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+  const [active, setActive] = useState(0);
+
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    const idx = Math.min(journeySteps.length - 1, Math.max(0, Math.floor(v * journeySteps.length)));
+    setActive(idx);
+  });
+
+  const railScale = useSpring(scrollYProgress, { stiffness: 120, damping: 22, mass: 0.4 });
+
+  return (
+    <section
+      id="journey"
+      ref={ref}
+      className="relative"
+      style={{ minHeight: `${100 + journeySteps.length * 60}vh` }}
+    >
+      <div className="sticky top-0 flex min-h-[100svh] items-center">
+        <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[minmax(280px,1fr)_1.4fr]">
+          {/* LEFT — heading + rail */}
+          <div className="flex flex-col justify-center">
+            <span className="inline-flex w-fit items-center gap-2 rounded-full border border-primary/20 bg-card/70 px-3 py-1 text-xs font-medium uppercase tracking-[0.3em] text-primary backdrop-blur">
+              The journey
+            </span>
+            <h2 className="mt-5 text-4xl font-semibold tracking-[-0.02em] md:text-5xl">
+              From first spark, <br className="hidden md:block" />
+              <span className="bg-gradient-to-br from-primary via-primary-glow to-coral bg-clip-text text-transparent">
+                to steady footing.
+              </span>
+            </h2>
+            <p className="mt-5 max-w-md text-muted-foreground">
+              Scroll to walk the path a patient takes with us — five deliberate steps, none of them rushed.
+            </p>
+
+            <div className="mt-10 hidden items-start gap-4 md:flex">
+              <div className="relative mt-1 h-56 w-[2px] overflow-hidden rounded-full bg-border">
+                <motion.div
+                  style={{ scaleY: railScale }}
+                  className="absolute inset-x-0 top-0 h-full origin-top bg-gradient-to-b from-primary via-primary-glow to-coral"
+                />
               </div>
-              <span className="text-sm font-medium">{label}</span>
+              <ol className="space-y-3 text-sm">
+                {journeySteps.map((s, i) => (
+                  <li
+                    key={s.tag}
+                    className={`transition-colors ${
+                      i === active ? "text-foreground" : "text-muted-foreground/70"
+                    }`}
+                  >
+                    <span className="font-mono text-[10px] uppercase tracking-[0.25em]">{s.tag}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+
+          {/* RIGHT — animated cards */}
+          <div className="relative min-h-[420px]">
+            {journeySteps.map((s, i) => (
+              <motion.div
+                key={s.tag}
+                initial={false}
+                animate={{
+                  opacity: i === active ? 1 : 0,
+                  y: i === active ? 0 : i < active ? -30 : 30,
+                  scale: i === active ? 1 : 0.96,
+                  filter: i === active ? "blur(0px)" : "blur(8px)",
+                }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className="absolute inset-0 flex items-center"
+              >
+                <div className="relative w-full overflow-hidden rounded-[2rem] border border-border bg-card/90 p-8 shadow-elegant backdrop-blur md:p-12">
+                  <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
+                  <div className="pointer-events-none absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-coral/10 blur-3xl" />
+                  <span className="font-mono text-xs uppercase tracking-[0.3em] text-primary">{s.tag}</span>
+                  <h3 className="mt-4 text-3xl font-semibold tracking-[-0.02em] md:text-4xl">
+                    {s.title}
+                  </h3>
+                  <p className="mt-4 max-w-xl text-lg leading-relaxed text-muted-foreground">
+                    {s.body}
+                  </p>
+                  <div className="mt-8 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
+                    <StepDots active={i} total={journeySteps.length} />
+                    <span>
+                      {i + 1} of {journeySteps.length}
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function StepDots({ active, total }: { active: number; total: number }) {
+  return (
+    <div className="flex items-center gap-1.5">
+      {Array.from({ length: total }).map((_, i) => (
+        <span
+          key={i}
+          className={`h-1.5 rounded-full transition-all duration-500 ${
+            i === active ? "w-8 bg-primary" : "w-1.5 bg-border"
+          }`}
+        />
+      ))}
+    </div>
+  );
+}
+
+/* ============================================================
+   CAPABILITIES — marquee + grid
+   ============================================================ */
+
+const capabilities = [
+  { icon: Video, label: "Video consults" },
+  { icon: MessageCircle, label: "Secure messaging" },
+  { icon: CalendarClock, label: "Instant booking" },
+  { icon: FileLock2, label: "Sealed records" },
+  { icon: BadgeCheck, label: "Verified clinicians" },
+  { icon: MonitorSmartphone, label: "Any device" },
+  { icon: HeartPulse, label: "Personalized care" },
+  { icon: ShieldCheck, label: "Encrypted rooms" },
+  { icon: UserCheck, label: "Identity checks" },
+  { icon: Globe, label: "AR · FR · EN" },
+];
+
+function Capabilities() {
+  return (
+    <section className="relative overflow-hidden py-24">
+      <div aria-hidden className="absolute inset-x-0 top-0 -z-10 h-40 bg-gradient-to-b from-background to-transparent" />
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <SectionHead
+          eyebrow="Everything, quietly"
+          title="A complete toolkit — that stays out of the way."
+          sub="Purpose-built for the two people who matter most: the patient, and the clinician."
+        />
+      </div>
+      <div className="group relative mt-14">
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-background to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-background to-transparent" />
+        <div className="flex overflow-hidden">
+          <div className="flex min-w-full shrink-0 animate-marquee items-center gap-4 pe-4 group-hover:[animation-play-state:paused]">
+            {capabilities.concat(capabilities).map(({ icon: Icon, label }, i) => (
+              <div
+                key={i}
+                className="flex shrink-0 items-center gap-2 rounded-full border border-border bg-card px-5 py-3 text-sm font-medium shadow-soft"
+              >
+                <Icon className="h-4 w-4 text-primary" />
+                {label}
+              </div>
+            ))}
+          </div>
+          <div
+            aria-hidden
+            className="flex min-w-full shrink-0 animate-marquee items-center gap-4 pe-4 group-hover:[animation-play-state:paused]"
+          >
+            {capabilities.concat(capabilities).map(({ icon: Icon, label }, i) => (
+              <div
+                key={`b-${i}`}
+                className="flex shrink-0 items-center gap-2 rounded-full border border-border bg-card px-5 py-3 text-sm font-medium shadow-soft"
+              >
+                <Icon className="h-4 w-4 text-primary" />
+                {label}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============================================================
+   FOR CLINICIANS — split
+   ============================================================ */
+
+function ForClinicians() {
+  return (
+    <section className="relative overflow-hidden py-24">
+      <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2">
+        <Reveal>
+          <span className="inline-flex items-center gap-2 rounded-full border border-coral/25 bg-coral/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.3em] text-coral">
+            <Stethoscope className="h-3.5 w-3.5" /> For clinicians
+          </span>
+          <h2 className="mt-5 text-4xl font-semibold tracking-[-0.02em] md:text-5xl">
+            Run your practice, <br />
+            <span className="bg-gradient-to-br from-coral via-primary-glow to-primary bg-clip-text text-transparent">
+              from anywhere calm.
+            </span>
+          </h2>
+          <p className="mt-5 max-w-lg text-lg text-muted-foreground">
+            Availability, records, secure consultations — one uncluttered workspace. PsyConnect handles
+            the admin so you can hold space for what matters.
+          </p>
+          <ul className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
+            {[
+              "Professional profile",
+              "Appointment management",
+              "Secure messaging",
+              "Online consultations",
+              "Availability calendar",
+              "Patient records",
+              "Verification system",
+              "Payouts in DZD",
+            ].map((b) => (
+              <li
+                key={b}
+                className="flex items-center gap-2 rounded-xl border border-border bg-card/70 px-3 py-2.5 text-sm shadow-soft backdrop-blur"
+              >
+                <BadgeCheck className="h-4 w-4 text-primary" /> {b}
+              </li>
+            ))}
+          </ul>
+          <div className="mt-8">
+            <MagneticButton
+              to="/onboarding/welcome"
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-elegant transition-shadow hover:shadow-glow"
+            >
+              <Stethoscope className="h-4 w-4" /> Join as a psychologist
+            </MagneticButton>
+          </div>
+        </Reveal>
+
+        <Reveal delay={0.1}>
+          <ClinicianDashboard />
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function ClinicianDashboard() {
+  return (
+    <div className="relative rounded-[2rem] border border-primary/15 bg-gradient-to-br from-primary/15 via-accent/10 to-card p-6 shadow-elegant">
+      <div className="rounded-2xl bg-card/95 p-5 shadow-soft backdrop-blur">
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Today</div>
+            <div className="text-lg font-semibold">3 sessions · 1 new patient</div>
+          </div>
+          <div className="inline-flex items-center gap-1.5 rounded-full bg-success/15 px-2.5 py-1 text-xs font-medium text-success">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-success" /> Online
+          </div>
+        </div>
+        <div className="mt-5 space-y-2 text-sm">
+          {[
+            { n: "Yacine M.", t: "14:00", tag: "Video" },
+            { n: "Nour B.", t: "16:30", tag: "Video" },
+            { n: "Karim & Sara", t: "Tomorrow", tag: "In-person" },
+          ].map((x, i) => (
+            <motion.div
+              key={x.n}
+              initial={{ opacity: 0, x: -10 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              className="flex items-center justify-between rounded-xl bg-surface-soft px-3 py-2.5"
+            >
+              <div className="flex items-center gap-2">
+                <div className="h-7 w-7 rounded-full bg-gradient-primary" />
+                <span className="font-medium">{x.n}</span>
+              </div>
+              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                <span className="rounded-full bg-primary/10 px-2 py-0.5 text-primary">{x.tag}</span>
+                <span>{x.t}</span>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+        <div className="mt-5 grid grid-cols-3 gap-3 text-center">
+          {[
+            { k: "Sessions", v: "128" },
+            { k: "Rating", v: "4.9" },
+            { k: "Payouts", v: "DZD" },
+          ].map((m) => (
+            <div key={m.k} className="rounded-xl border border-border p-3">
+              <div className="text-base font-semibold">{m.v}</div>
+              <div className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">{m.k}</div>
             </div>
           ))}
         </div>
+      </div>
+      <div className="pointer-events-none absolute -bottom-6 -right-6 h-32 w-32 rounded-full bg-primary/20 blur-2xl" />
+    </div>
+  );
+}
 
-        <div className="mt-10 grid gap-6 rounded-3xl border border-border bg-card p-6 shadow-soft sm:grid-cols-2 lg:grid-cols-4">
-          {stats.map((s) => (
-            <div key={s.label} className="text-center">
-              <div className="bg-gradient-primary bg-clip-text text-4xl font-bold tracking-tight text-transparent md:text-5xl">
-                <Counter to={s.v} />{s.suffix}
+/* ============================================================
+   TRUST BAND — stats + security
+   ============================================================ */
+
+function TrustBand() {
+  const stats = [
+    { v: 500, suffix: "+", label: "Verified psychologists" },
+    { v: 5000, suffix: "+", label: "Patients supported" },
+    { v: 20000, suffix: "+", label: "Consultations held" },
+    { v: 98, suffix: "%", label: "Patient satisfaction" },
+  ];
+  return (
+    <section className="relative overflow-hidden border-y border-border bg-surface-soft py-20">
+      <div aria-hidden className="pointer-events-none absolute inset-0 bg-grid opacity-30" />
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
+        <SectionHead
+          center
+          eyebrow="By the numbers"
+          title="Trusted, quietly and consistently."
+          sub="Growth we're proud of — because it means more people got help."
+        />
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {stats.map((s, i) => (
+            <motion.div
+              key={s.label}
+              initial={{ opacity: 0, y: 24, filter: "blur(6px)" }}
+              whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ delay: i * 0.08, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              className="rounded-3xl border border-border bg-card/80 p-6 text-center shadow-soft backdrop-blur"
+            >
+              <div className="bg-gradient-to-br from-primary via-primary-glow to-coral bg-clip-text text-5xl font-semibold tracking-[-0.02em] text-transparent md:text-6xl">
+                <Counter to={s.v} />
+                {s.suffix}
               </div>
-              <div className="mt-1 text-sm text-muted-foreground">{s.label}</div>
+              <div className="mt-2 text-sm text-muted-foreground">{s.label}</div>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="mt-14 grid gap-6 md:grid-cols-3">
+          {[
+            { icon: Lock, t: "End-to-end encrypted" },
+            { icon: ShieldCheck, t: "Private by default" },
+            { icon: FileLock2, t: "Records stay sealed" },
+          ].map(({ icon: Icon, t }) => (
+            <div
+              key={t}
+              className="flex items-center gap-4 rounded-2xl border border-border bg-card/80 p-5 shadow-soft backdrop-blur"
+            >
+              <div className="grid h-11 w-11 place-items-center rounded-2xl bg-gradient-primary text-primary-foreground">
+                <Icon className="h-5 w-5" />
+              </div>
+              <div className="text-sm font-semibold">{t}</div>
             </div>
           ))}
         </div>
@@ -537,7 +999,7 @@ function Counter({ to }: { to: number }) {
       (entries) => {
         if (entries[0].isIntersecting && !started.current) {
           started.current = true;
-          const dur = 1400;
+          const dur = 1600;
           const start = performance.now();
           const tick = (now: number) => {
             const p = Math.min(1, (now - start) / dur);
@@ -556,364 +1018,86 @@ function Counter({ to }: { to: number }) {
   return <span ref={ref}>{n.toLocaleString()}</span>;
 }
 
-/* --------------------------- WHY CHOOSE --------------------------- */
+/* ============================================================
+   VOICES — testimonial snap gallery
+   ============================================================ */
 
-function WhyChoose() {
-  const items = [
-    { icon: BadgeCheck, title: "Verified Psychologists", body: "Every clinician is license-checked and personally vetted by our medical team.", tone: "primary" },
-    { icon: ShieldCheck, title: "Private & Secure", body: "End-to-end encrypted video, messaging and records — your story stays yours.", tone: "coral" },
-    { icon: CalendarClock, title: "Book in Minutes", body: "Browse availability and confirm an appointment in under two minutes.", tone: "success" },
-    { icon: MonitorSmartphone, title: "Flexible Consultations", body: "Online or in-person, on any device — pick the format that fits your life.", tone: "primary" },
-    { icon: HeartPulse, title: "Personalized Care", body: "Get matched to clinicians who specialize in what you're going through.", tone: "coral" },
-    { icon: Stethoscope, title: "Professional Support", body: "Licensed psychologists across Algeria, ready to walk with you.", tone: "success" },
+function Voices() {
+  const voices = [
+    {
+      n: "Amel K.",
+      r: "Patient · Algiers",
+      q: "I felt heard from the very first session. Booking was effortless and the video was crystal clear.",
+      a: "AK",
+    },
+    {
+      n: "Dr. Hicham R.",
+      r: "Psychologist · Oran",
+      q: "The dashboard is calm and well thought out. I finally spend my time with patients, not on admin.",
+      a: "HR",
+    },
+    {
+      n: "Sofiane M.",
+      r: "Patient · Constantine",
+      q: "Knowing my data is private made it so much easier to open up. Highly recommended.",
+      a: "SM",
+    },
+    {
+      n: "Dr. Lina B.",
+      r: "Psychologist · Annaba",
+      q: "It feels like the platform was designed by people who understand clinical work.",
+      a: "LB",
+    },
   ];
   return (
-    <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
-      <SectionHead eyebrow="Why PsyConnect" title="Care that feels human, built like premium software." sub="A calm, modern space designed around how mental health support actually works." />
-      <motion.div
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, margin: "-60px" }}
-        variants={stagger}
-        className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3"
-      >
-        {items.map(({ icon: Icon, title, body, tone }) => (
-          <motion.div
-            key={title}
-            variants={fadeUp}
-            whileHover={{ y: -6 }}
-            className="group relative overflow-hidden rounded-3xl border border-border bg-card p-6 shadow-soft transition-shadow hover:shadow-elegant"
-          >
-            <div className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full bg-primary/5 blur-2xl transition-opacity group-hover:opacity-100 opacity-0" />
-            <HoverReplay animation="bounce">
-              <div className={`grid h-12 w-12 place-items-center rounded-2xl ${toneBg(tone)}`}>
-                <Icon className="h-5 w-5" />
-              </div>
-            </HoverReplay>
-            <h3 className="mt-5 text-lg font-semibold">{title}</h3>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{body}</p>
-          </motion.div>
-        ))}
-      </motion.div>
-    </section>
-  );
-}
-
-function toneBg(tone: string) {
-  if (tone === "coral") return "bg-coral/15 text-coral";
-  if (tone === "success") return "bg-success/15 text-success";
-  return "bg-primary/10 text-primary";
-}
-
-/* --------------------------- HOW IT WORKS --------------------------- */
-
-function HowItWorks() {
-  const steps = [
-    { t: "Create Your Account", b: "Sign up in under a minute with email or phone." },
-    { t: "Complete Your Profile", b: "Tell us a little about what you're looking for." },
-    { t: "Find a Psychologist", b: "Browse verified profiles, specialties and languages." },
-    { t: "Book an Appointment", b: "Pick a time that fits your schedule — online or in-person." },
-    { t: "Attend Your Consultation", b: "Join a secure video call or meet at the clinic." },
-    { t: "Continue Your Journey", b: "Message, follow up, and book recurring sessions easily." },
-  ];
-  return (
-    <section id="how" className="border-y border-border bg-surface-soft">
-      <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
-        <SectionHead eyebrow="How it works" title="Your patient journey." sub="Six small steps from sign-up to ongoing care." />
-        <motion.ol
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-60px" }}
-          variants={stagger}
-          className="relative mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3"
-        >
-          {steps.map((s, i) => (
-            <motion.li
-              key={s.t}
-              variants={fadeUp}
-              whileHover={{ y: -4 }}
-              className="group relative rounded-3xl border border-border bg-card p-6 shadow-soft transition-shadow hover:shadow-elegant"
-            >
-              <div className="flex items-center gap-4">
-                <div className="relative grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-primary text-lg font-bold text-primary-foreground shadow-soft">
-                  {String(i + 1).padStart(2, "0")}
-                  <span className="absolute inset-0 rounded-2xl ring-2 ring-primary/0 transition group-hover:ring-primary/30" />
-                </div>
-                <h3 className="text-base font-semibold">{s.t}</h3>
-              </div>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{s.b}</p>
-              {i < steps.length - 1 && (
-                <div className="pointer-events-none absolute -bottom-4 left-10 hidden h-4 w-px bg-gradient-to-b from-primary/40 to-transparent lg:block" />
-              )}
-            </motion.li>
-          ))}
-        </motion.ol>
+    <section className="relative py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <SectionHead
+          eyebrow="Voices"
+          title="Held by clinicians. Loved by patients."
+          sub="A few words from people already on the journey."
+        />
       </div>
-    </section>
-  );
-}
-
-/* ----------------------- FOR PSYCHOLOGISTS ----------------------- */
-
-function ForPsychologists() {
-  const benefits = [
-    "Professional profile",
-    "Appointment management",
-    "Secure messaging",
-    "Online consultations",
-    "Availability calendar",
-    "Patient management",
-    "Verification system",
-  ];
-  return (
-    <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
-      <div className="grid items-center gap-12 lg:grid-cols-2">
-        <div>
-          <span className="inline-flex items-center gap-2 rounded-full border border-coral/20 bg-coral/10 px-3 py-1 text-xs font-medium text-coral">
-            <Stethoscope className="h-3.5 w-3.5" /> For Clinicians
-          </span>
-          <h2 className="mt-5 text-3xl font-semibold tracking-tight md:text-4xl">
-            Run your practice from anywhere.
-          </h2>
-          <p className="mt-4 max-w-xl text-muted-foreground">
-            Manage availability, patient records and secure consultations in one calm workspace. PsyConnect
-            handles the admin so you can focus on care.
-          </p>
-          <ul className="mt-6 grid grid-cols-1 gap-2 sm:grid-cols-2">
-            {benefits.map((b) => (
-              <li key={b} className="flex items-center gap-2 text-sm">
-                <BadgeCheck className="h-4 w-4 text-primary" /> {b}
-              </li>
-            ))}
-          </ul>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              to="/onboarding/welcome"
-              className="inline-flex items-center gap-2 rounded-full bg-gradient-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-elegant hover:shadow-glow transition-shadow"
-            >
-              <Stethoscope className="h-4 w-4" /> Join as a Psychologist
-            </Link>
-          </div>
-        </div>
-
-        <DashboardPreview />
-      </div>
-    </section>
-  );
-}
-
-function DashboardPreview() {
-  return (
-    <div className="rounded-3xl border border-primary/15 bg-gradient-to-br from-primary/15 via-accent to-card p-6 shadow-elegant">
-      <div className="rounded-2xl bg-card p-5 shadow-soft">
-        <div className="flex items-center justify-between">
-          <div>
-            <div className="text-xs uppercase tracking-wider text-muted-foreground">Today</div>
-            <div className="text-lg font-semibold">3 sessions · 1 new patient</div>
-          </div>
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-success/15 px-2.5 py-1 text-xs font-medium text-success">
-            <span className="h-1.5 w-1.5 rounded-full bg-success" /> Online
-          </div>
-        </div>
-        <div className="mt-5 space-y-2 text-sm">
-          {[
-            { n: "Yacine M.", t: "14:00", tag: "Video" },
-            { n: "Nour B.", t: "16:30", tag: "Video" },
-            { n: "Karim & Sara", t: "Tomorrow", tag: "In-person" },
-          ].map((x) => (
-            <div key={x.n} className="flex items-center justify-between rounded-xl bg-surface-soft px-3 py-2.5">
-              <div className="flex items-center gap-2">
-                <div className="h-7 w-7 rounded-full bg-gradient-primary" />
-                <span className="font-medium">{x.n}</span>
-              </div>
-              <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                <span className="rounded-full bg-primary/10 px-2 py-0.5 text-primary">{x.tag}</span>
-                <span>{x.t}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="mt-5 grid grid-cols-3 gap-3 text-center">
-          {[
-            { k: "Sessions", v: "128" },
-            { k: "Rating", v: "4.9" },
-            { k: "Payouts", v: "DZD" },
-          ].map((m) => (
-            <div key={m.k} className="rounded-xl border border-border p-3">
-              <div className="text-base font-semibold">{m.v}</div>
-              <div className="text-[10px] uppercase tracking-wider text-muted-foreground">{m.k}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ----------------------------- FEATURES ----------------------------- */
-
-function Features() {
-  const items = [
-    { icon: MessageCircle, t: "Secure Messaging" },
-    { icon: Video, t: "Video Consultations" },
-    { icon: Phone, t: "Audio Consultations" },
-    { icon: CalendarClock, t: "Appointment Scheduling" },
-    { icon: ClipboardList, t: "Patient Dashboard" },
-    { icon: Stethoscope, t: "Psychologist Dashboard" },
-    { icon: FileText, t: "Digital Patient File" },
-    { icon: CalendarCheck, t: "Availability Management" },
-    { icon: UserCheck, t: "Professional Verification" },
-    { icon: Bell, t: "Notifications" },
-    { icon: MonitorSmartphone, t: "Responsive Design" },
-    { icon: FileLock2, t: "Medical Document Sharing" },
-  ];
-  return (
-    <section className="border-y border-border bg-surface-soft">
-      <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
-        <SectionHead eyebrow="Platform" title="Everything you need, nothing you don't." sub="A complete toolkit for patients and clinicians — designed to stay out of the way." />
-        <motion.div
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-60px" }}
-          variants={{ hidden: {}, show: { transition: { staggerChildren: 0.04 } } }}
-          className="mt-12 grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
-        >
-          {items.map(({ icon: Icon, t }, i) => {
-            const anims = ["bounce", "wobble", "pop", "spin"] as const;
-            return (
-              <motion.div
-                key={t}
-                variants={fadeUp}
-                whileHover={{ y: -4, scale: 1.02 }}
-                className="group rounded-2xl border border-border bg-card p-5 shadow-soft transition-shadow hover:shadow-elegant"
-              >
-                <HoverReplay animation={anims[i % anims.length]}>
-                  <div className={`grid h-11 w-11 place-items-center rounded-xl ${["bg-primary/10 text-primary","bg-coral/15 text-coral","bg-success/15 text-success"][i % 3]}`}>
-                    <Icon className="h-5 w-5" />
-                  </div>
-                </HoverReplay>
-                <h3 className="mt-4 text-sm font-semibold">{t}</h3>
-                <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-                  Thoughtfully designed and tested with real clinicians and patients.
-                </p>
-              </motion.div>
-            );
-          })}
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-/* ------------------------------ SECURITY ------------------------------ */
-
-function Security() {
-  const points = [
-    { icon: Lock, t: "Encrypted communications" },
-    { icon: ShieldCheck, t: "Confidential consultations" },
-    { icon: BadgeCheck, t: "Verified psychologists" },
-    { icon: UserCheck, t: "Secure authentication" },
-    { icon: FileLock2, t: "Protected medical information" },
-    { icon: HeartPulse, t: "Privacy-first design" },
-  ];
-  return (
-    <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
-      <div className="grid items-center gap-12 lg:grid-cols-2">
-        <div className="order-2 lg:order-1">
-          <div className="relative rounded-3xl border border-primary/15 bg-gradient-to-br from-primary/15 via-card to-accent p-8 shadow-elegant">
-            <div className="rounded-2xl border border-border bg-card p-6 shadow-soft">
-              <div className="flex items-center gap-3">
-                <div className="grid h-11 w-11 place-items-center rounded-2xl bg-gradient-primary text-primary-foreground">
-                  <Lock className="h-5 w-5" />
-                </div>
-                <div>
-                  <div className="text-sm font-semibold">Private by default</div>
-                  <div className="text-xs text-muted-foreground">Your details are shared only with your assigned psychologist after an appointment is confirmed.</div>
-                </div>
-              </div>
-              <div className="mt-5 space-y-2">
-                {["Identity verified", "Session encrypted", "Records sealed"].map((x) => (
-                  <div key={x} className="flex items-center justify-between rounded-xl bg-surface-soft px-3 py-2 text-sm">
-                    <span>{x}</span>
-                    <BadgeCheck className="h-4 w-4 text-success" />
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="pointer-events-none absolute -bottom-6 -right-6 h-32 w-32 rounded-full bg-primary/20 blur-2xl" />
-          </div>
-        </div>
-        <div className="order-1 lg:order-2">
-          <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-            <ShieldCheck className="h-3.5 w-3.5" /> Security & Privacy
-          </span>
-          <h2 className="mt-5 text-3xl font-semibold tracking-tight md:text-4xl">
-            Built to protect what matters most.
-          </h2>
-          <p className="mt-4 max-w-xl text-muted-foreground">
-            PsyConnect treats your mental health information with the same care a clinician would. Every layer
-            of the platform is built around privacy.
-          </p>
-          <ul className="mt-6 grid gap-3 sm:grid-cols-2">
-            {points.map(({ icon: Icon, t }) => (
-              <li key={t} className="flex items-center gap-3 rounded-xl border border-border bg-card px-3 py-2.5 shadow-soft">
-                <div className="grid h-8 w-8 place-items-center rounded-lg bg-primary/10 text-primary"><Icon className="h-4 w-4" /></div>
-                <span className="text-sm font-medium">{t}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ---------------------------- TESTIMONIALS ---------------------------- */
-
-function Testimonials() {
-  const t = [
-    { n: "Amel K.", r: "Patient", q: "I felt heard from the very first session. Booking was effortless and the video was crystal clear.", a: "AK" },
-    { n: "Dr. Hicham R.", r: "Psychologist", q: "The dashboard is calm and well thought out. I finally spend my time with patients, not on admin.", a: "HR" },
-    { n: "Sofiane M.", r: "Patient", q: "Knowing my data is private made it so much easier to open up. Highly recommended.", a: "SM" },
-  ];
-  return (
-    <section className="border-y border-border bg-surface-soft">
-      <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
-        <SectionHead eyebrow="Stories" title="Loved by patients and clinicians." />
-        <motion.div
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-60px" }}
-          variants={stagger}
-          className="mt-12 grid gap-5 md:grid-cols-3"
-        >
-          {t.map((x) => (
+      <div className="mt-12 overflow-x-auto pb-6 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+        <div className="mx-auto flex max-w-none snap-x snap-mandatory gap-5 px-4 sm:px-6">
+          {voices.map((v, i) => (
             <motion.figure
-              key={x.n}
-              variants={fadeUp}
-              whileHover={{ y: -6 }}
-              className="rounded-3xl border border-border bg-card p-6 shadow-soft transition-shadow hover:shadow-elegant"
+              key={v.n}
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ delay: i * 0.08, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              className="w-[85%] max-w-md flex-shrink-0 snap-center rounded-[2rem] border border-border bg-card/90 p-8 shadow-soft backdrop-blur transition-shadow hover:shadow-elegant sm:w-[440px]"
             >
               <div className="flex items-center gap-1 text-coral">
-                {Array.from({ length: 5 }).map((_, i) => <Star key={i} className="h-4 w-4 fill-current" />)}
+                {Array.from({ length: 5 }).map((_, si) => (
+                  <Star key={si} className="h-4 w-4 fill-current" />
+                ))}
               </div>
-              <blockquote className="mt-4 text-sm leading-relaxed text-foreground/90">"{x.q}"</blockquote>
-              <figcaption className="mt-5 flex items-center gap-3">
-                <div className="grid h-10 w-10 place-items-center rounded-full bg-gradient-primary text-sm font-semibold text-primary-foreground">{x.a}</div>
+              <blockquote className="mt-5 text-lg leading-relaxed text-foreground/90">
+                "{v.q}"
+              </blockquote>
+              <figcaption className="mt-6 flex items-center gap-3">
+                <div className="grid h-11 w-11 place-items-center rounded-full bg-gradient-primary text-sm font-semibold text-primary-foreground">
+                  {v.a}
+                </div>
                 <div>
-                  <div className="text-sm font-semibold">{x.n}</div>
-                  <div className="text-xs text-muted-foreground">{x.r}</div>
+                  <div className="text-sm font-semibold">{v.n}</div>
+                  <div className="text-xs text-muted-foreground">{v.r}</div>
                 </div>
               </figcaption>
             </motion.figure>
           ))}
-        </motion.div>
+          <div className="w-4 flex-shrink-0" />
+        </div>
       </div>
     </section>
   );
 }
 
-/* -------------------------------- FAQ -------------------------------- */
+/* ============================================================
+   FAQ
+   ============================================================ */
 
 function FAQ() {
   const faqs = [
@@ -921,29 +1105,35 @@ function FAQ() {
     { q: "How are psychologists verified?", a: "Every clinician's license and credentials are personally reviewed by our medical team before they appear on the platform." },
     { q: "Are consultations confidential?", a: "Yes. All sessions are end-to-end encrypted and your records are only shared with your assigned psychologist." },
     { q: "Can I cancel an appointment?", a: "You can reschedule or cancel from your dashboard up to 24 hours before the session at no cost." },
-    { q: "Can I use my phone?", a: "PsyConnect works beautifully on mobile, tablet and desktop — including video and audio sessions." },
+    { q: "Does it work on mobile?", a: "PsyConnect works beautifully on mobile, tablet and desktop — including video and audio sessions." },
     { q: "How do online consultations work?", a: "At your scheduled time, join a secure video room from your dashboard — no downloads required." },
   ];
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section className="mx-auto max-w-3xl px-4 py-20 sm:px-6">
-      <SectionHead eyebrow="FAQ" title="Frequently asked questions." center />
+    <section className="mx-auto max-w-3xl px-4 py-24 sm:px-6">
+      <SectionHead center eyebrow="FAQ" title="Small questions, honest answers." />
       <div className="mt-10 space-y-3">
         {faqs.map((f, i) => {
           const isOpen = open === i;
           return (
-            <div key={f.q} className="rounded-2xl border border-border bg-card shadow-soft overflow-hidden">
+            <div
+              key={f.q}
+              className="overflow-hidden rounded-2xl border border-border bg-card/80 shadow-soft backdrop-blur transition-colors hover:border-primary/30"
+            >
               <button
                 onClick={() => setOpen(isOpen ? null : i)}
                 className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
               >
                 <span className="text-sm font-semibold sm:text-base">{f.q}</span>
-                <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-primary/10 text-primary transition-transform" style={{ transform: isOpen ? "rotate(180deg)" : "none" }}>
+                <span
+                  className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-primary/10 text-primary transition-transform duration-300"
+                  style={{ transform: isOpen ? "rotate(180deg)" : "none" }}
+                >
                   {isOpen ? <Minus className="h-3.5 w-3.5" /> : <Plus className="h-3.5 w-3.5" />}
                 </span>
               </button>
               <div
-                className="grid transition-[grid-template-rows] duration-300 ease-out"
+                className="grid transition-[grid-template-rows] duration-500 ease-out"
                 style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}
               >
                 <div className="overflow-hidden">
@@ -958,40 +1148,51 @@ function FAQ() {
   );
 }
 
-/* ----------------------------- FINAL CTA ----------------------------- */
+/* ============================================================
+   FINAL CTA — kinetic close
+   ============================================================ */
 
 function FinalCTA() {
   return (
-    <section className="px-4 pb-20 sm:px-6">
+    <section className="relative px-4 pb-24 sm:px-6">
       <motion.div
         initial={{ opacity: 0, y: 40, scale: 0.96 }}
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="relative mx-auto max-w-6xl overflow-hidden rounded-[2.5rem] border border-primary/20 bg-gradient-primary p-10 text-primary-foreground shadow-elegant md:p-16"
+        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+        className="relative mx-auto max-w-6xl overflow-hidden rounded-[3rem] border border-primary/25 bg-gradient-primary p-12 text-primary-foreground shadow-elegant md:p-20"
       >
-        <div className="pointer-events-none absolute -top-20 -right-20 h-72 w-72 rounded-full bg-white/15 blur-3xl animate-blob" />
-        <div className="pointer-events-none absolute -bottom-20 -left-10 h-72 w-72 rounded-full bg-coral/30 blur-3xl animate-blob" style={{ animationDelay: "-6s" }} />
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.15),transparent_50%)]" />
-        <div className="relative max-w-2xl">
-          <h2 className="text-3xl font-bold tracking-tight md:text-5xl">
-            Take the first step toward better mental health.
+        <div className="pointer-events-none absolute -top-24 -right-24 h-80 w-80 rounded-full bg-white/15 blur-3xl animate-blob" />
+        <div
+          className="pointer-events-none absolute -bottom-24 -left-16 h-80 w-80 rounded-full bg-coral/30 blur-3xl animate-blob"
+          style={{ animationDelay: "-6s" }}
+        />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.18),transparent_55%)]" />
+
+        <div className="relative max-w-3xl">
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.3em]">
+            <Sparkles className="h-3.5 w-3.5" /> Ready when you are
+          </span>
+          <h2 className="mt-6 text-4xl font-semibold tracking-[-0.02em] md:text-6xl">
+            Take the first step, <br />
+            without leaving your seat.
           </h2>
-          <p className="mt-4 text-base text-primary-foreground/85 md:text-lg">
-            Join thousands of people in Algeria getting confidential, professional support — on their terms.
+          <p className="mt-5 max-w-xl text-lg text-primary-foreground/85 md:text-xl">
+            Thousands across Algeria are already getting confidential, professional support — on their own
+            terms. Your turn.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link
+          <div className="mt-9 flex flex-wrap gap-3">
+            <MagneticButton
               to="/patient/find"
-              className="inline-flex items-center gap-2 rounded-full bg-card px-6 py-3 text-sm font-semibold text-primary shadow-elegant hover:shadow-glow transition-shadow"
+              className="inline-flex items-center gap-2 rounded-full bg-card px-7 py-4 text-sm font-semibold text-primary shadow-elegant transition-shadow hover:shadow-glow"
             >
-              Book an Appointment <ArrowRight className="h-4 w-4 rtl:rotate-180" />
-            </Link>
+              Book a session <ArrowUpRight className="h-4 w-4" />
+            </MagneticButton>
             <Link
               to="/onboarding/welcome"
-              className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-6 py-3 text-sm font-semibold text-primary-foreground backdrop-blur hover:bg-white/20 transition-colors"
+              className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-7 py-4 text-sm font-semibold text-primary-foreground backdrop-blur transition-colors hover:bg-white/20"
             >
-              Join as a Psychologist
+              Join as a psychologist
             </Link>
           </div>
         </div>
@@ -1000,12 +1201,14 @@ function FinalCTA() {
   );
 }
 
-/* ------------------------------ FOOTER ------------------------------ */
+/* ============================================================
+   FOOTER
+   ============================================================ */
 
 function Footer() {
   return (
     <footer className="border-t border-border bg-surface-soft">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-5">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 md:grid-cols-5">
         <div className="md:col-span-2">
           <div className="flex items-center gap-2">
             <BrandLogo />
@@ -1023,42 +1226,44 @@ function Footer() {
               placeholder="Your email"
               className="flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
             />
-            <button className="rounded-full bg-gradient-primary px-4 py-2 text-xs font-semibold text-primary-foreground hover:shadow-glow transition-shadow">
+            <button className="rounded-full bg-gradient-primary px-4 py-2 text-xs font-semibold text-primary-foreground transition-shadow hover:shadow-glow">
               Subscribe
             </button>
           </form>
         </div>
 
-        <FooterCol title="Platform" links={[
-          { to: "/patient/find", label: "Find a Psychologist" },
-          { to: "/onboarding/welcome", label: "Become a Psychologist" },
-          { to: "/faq", label: "FAQ" },
-        ]} />
-        <FooterCol title="Company" links={[
-          { to: "/about", label: "About" },
-          { to: "/mission", label: "Mission" },
-          { to: "/contact", label: "Contact" },
-        ]} />
-        <FooterCol title="Legal" links={[
-          { to: "/privacy", label: "Privacy Policy" },
-          { to: "/terms", label: "Terms of Service" },
-        ]} />
+        <FooterCol
+          title="Platform"
+          links={[
+            { to: "/patient/find", label: "Find a psychologist" },
+            { to: "/onboarding/welcome", label: "Become a psychologist" },
+            { to: "/faq", label: "FAQ" },
+          ]}
+        />
+        <FooterCol
+          title="Company"
+          links={[
+            { to: "/about", label: "About" },
+            { to: "/mission", label: "Mission" },
+            { to: "/contact", label: "Contact" },
+          ]}
+        />
+        <FooterCol
+          title="Legal"
+          links={[
+            { to: "/privacy", label: "Privacy" },
+            { to: "/terms", label: "Terms" },
+          ]}
+        />
       </div>
       <div className="border-t border-border">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-5 text-xs text-muted-foreground sm:px-6">
           <div>© {new Date().getFullYear()} PsyConnect. All rights reserved.</div>
           <div className="flex items-center gap-3">
-            <button className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1.5 hover:bg-accent transition-colors">
+            <button className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1.5 transition-colors hover:bg-accent">
               <Globe className="h-3.5 w-3.5" /> English
               <ChevronDown className="h-3 w-3" />
             </button>
-            <div className="flex items-center gap-1">
-              {[Users, Bell, MessageCircle].map((I, i) => (
-                <a key={i} href="#" className="grid h-8 w-8 place-items-center rounded-full border border-border bg-card hover:bg-accent transition-colors">
-                  <I className="h-3.5 w-3.5" />
-                </a>
-              ))}
-            </div>
           </div>
         </div>
       </div>
@@ -1069,34 +1274,95 @@ function Footer() {
 function FooterCol({ title, links }: { title: string; links: { to: string; label: string }[] }) {
   return (
     <div>
-      <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{title}</div>
+      <div className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
+        {title}
+      </div>
       <ul className="mt-3 space-y-2 text-sm">
         {links.map((l) => (
-          <li key={l.to}><Link to={l.to} className="text-foreground/80 hover:text-primary transition-colors">{l.label}</Link></li>
+          <li key={l.to}>
+            <Link to={l.to} className="text-foreground/80 transition-colors hover:text-primary">
+              {l.label}
+            </Link>
+          </li>
         ))}
       </ul>
     </div>
   );
 }
 
-/* ------------------------------ HELPERS ------------------------------ */
+/* ============================================================
+   SHARED
+   ============================================================ */
 
-function SectionHead({ eyebrow, title, sub, center }: { eyebrow?: string; title: string; sub?: string; center?: boolean }) {
+function Reveal({
+  children,
+  className,
+  delay = 0,
+  y = 28,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  delay?: number;
+  y?: number;
+}) {
+  const reduced = useReducedMotion();
   return (
     <motion.div
-      initial="hidden"
-      whileInView="show"
+      className={className}
+      initial={reduced ? false : { opacity: 0, y, filter: "blur(6px)" }}
+      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
       viewport={{ once: true, margin: "-80px" }}
-      variants={stagger}
-      className={center ? "mx-auto max-w-2xl text-center" : "max-w-2xl"}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay }}
     >
+      {children}
+    </motion.div>
+  );
+}
+
+function SectionHead({
+  eyebrow,
+  title,
+  sub,
+  center,
+}: {
+  eyebrow?: string;
+  title: string;
+  sub?: string;
+  center?: boolean;
+}) {
+  return (
+    <div className={center ? "mx-auto max-w-2xl text-center" : "max-w-2xl"}>
       {eyebrow && (
-        <motion.span variants={fadeUp} className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-medium uppercase tracking-wider text-primary">
+        <motion.span
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-card/70 px-3 py-1 text-xs font-medium uppercase tracking-[0.3em] text-primary backdrop-blur"
+        >
           {eyebrow}
         </motion.span>
       )}
-      <motion.h2 variants={fadeUp} className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">{title}</motion.h2>
-      {sub && <motion.p variants={fadeUp} className="mt-3 text-muted-foreground">{sub}</motion.p>}
-    </motion.div>
+      <motion.h2
+        initial={{ opacity: 0, y: 14, filter: "blur(6px)" }}
+        whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        className="mt-4 text-4xl font-semibold tracking-[-0.02em] md:text-5xl"
+      >
+        {title}
+      </motion.h2>
+      {sub && (
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-4 text-lg text-muted-foreground"
+        >
+          {sub}
+        </motion.p>
+      )}
+    </div>
   );
 }
