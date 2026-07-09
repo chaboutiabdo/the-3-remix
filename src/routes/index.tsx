@@ -569,10 +569,11 @@ function Journey() {
 
   useMotionValueEvent(scrollYProgress, "change", (v) => {
     const idx = Math.min(journeySteps.length - 1, Math.max(0, Math.floor(v * journeySteps.length)));
-    setActive(idx);
+    setActive((prev) => (prev === idx ? prev : idx));
   });
 
-  const railScale = useSpring(scrollYProgress, { stiffness: 120, damping: 22, mass: 0.4 });
+  const railScale = useSpring(scrollYProgress, { stiffness: 140, damping: 26, mass: 0.35 });
+
 
   return (
     <section
