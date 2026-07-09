@@ -33,7 +33,7 @@ import {
   useTransform,
   type MotionValue,
 } from "framer-motion";
-import therapyHero from "@/assets/therapy-hero.jpg";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -239,115 +239,145 @@ function MagneticButton({
 }
 
 /* ============================================================
-   HERO — full viewport cinematic intro
+   HERO — full-viewport cinematic video intro
    ============================================================ */
+
+const HERO_VIDEO_SRC = "https://assets.mixkit.co/videos/4067/4067-1080.mp4";
+const HERO_POSTER =
+  "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=2400&q=80";
 
 function Hero() {
   const ref = useRef<HTMLElement>(null);
   const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
 
-  const heroY = useTransform(scrollYProgress, [0, 1], reduced ? [0, 0] : [0, -60]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0]);
-  const bgY = useTransform(scrollYProgress, [0, 1], reduced ? [0, 0] : [0, 180]);
-  const imgScale = useTransform(scrollYProgress, [0, 1], reduced ? [1, 1] : [1, 1.14]);
-  const imgY = useTransform(scrollYProgress, [0, 1], reduced ? [0, 0] : [0, -40]);
+  const contentY = useTransform(scrollYProgress, [0, 1], reduced ? [0, 0] : [0, -80]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
+  const mediaY = useTransform(scrollYProgress, [0, 1], reduced ? [0, 0] : [0, 140]);
+  const mediaScale = useTransform(scrollYProgress, [0, 1], reduced ? [1, 1] : [1.06, 1.18]);
+
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [videoReady, setVideoReady] = useState(false);
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v || reduced) return;
+    const tryPlay = () => v.play().catch(() => {});
+    if (v.readyState >= 2) {
+      setVideoReady(true);
+      tryPlay();
+    } else {
+      v.addEventListener("loadeddata", () => {
+        setVideoReady(true);
+        tryPlay();
+      }, { once: true });
+    }
+  }, [reduced]);
 
   return (
     <section
       ref={ref}
-      className="relative flex min-h-[100svh] items-center overflow-hidden pt-24"
+      className="relative flex min-h-[100svh] w-full items-center justify-center overflow-hidden"
     >
-      {/* backdrop layers */}
+      {/* Cinematic background */}
       <motion.div
         aria-hidden
-        style={{ y: bgY }}
-        className="absolute inset-0 -z-30 bg-gradient-hero"
+        style={{ y: mediaY, scale: mediaScale }}
+        className="absolute inset-0 -z-20"
+      >
+        <img
+          src={HERO_POSTER}
+          alt=""
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1400ms] ${
+            videoReady ? "opacity-0" : "opacity-100"
+          }`}
+        />
+        {!reduced && (
+          <video
+            ref={videoRef}
+            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1600ms] ${
+              videoReady ? "opacity-100" : "opacity-0"
+            }`}
+            src={HERO_VIDEO_SRC}
+            poster={HERO_POSTER}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+          />
+        )}
+      </motion.div>
+
+      {/* Cinematic overlays for text legibility */}
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_0%,oklch(0.12_0.03_255/0.55)_60%,oklch(0.08_0.02_255/0.85)_100%)]"
       />
-      <div aria-hidden className="absolute inset-0 -z-30 bg-grid opacity-40" />
-      <FloatingOrbs />
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-10 bg-gradient-to-b from-black/40 via-black/25 to-black/70"
+      />
+      <div aria-hidden className="absolute inset-0 -z-10 bg-grid opacity-[0.08]" />
 
       {/* Content */}
       <motion.div
-        style={{ y: heroY, opacity: heroOpacity }}
-        className="relative mx-auto grid w-full max-w-7xl items-center gap-14 px-4 sm:px-6 lg:grid-cols-[1.15fr_1fr]"
+        style={{ y: contentY, opacity: contentOpacity }}
+        className="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center px-4 text-center sm:px-6"
       >
-        <div className="relative z-10">
-          <motion.span
-            initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-card/70 px-3 py-1 text-xs font-medium text-primary shadow-soft backdrop-blur"
-          >
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary/60" />
-              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
-            </span>
-            Verified psychologists across Algeria
-          </motion.span>
+        <motion.span
+          initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-xs font-medium text-white/90 shadow-[0_4px_30px_rgba(0,0,0,0.25)] backdrop-blur-md"
+        >
+          <span className="relative flex h-1.5 w-1.5">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white/70" />
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-white" />
+          </span>
+          Verified psychologists across Algeria
+        </motion.span>
 
-          <KineticHeadline
-            className="mt-6 font-semibold leading-[0.95] tracking-[-0.03em] text-[clamp(2.75rem,7.5vw,6.5rem)]"
-            lines={[
-              { text: "Mental wellbeing," },
-              { text: "in motion.", gradient: true },
-            ]}
-          />
+        <KineticHeadline
+          className="mt-8 max-w-5xl font-semibold leading-[0.95] tracking-[-0.03em] text-white text-[clamp(2.75rem,8vw,7rem)] [text-shadow:0_2px_40px_rgba(0,0,0,0.35)]"
+          lines={[
+            { text: "Mental wellbeing," },
+            { text: "in motion.", gradient: true },
+          ]}
+        />
 
-          <motion.p
-            initial={{ opacity: 0, y: 14, filter: "blur(6px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 0.9, delay: 1.0, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground md:text-xl"
-          >
-            An immersive space to meet the right psychologist — secure video, audio and messaging,
-            designed with the calm of a clinician's office and the craft of great software.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 1.25, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-9 flex flex-wrap items-center gap-3"
-          >
-            <MagneticButton
-              to="/patient/find"
-              className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-elegant transition-shadow hover:shadow-glow"
-            >
-              <span className="relative z-10 inline-flex items-center gap-2">
-                Begin your journey
-                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-              </span>
-              <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-[900ms] group-hover:translate-x-full" />
-            </MagneticButton>
-            <a
-              href="#journey"
-              className="group inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-6 py-3.5 text-sm font-semibold backdrop-blur transition-colors hover:border-primary/40 hover:text-primary"
-            >
-              How it works
-              <ChevronDown className="h-4 w-4 transition-transform group-hover:translate-y-0.5" />
-            </a>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.9, delay: 1.5 }}
-            className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs text-muted-foreground"
-          >
-            <span className="inline-flex items-center gap-1.5"><BadgeCheck className="h-4 w-4 text-success" /> Licensed clinicians</span>
-            <span className="inline-flex items-center gap-1.5"><Lock className="h-4 w-4 text-primary" /> End-to-end encrypted</span>
-            <span className="inline-flex items-center gap-1.5"><Globe className="h-4 w-4 text-coral" /> AR · FR · EN</span>
-          </motion.div>
-        </div>
-
-        {/* Cinematic visual */}
-        <motion.div style={{ y: imgY, scale: imgScale }} className="relative">
-          <HeroScene />
-        </motion.div>
+        <motion.p
+          initial={{ opacity: 0, y: 14, filter: "blur(6px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 1, delay: 1.1, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-6 max-w-2xl text-lg leading-relaxed text-white/80 md:text-xl [text-shadow:0_1px_20px_rgba(0,0,0,0.35)]"
+        >
+          An immersive space to meet the right psychologist — secure video, audio and messaging,
+          designed with the calm of a clinician's office and the craft of great software.
+        </motion.p>
       </motion.div>
 
-      <ScrollHint />
+      {/* Bottom-center floating CTA + scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0, y: 32 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.9, delay: 1.5, ease: [0.22, 1, 0.36, 1] }}
+        style={{ opacity: contentOpacity }}
+        className="absolute inset-x-0 bottom-10 z-20 flex flex-col items-center gap-6 px-4 sm:bottom-14"
+      >
+        <MagneticButton
+          to="/patient/find"
+          className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-full bg-white px-8 py-4 text-sm font-semibold text-neutral-900 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.55)] ring-1 ring-white/40 transition-shadow hover:shadow-[0_25px_80px_-15px_rgba(0,0,0,0.7)] sm:text-base"
+        >
+          <span className="relative z-10 inline-flex items-center gap-2">
+            Begin your journey
+            <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          </span>
+          <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-black/10 to-transparent transition-transform duration-[900ms] group-hover:translate-x-full" />
+        </MagneticButton>
+
+        <ScrollHint />
+      </motion.div>
     </section>
   );
 }
@@ -368,7 +398,7 @@ function KineticHeadline({
           <span
             className={
               line.gradient
-                ? "bg-gradient-to-br from-primary via-primary-glow to-coral bg-clip-text text-transparent"
+                ? "bg-gradient-to-br from-white via-primary-glow to-coral bg-clip-text text-transparent"
                 : ""
             }
           >
@@ -400,135 +430,21 @@ function KineticHeadline({
   );
 }
 
-function HeroScene() {
-  const reduced = useReducedMotion();
-  const wrap = useRef<HTMLDivElement>(null);
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  const rotateY = useSpring(useTransform(mx, [-1, 1], [-9, 9]), { stiffness: 120, damping: 14 });
-  const rotateX = useSpring(useTransform(my, [-1, 1], [7, -7]), { stiffness: 120, damping: 14 });
-  const px = useTransform(mx, [-1, 1], ["15%", "85%"]);
-  const py = useTransform(my, [-1, 1], ["15%", "85%"]);
-
-  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (reduced) return;
-    const r = e.currentTarget.getBoundingClientRect();
-    mx.set(((e.clientX - r.left) / r.width) * 2 - 1);
-    my.set(((e.clientY - r.top) / r.height) * 2 - 1);
-  };
-  const onLeave = () => {
-    mx.set(0);
-    my.set(0);
-  };
-
-  return (
-    <div
-      ref={wrap}
-      className="relative mx-auto w-full max-w-lg [perspective:1400px]"
-      onMouseMove={onMove}
-      onMouseLeave={onLeave}
-    >
-      <motion.div
-        style={{ rotateY, rotateX }}
-        transition={{ type: "spring", stiffness: 200, damping: 18 }}
-        className="relative overflow-hidden rounded-[2.25rem] border border-primary/15 bg-gradient-to-br from-primary/15 via-card to-accent/10 p-3 shadow-elegant animate-floaty [transform-style:preserve-3d]"
-      >
-        <motion.img
-          src={therapyHero}
-          alt="A calm therapy scene — sunlight through window, warm tones"
-          width={1280}
-          height={1024}
-          className="block w-full rounded-[1.75rem] object-cover"
-          initial={{ scale: 1.12, opacity: 0, filter: "blur(18px)" }}
-          animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
-          transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
-        />
-        <span className="pointer-events-none absolute inset-0 rounded-[2.25rem] ring-1 ring-inset ring-white/25" />
-        <motion.span
-          aria-hidden
-          className="pointer-events-none absolute inset-0 rounded-[2.25rem]"
-          style={{
-            background: `radial-gradient(320px circle at ${px.get()} ${py.get()}, oklch(1 0 0 / 0.22), transparent 60%)`,
-            ["--px" as string]: px,
-            ["--py" as string]: py,
-            backgroundImage:
-              "radial-gradient(320px circle at var(--px) var(--py), oklch(1 0 0 / 0.20), transparent 60%)",
-          }}
-        />
-      </motion.div>
-
-      {/* floating badges */}
-      <FloatBadge className="-left-6 top-6" delay={0.9} icon={<BadgeCheck className="h-4 w-4 text-success" />}>
-        Verified
-      </FloatBadge>
-      <FloatBadge className="-right-4 top-28" delay={1.2} icon={<ShieldCheck className="h-4 w-4 text-primary" />}>
-        Encrypted
-      </FloatBadge>
-      <FloatBadge className="-left-2 bottom-16" delay={1.5} icon={<HeartPulse className="h-4 w-4 text-coral" />}>
-        Human care
-      </FloatBadge>
-      <FloatBadge className="-right-6 -bottom-3" delay={1.8} icon={<MonitorSmartphone className="h-4 w-4 text-primary" />}>
-        Any device
-      </FloatBadge>
-    </div>
-  );
-}
-
-function FloatBadge({
-  children,
-  icon,
-  className = "",
-  delay = 0,
-}: {
-  children: React.ReactNode;
-  icon: React.ReactNode;
-  className?: string;
-  delay?: number;
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 14, scale: 0.9 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ delay, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      className={`absolute hidden items-center gap-2 rounded-2xl border border-border bg-card/85 px-3 py-2 text-xs font-medium shadow-elegant backdrop-blur md:inline-flex animate-floaty ${className}`}
-      style={{ animationDelay: `${delay}s` }}
-    >
-      {icon} {children}
-    </motion.div>
-  );
-}
-
-function FloatingOrbs() {
-  return (
-    <div aria-hidden className="pointer-events-none absolute inset-0 -z-20 overflow-hidden">
-      <div className="absolute -left-24 top-16 h-[420px] w-[420px] rounded-full bg-primary/25 blur-3xl animate-blob" />
-      <div
-        className="absolute right-[-6rem] top-40 h-[420px] w-[420px] rounded-full bg-coral/20 blur-3xl animate-blob"
-        style={{ animationDelay: "-5s" }}
-      />
-      <div
-        className="absolute bottom-[-10rem] left-1/3 h-[360px] w-[360px] rounded-full bg-success/20 blur-3xl animate-blob"
-        style={{ animationDelay: "-9s" }}
-      />
-    </div>
-  );
-}
-
 function ScrollHint() {
   const reduced = useReducedMotion();
   return (
     <motion.a
       href="#manifesto"
-      aria-label="Scroll"
+      aria-label="Scroll to explore"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ delay: 1.8, duration: 1 }}
-      className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-muted-foreground"
+      transition={{ delay: 2, duration: 1 }}
+      className="flex flex-col items-center gap-2 text-[10px] uppercase tracking-[0.35em] text-white/70 transition-colors hover:text-white"
     >
       <span>Scroll</span>
-      <span className="relative flex h-8 w-5 items-start justify-center rounded-full border border-border/70">
+      <span className="relative flex h-8 w-5 items-start justify-center rounded-full border border-white/40">
         <motion.span
-          className="mt-1 h-1.5 w-1 rounded-full bg-foreground/70"
+          className="mt-1 h-1.5 w-1 rounded-full bg-white/80"
           animate={reduced ? undefined : { y: [0, 10, 0], opacity: [1, 0.2, 1] }}
           transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
         />
