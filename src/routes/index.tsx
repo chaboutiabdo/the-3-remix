@@ -482,7 +482,7 @@ function Manifesto() {
       id="manifesto"
       ref={ref}
       className="relative"
-      style={{ minHeight: "160vh" }}
+      style={{ minHeight: "130vh" }}
     >
       <div className="sticky top-0 flex min-h-[100svh] items-center overflow-hidden">
         <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-b from-background via-surface-soft to-background" />
@@ -517,19 +517,18 @@ function ManifestoWord({
   index: number;
   total: number;
 }) {
-  // Reveal window: each word lights up between p1 and p2 of overall scroll.
-  const span = 0.6 / total;
-  const p1 = 0.15 + index * span;
-  const p2 = p1 + span * 2.5;
-  const opacity = useTransform(progress, [p1, p2], [0.18, 1]);
-  const blur = useTransform(progress, [p1, p2], [6, 0]);
-  const filter = useTransform(blur, (b) => `blur(${b}px)`);
+  // Opacity-only reveal — no per-word blur (blur during scroll kills FPS).
+  const span = 0.55 / total;
+  const p1 = 0.2 + index * span;
+  const p2 = p1 + span * 2.2;
+  const opacity = useTransform(progress, [p1, p2], [0.22, 1]);
   return (
-    <motion.span style={{ opacity, filter }} className="inline-block">
+    <motion.span style={{ opacity }} className="inline-block">
       {children}
     </motion.span>
   );
 }
+
 
 /* ============================================================
    JOURNEY — pinned scroll-story with vertical progress rail
