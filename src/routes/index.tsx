@@ -58,7 +58,6 @@ function Landing() {
   return (
     <div className="relative min-h-screen bg-background text-foreground antialiased selection:bg-primary/25 selection:text-foreground">
       <ScrollProgressBar />
-      <AmbientCursor />
       <Nav />
       <main className="relative">
         <Hero />
@@ -75,6 +74,7 @@ function Landing() {
     </div>
   );
 }
+
 
 /* ============================================================
    AMBIENT: cursor + scroll progress
@@ -242,9 +242,11 @@ function MagneticButton({
    HERO — full-viewport cinematic video intro
    ============================================================ */
 
-const HERO_VIDEO_SRC = "https://assets.mixkit.co/videos/4067/4067-1080.mp4";
+const HERO_VIDEO_SRC =
+  "https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4";
 const HERO_POSTER =
-  "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=2400&q=80";
+  "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=2400&q=80";
+
 
 function Hero() {
   const ref = useRef<HTMLElement>(null);
@@ -309,16 +311,26 @@ function Hero() {
         )}
       </motion.div>
 
-      {/* Cinematic overlays for text legibility */}
+      {/* Cinematic overlays for text legibility (tuned for both light + dark) */}
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_0%,oklch(0.12_0.03_255/0.55)_60%,oklch(0.08_0.02_255/0.85)_100%)]"
+        className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(9,14,22,0.55)_55%,rgba(6,10,16,0.9)_100%)]"
       />
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-gradient-to-b from-black/40 via-black/25 to-black/70"
+        className="absolute inset-0 -z-10 bg-gradient-to-b from-black/55 via-black/35 to-black/80"
       />
-      <div aria-hidden className="absolute inset-0 -z-10 bg-grid opacity-[0.08]" />
+      {/* Brand tint keeps hero premium in both themes */}
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,oklch(0.22_0.06_255/0.35)_0%,transparent_35%,oklch(0.18_0.05_255/0.45)_100%)]"
+      />
+      {/* Smooth blend into the next section — kills the hard edge */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-48 bg-gradient-to-b from-transparent to-background"
+      />
+
 
       {/* Content */}
       <motion.div
@@ -470,7 +482,7 @@ function Manifesto() {
       id="manifesto"
       ref={ref}
       className="relative"
-      style={{ minHeight: "160vh" }}
+      style={{ minHeight: "130vh" }}
     >
       <div className="sticky top-0 flex min-h-[100svh] items-center overflow-hidden">
         <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-b from-background via-surface-soft to-background" />
@@ -505,19 +517,18 @@ function ManifestoWord({
   index: number;
   total: number;
 }) {
-  // Reveal window: each word lights up between p1 and p2 of overall scroll.
-  const span = 0.6 / total;
-  const p1 = 0.15 + index * span;
-  const p2 = p1 + span * 2.5;
-  const opacity = useTransform(progress, [p1, p2], [0.18, 1]);
-  const blur = useTransform(progress, [p1, p2], [6, 0]);
-  const filter = useTransform(blur, (b) => `blur(${b}px)`);
+  // Opacity-only reveal — no per-word blur (blur during scroll kills FPS).
+  const span = 0.55 / total;
+  const p1 = 0.2 + index * span;
+  const p2 = p1 + span * 2.2;
+  const opacity = useTransform(progress, [p1, p2], [0.22, 1]);
   return (
-    <motion.span style={{ opacity, filter }} className="inline-block">
+    <motion.span style={{ opacity }} className="inline-block">
       {children}
     </motion.span>
   );
 }
+
 
 /* ============================================================
    JOURNEY — pinned scroll-story with vertical progress rail
@@ -558,17 +569,18 @@ function Journey() {
 
   useMotionValueEvent(scrollYProgress, "change", (v) => {
     const idx = Math.min(journeySteps.length - 1, Math.max(0, Math.floor(v * journeySteps.length)));
-    setActive(idx);
+    setActive((prev) => (prev === idx ? prev : idx));
   });
 
-  const railScale = useSpring(scrollYProgress, { stiffness: 120, damping: 22, mass: 0.4 });
+  const railScale = useSpring(scrollYProgress, { stiffness: 140, damping: 26, mass: 0.35 });
+
 
   return (
     <section
       id="journey"
       ref={ref}
       className="relative"
-      style={{ minHeight: `${100 + journeySteps.length * 60}vh` }}
+      style={{ minHeight: `${100 + journeySteps.length * 32}vh` }}
     >
       <div className="sticky top-0 flex min-h-[100svh] items-center">
         <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[minmax(280px,1fr)_1.4fr]">
@@ -617,13 +629,14 @@ function Journey() {
                 initial={false}
                 animate={{
                   opacity: i === active ? 1 : 0,
-                  y: i === active ? 0 : i < active ? -30 : 30,
-                  scale: i === active ? 1 : 0.96,
-                  filter: i === active ? "blur(0px)" : "blur(8px)",
+                  y: i === active ? 0 : i < active ? -24 : 24,
+                  scale: i === active ? 1 : 0.97,
                 }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                style={{ willChange: "transform, opacity", pointerEvents: i === active ? "auto" : "none" }}
                 className="absolute inset-0 flex items-center"
               >
+
                 <div className="relative w-full overflow-hidden rounded-[2rem] border border-border bg-card/90 p-8 shadow-elegant backdrop-blur md:p-12">
                   <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
                   <div className="pointer-events-none absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-coral/10 blur-3xl" />

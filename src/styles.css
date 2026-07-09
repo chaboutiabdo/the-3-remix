@@ -148,9 +148,10 @@
   --shadow-glow: 0 0 0 6px oklch(0.68 0.17 255 / 0.18), 0 12px 40px -12px oklch(0.68 0.17 255 / 0.35);
 }
 
-html { color-scheme: light; }
+html { color-scheme: light; scroll-behavior: smooth; }
 html.dark { color-scheme: dark; }
 html, body { background-color: var(--color-background); }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 /* Smooth theme swap — colors only, not transforms */
 body, .bg-background, .bg-card, .bg-sidebar, .bg-popover, .bg-muted, .border, [class*="border-"] {
   transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease;
