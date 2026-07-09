@@ -58,7 +58,6 @@ function Landing() {
   return (
     <div className="relative min-h-screen bg-background text-foreground antialiased selection:bg-primary/25 selection:text-foreground">
       <ScrollProgressBar />
-      <AmbientCursor />
       <Nav />
       <main className="relative">
         <Hero />
@@ -75,6 +74,7 @@ function Landing() {
     </div>
   );
 }
+
 
 /* ============================================================
    AMBIENT: cursor + scroll progress
