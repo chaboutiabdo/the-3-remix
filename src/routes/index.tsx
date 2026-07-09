@@ -242,9 +242,11 @@ function MagneticButton({
    HERO — full-viewport cinematic video intro
    ============================================================ */
 
-const HERO_VIDEO_SRC = "https://assets.mixkit.co/videos/4067/4067-1080.mp4";
+const HERO_VIDEO_SRC =
+  "https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4";
 const HERO_POSTER =
-  "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=2400&q=80";
+  "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=2400&q=80";
+
 
 function Hero() {
   const ref = useRef<HTMLElement>(null);
