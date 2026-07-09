@@ -311,16 +311,26 @@ function Hero() {
         )}
       </motion.div>
 
-      {/* Cinematic overlays for text legibility */}
+      {/* Cinematic overlays for text legibility (tuned for both light + dark) */}
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_0%,oklch(0.12_0.03_255/0.55)_60%,oklch(0.08_0.02_255/0.85)_100%)]"
+        className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(9,14,22,0.55)_55%,rgba(6,10,16,0.9)_100%)]"
       />
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-gradient-to-b from-black/40 via-black/25 to-black/70"
+        className="absolute inset-0 -z-10 bg-gradient-to-b from-black/55 via-black/35 to-black/80"
       />
-      <div aria-hidden className="absolute inset-0 -z-10 bg-grid opacity-[0.08]" />
+      {/* Brand tint keeps hero premium in both themes */}
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,oklch(0.22_0.06_255/0.35)_0%,transparent_35%,oklch(0.18_0.05_255/0.45)_100%)]"
+      />
+      {/* Smooth blend into the next section — kills the hard edge */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-48 bg-gradient-to-b from-transparent to-background"
+      />
+
 
       {/* Content */}
       <motion.div
