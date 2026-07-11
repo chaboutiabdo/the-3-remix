@@ -26,7 +26,6 @@ import { BrandLogo } from "@/components/brand-logo";
 import {
   motion,
   useMotionValue,
-  useMotionValueEvent,
   useReducedMotion,
   useScroll,
   useSpring,
@@ -531,7 +530,7 @@ function ManifestoWord({
 
 
 /* ============================================================
-   JOURNEY — pinned scroll-story with vertical progress rail
+   JOURNEY — natural scrolling path with soft reveal cards
    ============================================================ */
 
 const journeySteps = [
@@ -564,101 +563,81 @@ const journeySteps = [
 
 function Journey() {
   const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-  const [active, setActive] = useState(0);
-
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
-    const idx = Math.min(journeySteps.length - 1, Math.max(0, Math.floor(v * journeySteps.length)));
-    setActive((prev) => (prev === idx ? prev : idx));
-  });
-
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end center"] });
   const railScale = useSpring(scrollYProgress, { stiffness: 140, damping: 26, mass: 0.35 });
-
 
   return (
     <section
       id="journey"
       ref={ref}
-      className="relative"
-      style={{ minHeight: `${100 + journeySteps.length * 85}vh` }}
+      className="relative overflow-hidden py-24 sm:py-32 lg:py-40"
     >
-      <div className="sticky top-0 flex min-h-[100svh] items-center">
+      <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-b from-background via-surface-soft/70 to-background" />
+      <div aria-hidden className="pointer-events-none absolute left-1/2 top-24 -z-10 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-primary/10 blur-3xl" />
 
-        <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[minmax(280px,1fr)_1.4fr]">
-          {/* LEFT — heading + rail */}
-          <div className="flex flex-col justify-center">
-            <span className="inline-flex w-fit items-center gap-2 rounded-full border border-primary/20 bg-card/70 px-3 py-1 text-xs font-medium uppercase tracking-[0.3em] text-primary backdrop-blur">
-              The journey
+      <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[minmax(280px,0.9fr)_1.5fr] lg:gap-16">
+        {/* LEFT — heading + rail */}
+        <div className="flex flex-col justify-start lg:pt-8">
+          <span className="inline-flex w-fit items-center gap-2 rounded-full border border-primary/20 bg-card/70 px-3 py-1 text-xs font-medium uppercase tracking-[0.3em] text-primary backdrop-blur">
+            The journey
+          </span>
+          <h2 className="mt-5 text-4xl font-semibold tracking-[-0.02em] md:text-5xl">
+            From first spark, <br className="hidden md:block" />
+            <span className="bg-gradient-to-br from-primary via-primary-glow to-coral bg-clip-text text-transparent">
+              to steady footing.
             </span>
-            <h2 className="mt-5 text-4xl font-semibold tracking-[-0.02em] md:text-5xl">
-              From first spark, <br className="hidden md:block" />
-              <span className="bg-gradient-to-br from-primary via-primary-glow to-coral bg-clip-text text-transparent">
-                to steady footing.
-              </span>
-            </h2>
-            <p className="mt-5 max-w-md text-muted-foreground">
-              Scroll to walk the path a patient takes with us — five deliberate steps, none of them rushed.
-            </p>
+          </h2>
+          <p className="mt-5 max-w-md text-muted-foreground">
+            A simple path through care — clear, calm and easy to follow without any forced scroll effects.
+          </p>
 
-            <div className="mt-10 hidden items-start gap-4 md:flex">
-              <div className="relative mt-1 h-56 w-[2px] overflow-hidden rounded-full bg-border">
-                <motion.div
-                  style={{ scaleY: railScale }}
-                  className="absolute inset-x-0 top-0 h-full origin-top bg-gradient-to-b from-primary via-primary-glow to-coral"
-                />
-              </div>
-              <ol className="space-y-3 text-sm">
-                {journeySteps.map((s, i) => (
-                  <li
-                    key={s.tag}
-                    className={`transition-colors ${
-                      i === active ? "text-foreground" : "text-muted-foreground/70"
-                    }`}
-                  >
-                    <span className="font-mono text-[10px] uppercase tracking-[0.25em]">{s.tag}</span>
-                  </li>
-                ))}
-              </ol>
-            </div>
-          </div>
-
-          {/* RIGHT — animated cards */}
-          <div className="relative min-h-[420px]">
-            {journeySteps.map((s, i) => (
+          <div className="mt-10 hidden items-start gap-4 md:flex">
+            <div className="relative mt-1 h-56 w-[2px] overflow-hidden rounded-full bg-border">
               <motion.div
-                key={s.tag}
-                initial={false}
-                animate={{
-                  opacity: i === active ? 1 : 0,
-                  y: i === active ? 0 : i < active ? -32 : 32,
-                  scale: i === active ? 1 : 0.96,
-                }}
-                transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-                style={{ willChange: "transform, opacity", pointerEvents: i === active ? "auto" : "none" }}
-                className="absolute inset-0 flex items-center"
-              >
-
-
-                <div className="relative w-full overflow-hidden rounded-[2rem] border border-border bg-card/90 p-8 shadow-elegant backdrop-blur md:p-12">
-                  <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
-                  <div className="pointer-events-none absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-coral/10 blur-3xl" />
-                  <span className="font-mono text-xs uppercase tracking-[0.3em] text-primary">{s.tag}</span>
-                  <h3 className="mt-4 text-3xl font-semibold tracking-[-0.02em] md:text-4xl">
-                    {s.title}
-                  </h3>
-                  <p className="mt-4 max-w-xl text-lg leading-relaxed text-muted-foreground">
-                    {s.body}
-                  </p>
-                  <div className="mt-8 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
-                    <StepDots active={i} total={journeySteps.length} />
-                    <span>
-                      {i + 1} of {journeySteps.length}
-                    </span>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+                style={{ scaleY: railScale }}
+                className="absolute inset-x-0 top-0 h-full origin-top bg-gradient-to-b from-primary via-primary-glow to-coral"
+              />
+            </div>
+            <ol className="space-y-3 text-sm text-muted-foreground/75">
+              {journeySteps.map((s) => (
+                <li key={s.tag} className="transition-colors hover:text-foreground">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.25em]">{s.tag}</span>
+                </li>
+              ))}
+            </ol>
           </div>
+        </div>
+
+        {/* RIGHT — normal document-flow cards */}
+        <div className="grid gap-5 sm:gap-6">
+          {journeySteps.map((s, i) => (
+            <motion.article
+              key={s.tag}
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-12% 0px -12% 0px" }}
+              transition={{ duration: 0.7, delay: Math.min(i * 0.05, 0.18), ease: [0.22, 1, 0.36, 1] }}
+              className="relative overflow-hidden rounded-[2rem] border border-border bg-card/90 p-7 shadow-elegant backdrop-blur transition-[transform,border-color,box-shadow] duration-500 hover:-translate-y-1 hover:border-primary/30 hover:shadow-glow md:p-10"
+            >
+              <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
+              <div className="pointer-events-none absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-coral/10 blur-3xl" />
+              <div className="relative">
+                <span className="font-mono text-xs uppercase tracking-[0.3em] text-primary">{s.tag}</span>
+                <h3 className="mt-4 text-3xl font-semibold tracking-[-0.02em] md:text-4xl">
+                  {s.title}
+                </h3>
+                <p className="mt-4 max-w-xl text-lg leading-relaxed text-muted-foreground">
+                  {s.body}
+                </p>
+                <div className="mt-8 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
+                  <StepDots active={i} total={journeySteps.length} />
+                  <span>
+                    {i + 1} of {journeySteps.length}
+                  </span>
+                </div>
+              </div>
+            </motion.article>
+          ))}
         </div>
       </div>
     </section>
