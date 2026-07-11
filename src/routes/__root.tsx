@@ -18,6 +18,7 @@ import { RouteProgress } from "@/components/route-progress";
 import { Toaster } from "@/components/ui/sonner";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { NotFoundPage, RouteErrorBoundary, OfflineBanner } from "@/components/page-states";
+import { SmoothScroll } from "@/components/smooth-scroll";
 
 function NotFoundComponent() {
   return <NotFoundPage />;
@@ -102,6 +103,7 @@ function RootComponent() {
         <LanguageProvider>
           <AuthProvider>
             <ClientGate>
+              <SmoothScroll />
               <OfflineBanner />
               <RouteProgress />
               <AnimatedOutlet />

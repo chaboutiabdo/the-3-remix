@@ -580,9 +580,10 @@ function Journey() {
       id="journey"
       ref={ref}
       className="relative"
-      style={{ minHeight: `${100 + journeySteps.length * 32}vh` }}
+      style={{ minHeight: `${100 + journeySteps.length * 85}vh` }}
     >
       <div className="sticky top-0 flex min-h-[100svh] items-center">
+
         <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[minmax(280px,1fr)_1.4fr]">
           {/* LEFT — heading + rail */}
           <div className="flex flex-col justify-center">
@@ -629,13 +630,14 @@ function Journey() {
                 initial={false}
                 animate={{
                   opacity: i === active ? 1 : 0,
-                  y: i === active ? 0 : i < active ? -24 : 24,
-                  scale: i === active ? 1 : 0.97,
+                  y: i === active ? 0 : i < active ? -32 : 32,
+                  scale: i === active ? 1 : 0.96,
                 }}
-                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
                 style={{ willChange: "transform, opacity", pointerEvents: i === active ? "auto" : "none" }}
                 className="absolute inset-0 flex items-center"
               >
+
 
                 <div className="relative w-full overflow-hidden rounded-[2rem] border border-border bg-card/90 p-8 shadow-elegant backdrop-blur md:p-12">
                   <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
