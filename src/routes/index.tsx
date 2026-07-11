@@ -580,9 +580,10 @@ function Journey() {
       id="journey"
       ref={ref}
       className="relative"
-      style={{ minHeight: `${100 + journeySteps.length * 32}vh` }}
+      style={{ minHeight: `${100 + journeySteps.length * 85}vh` }}
     >
       <div className="sticky top-0 flex min-h-[100svh] items-center">
+
         <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[minmax(280px,1fr)_1.4fr]">
           {/* LEFT — heading + rail */}
           <div className="flex flex-col justify-center">
