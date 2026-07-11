@@ -102,6 +102,7 @@ function RootComponent() {
         <LanguageProvider>
           <AuthProvider>
             <ClientGate>
+              <SmoothScroll />
               <OfflineBanner />
               <RouteProgress />
               <AnimatedOutlet />
