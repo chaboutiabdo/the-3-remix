@@ -575,36 +575,45 @@ function Journey() {
       <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-b from-background via-surface-soft/70 to-background" />
       <div aria-hidden className="pointer-events-none absolute left-1/2 top-24 -z-10 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-primary/10 blur-3xl" />
 
-      <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[minmax(280px,0.9fr)_1.5fr] lg:gap-16">
-        {/* LEFT — heading + rail */}
-        <div className="flex flex-col justify-start lg:pt-8">
+      <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[minmax(300px,0.95fr)_1.5fr] lg:gap-16">
+        {/* LEFT — heading + rail (sticky so it spans the full card stack) */}
+        <div className="flex flex-col lg:sticky lg:top-24 lg:self-start lg:pt-8">
           <span className="inline-flex w-fit items-center gap-2 rounded-full border border-primary/20 bg-card/70 px-3 py-1 text-xs font-medium uppercase tracking-[0.3em] text-primary backdrop-blur">
             The journey
           </span>
-          <h2 className="mt-5 text-4xl font-semibold tracking-[-0.02em] md:text-5xl">
+          <h2 className="mt-5 text-4xl font-semibold tracking-[-0.02em] md:text-5xl lg:text-6xl">
             From first spark, <br className="hidden md:block" />
             <span className="bg-gradient-to-br from-primary via-primary-glow to-coral bg-clip-text text-transparent">
               to steady footing.
             </span>
           </h2>
-          <p className="mt-5 max-w-md text-muted-foreground">
-            A simple path through care — clear, calm and easy to follow without any forced scroll effects.
+          <p className="mt-6 max-w-md text-base leading-relaxed text-muted-foreground md:text-lg">
+            A simple path through care — clear, calm and easy to follow. Five quiet
+            steps, at your pace, with a human on the other side of every one.
           </p>
 
-          <div className="mt-10 hidden items-start gap-4 md:flex">
-            <div className="relative mt-1 h-56 w-[2px] overflow-hidden rounded-full bg-border">
+          <div className="mt-10 hidden items-start gap-5 md:flex">
+            <div className="relative mt-2 h-80 w-[2px] overflow-hidden rounded-full bg-border">
               <motion.div
                 style={{ scaleY: railScale }}
                 className="absolute inset-x-0 top-0 h-full origin-top bg-gradient-to-b from-primary via-primary-glow to-coral"
               />
             </div>
-            <ol className="space-y-3 text-sm text-muted-foreground/75">
+            <ol className="space-y-5 text-sm text-muted-foreground/80">
               {journeySteps.map((s) => (
-                <li key={s.tag} className="transition-colors hover:text-foreground">
-                  <span className="font-mono text-[10px] uppercase tracking-[0.25em]">{s.tag}</span>
+                <li key={s.tag} className="group flex flex-col gap-1 transition-colors hover:text-foreground">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-primary/80">{s.tag}</span>
+                  <span className="text-sm text-foreground/70 group-hover:text-foreground">{s.title}</span>
                 </li>
               ))}
             </ol>
+          </div>
+
+          <div className="mt-12 hidden max-w-sm rounded-2xl border border-border/70 bg-card/60 p-5 backdrop-blur lg:block">
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              <span className="font-medium text-foreground">Private by design.</span>{" "}
+              Every step above is encrypted end-to-end and reviewed by our clinical team.
+            </p>
           </div>
         </div>
 
